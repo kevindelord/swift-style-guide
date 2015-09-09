@@ -91,6 +91,19 @@ enum Shape {
 }
 ```
 
+### Structures
+
+Use UpperCamelCase for static values within structures:
+
+```swift
+struct Duration {
+    static let FadeOut      = 0.3
+    static let FadeIn       = 0.8
+
+    var someVariable        : AnyObject?
+}
+```
+
 ### Class Prefixes
 
 Swift types are automatically namespaced by the module that contains them and you should not add a class prefix. If two names from different modules collide you can disambiguate by prefixing the type name with the module name.
@@ -439,7 +452,6 @@ attendeeList.sort { a, b in
 }
 ```
 
-
 ## Types
 
 Always use Swift's native types when available. Swift offers bridging to Objective-C so you can still use the full set of methods as needed.
@@ -464,6 +476,99 @@ Constants are defined using the `let` keyword, and variables with the `var` keyw
 
 **Tip:** A good technique is to define everything using `let` and only change it to `var` if the compiler complains!
 
+#### Global Constants
+
+* The constants should be in one single constants files called Constants.swift or Constants.h. Of course this file should also be prefix depending on your project.
+* As said earlier, the more your file is structured the better: Create structures, add comments and pragma marks.
+* Try to avoid single and anarchic constants without logic or explanation around.
+* Here, what `constant` means is all strings/numbers that are fixed and can't be dynamically changed. 
+They are used for database keys, API endpoints and response codes, user default keys, segue identifiers, etc. Actually all values that should not change. But if they do, they are all created in one single file and the change will take mostly 5 seconds.
+
+**Preferred:**
+```swift
+//
+// User Default
+//
+enum HUUserDefault                          : String {
+
+    // Keys set in PList files
+    case AppId                              =       "AppId"
+    case HockeyId                           =       "HockeyAppId"
+    case APIBaseURL                         =       "ApiBaseURL"
+    case APIUserCredential                  =       "ApiUserCredential"
+    case APIPasswordCredential              =       "ApiPasswordCredential"
+ 
+    static let allValues                    =       [AppId, HockeyId, APIBaseURL, APIUserCredential, APIPasswordCredential]
+}
+
+//
+// Segues
+//
+enum HUSegueIdentifier                      : String {
+    case FormulaDetail                      =       "showDetailFormula"
+    case SearchViewController               =       "showSearchView"
+}
+
+//
+// Cells
+//
+enum HUCellReuseIdentifier                  : String {
+    case FormulaCell                        =       "HUFormulaCell_id"
+    case SearchCell                         =       "HUSearchCell_id"
+    case OptionCell                         =       "HUOptionCell_id"
+}
+
+//
+// Database
+//
+struct DB {
+
+    static let DatabaseName                 =       "Huethig.sqlite"
+
+    struct Key {
+        static let Id                       =       "id"
+        static let UpdatedAt                =       "lastUpdate"
+        static let Key                      =       "key"
+        static let Value                    =       "value"
+    }
+}
+
+//
+// API
+//
+struct API {
+
+    // Endpoints
+    enum Endpoint                           : String {
+        case Formula                        =       "formula"
+        case PDF                            =       "pdf"
+        case ProductId                      =       "productid"
+    }
+}
+```
+
+**Not Preferred:**
+```swift
+// User Default
+let K_APP_ID = "AppId"
+let HOCKEY_ID = "HockeyAppId"
+
+let K_FORMULADETAIL = "showDetailFormula"
+let K_SEARCHVIEWCONTROLLER = "showSearchView"
+let K_FORMULACELL = "HUFormulaCell_id"
+let K_SEARCHCELL = "HUSearchCell_id"
+let K_OPTIONCELL = "HUOptionCell_id"
+
+// Database
+let DB_ID = "id"
+let DB_UPDATEDAT = "lastUpdate"
+let DB_KEY = "key"
+let DB_VALUE = "value"
+
+let API_FORMULA = "formula"
+let API_PDF = "pdf"
+let API_PRODUCTID = "productid"
+```
 
 ### Optionals
 
