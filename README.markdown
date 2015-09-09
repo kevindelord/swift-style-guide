@@ -1,4 +1,4 @@
-# Swift Style Guide.
+# Swift Style Guide
 
 This guide is a fork from the [Official raywenderlich.com Swift Style Guide](https://github.com/raywenderlich/swift-style-guide).
 It has then be modified and improved to match different styles and add some missing parts.
@@ -41,8 +41,8 @@ Use descriptive names with camel case for classes, methods, variables, etc. Clas
 
 ```swift
 class WidgetContainer {
-  var widgetButton: UIButton
-  let widgetHeightPercentage = 0.85
+    var widgetButton: UIButton
+    let widgetHeightPercentage = 0.85
 }
 ```
 
@@ -50,8 +50,8 @@ class WidgetContainer {
 
 ```swift
 class app_widgetContainer {
-  var wBut: UIButton
-  let WHeightPCT = 0.85
+    var wBut: UIButton
+    let WHeightPCT = 0.85
 }
 ```
 
@@ -72,8 +72,8 @@ For methods, follow the standard Apple convention of referring to the first para
 
 ```swift
 class Guideline {
-  func combineWithString(incoming: String, options: Dictionary?) { ... }
-  func upvoteBy(amount: Int) { ... }
+    func combineWithString(incoming: String, options: Dictionary?) { ... }
+    func upvoteBy(amount: Int) { ... }
 }
 ```
 
@@ -83,10 +83,10 @@ Use UpperCamelCase for enumeration values:
 
 ```swift
 enum Shape {
-  case Rectangle
-  case Square
-  case Triangle
-  case Circle
+    case Rectangle
+    case Square
+    case Triangle
+    case Circle
 }
 ```
 
@@ -113,9 +113,9 @@ let myClass = MyModule.UsefulClass()
 **Preferred:**
 ```swift
 if (user.isHappy == true) {
-  // Do something
+    // Do something
 } else {
-  // Do something else
+    // Do something else
 }
 ```
 
@@ -123,26 +123,26 @@ if (user.isHappy == true) {
 ```swift
 if user.isHappy
 {
-    // Do something
+  // Do something
 }
 else {
-    // Do something else
+  // Do something else
 }
 ```
 
-* There should be exactly one blank line between methods to aid in visual clarity and organization. Whitespace within methods should separate functionality, but having too many sections in a method often means you should refactor into several methods.
+* There should be exactly one blank line between methods to aid in visual clarity and organization. Whitespace within methods should separate functionality, but having too many sections in a method often means you should **refactor into several methods**.
 
 **Preferred:**
 ```swift
 func firstMethod() {
-  // Explanation
-  if (a == b) {
-    // Do something
-  }
+    // Explanation
+    if (a == b) {
+        // Do something
+    }
 }
 
 func secondMethod() {
-  // Do something
+    // Do something
 }
 ```
 
