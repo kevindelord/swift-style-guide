@@ -13,6 +13,7 @@ Of course, efficacity, readability, and simplicity are the most important points
   * [Class Prefixes](#class-prefixes)
 * [Spacing](#spacing)
 * [Comments](#comments)
+* [Code alignement and structure](#code-alignement-and-structure)
 * [Classes and Structures](#classes-and-structures)
   * [Use of Self](#use-of-self)
   * [Protocol Conformance](#protocol-conformance)
@@ -171,7 +172,9 @@ The pragma mark should be indented, capitalised and using a separator. It should
 **Preferred:**
 ```swift
 class MyViewController : UIViewController {
+
     // MARK: - Actions
+
     func superMethod() {
     }
 }
