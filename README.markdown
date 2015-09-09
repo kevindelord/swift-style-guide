@@ -153,13 +153,87 @@ func firstMethod() {
 }
 func secondMethod() {
   // Do something
-}```
+}
+```
 
 ## Comments
 
 When they are needed, use comments to explain **why** a particular piece of code does something. Comments must be kept up-to-date or deleted.
 
 Avoid block comments inline with code, as the code should be as self-documenting as possible. *Exception: This does not apply to those comments used to generate documentation.*
+
+## Code alignement and structure
+
+* The pragma mark should be use as much as possible to actually separate and structure your classes and code within different files.
+
+The pragma mark should be indented, capitalised and using a separator. It should describe what the next methods are about.
+
+**Preferred:**
+```swift
+    // MARK: - Actions
+```
+
+**Not Preferred:**
+```swift
+// MARK actions
+```
+
+* Make sure the code is aligned to itself. This is just about structure and better looking code: for example the `=` character, the start of the lines, the function names, etc. The alignment is done with "tabulations".
+It is also extremely appreciated to use comments to separate the class attributes and pragma mark between functions.
+
+**Preferred:**
+```swift
+class MyViewController                      : UIViewController {
+
+    // MARK: - Outlets
+
+    @IBOutlet var lettersGameButton         : UIButton?
+    @IBOutlet var headBodyLegsGameButton    : UIButton?
+    @IBOutlet var colorMatcherGameButton    : UIButton?
+
+    // MARK: - Instance Variables
+
+    var destinationType                     : FFGameType?
+    let transitionManager                   = FFTransitionManager()
+
+    // MARK: - View Lifecycle
+
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        // Your code here.
+    }
+
+    // MARK: - Actions
+
+    @IBAction func buttonPressed(sender: UIButton) {
+        // Your code here.
+    }
+}
+```
+
+**Not Preferred:**
+```swift
+class MyViewController : UIViewController {
+
+// MARK Outlets
+
+    @IBOutlet var lettersGameButton : UIButton?
+    @IBOutlet var headBodyLegsGameButton : UIButton?
+    @IBOutlet var colorMatcherGameButton : UIButton?
+    var destinationType : FFGameType?
+    let transitionManager = FFTransitionManager()
+
+// MARK View Lifecycle
+
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        // Your code here.
+    }
+    @IBAction func buttonPressed(sender: UIButton) {
+        // Your code here.
+    }
+}
+```
 
 
 ## Classes and Structures
@@ -185,7 +259,7 @@ class Circle: Shape {
       return radius * 2
     }
     set {
-      radius = newValue / 2
+      radius = newValue * 0.5
     }
   }
 
