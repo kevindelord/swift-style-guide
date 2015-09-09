@@ -170,12 +170,20 @@ The pragma mark should be indented, capitalised and using a separator. It should
 
 **Preferred:**
 ```swift
+class MyViewController : UIViewController {
     // MARK: - Actions
+    func superMethod() {
+    }
+}
 ```
 
 **Not Preferred:**
 ```swift
+class MyViewController : UIViewController {
 // MARK actions
+    func superMethod() {
+    }
+}
 ```
 
 * Make sure the code is aligned to itself. This is just about structure and better looking code: for example the `=` character, the start of the lines, the function names, etc. The alignment is done with "tabulations".
