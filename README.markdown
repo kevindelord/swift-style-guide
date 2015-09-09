@@ -1,15 +1,15 @@
-# The Official raywenderlich.com Swift Style Guide.
+# Swift Style Guide.
 
-This style guide is different from others you may see, because the focus is centered on readability for print and the web. We created this style guide to keep the code in our books, tutorials, and starter kits nice and consistent — even though we have many different authors working on the books.
+This guide is a fork from the [Official raywenderlich.com Swift Style Guide](https://github.com/raywenderlich/swift-style-guide).
+It has then be modified and improved to match different styles and add some missing parts.
 
-Our overarching goals are conciseness, readability, and simplicity.
-
-Writing Objective-C? Check out our [Objective-C Style Guide](https://github.com/raywenderlich/objective-c-style-guide) too.
+This style guide is different from othersn nonetheless the goals are the same: define a style, syntax and structure while coding in Swift.
+Of course, efficacity, readability, and simplicity are the most important points.
 
 ## Table of Contents
 
 * [Naming](#naming)
-  * [Prose](#prose)
+  * [Enumerations](#enumerations)
   * [Class Prefixes](#class-prefixes)
 * [Spacing](#spacing)
 * [Comments](#comments)
@@ -40,8 +40,6 @@ Use descriptive names with camel case for classes, methods, variables, etc. Clas
 **Preferred:**
 
 ```swift
-private let maximumWidgetCount = 100
-
 class WidgetContainer {
   var widgetButton: UIButton
   let widgetHeightPercentage = 0.85
@@ -51,11 +49,9 @@ class WidgetContainer {
 **Not Preferred:**
 
 ```swift
-let MAX_WIDGET_COUNT = 100
-
 class app_widgetContainer {
   var wBut: UIButton
-  let wHeightPct = 0.85
+  let WHeightPCT = 0.85
 }
 ```
 
@@ -94,22 +90,6 @@ enum Shape {
 }
 ```
 
-### Prose
-
-When referring to functions in prose (tutorials, books, comments) include the required parameter names from the caller's perspective or `_` for unnamed parameters.
-
-> Call `convertPointAt(column:row:)` from your own `init` implementation.
->
-> If you call `dateFromString(_:)` make sure that you provide a string with the format "yyyy-MM-dd".
->
-> If you call `timedAction(delay:perform:)` from `viewDidLoad()` remember to provide an adjusted delay value and an action to perform.
->
-> You shouldn't call the data source method `tableView(_:cellForRowAtIndexPath:)` directly.
-
-When in doubt, look at how Xcode lists the method in the jump bar – our style here matches that.
-
-![Methods in Xcode jump bar](screens/xcode-jump-bar.png)
-
 ### Class Prefixes
 
 Swift types are automatically namespaced by the module that contains them and you should not add a class prefix. If two names from different modules collide you can disambiguate by prefixing the type name with the module name.
@@ -123,7 +103,7 @@ let myClass = MyModule.UsefulClass()
 
 ## Spacing
 
-* Indent using 2 spaces rather than tabs to conserve space and help prevent line wrapping. Be sure to set this preference in Xcode as shown below:
+* Indent using tabs equivalent to 4 spaces, and indent by inserting tab characters. Be sure to set xcode like this:
 
   ![Xcode indent settings](screens/indentation.png)
 
@@ -132,7 +112,7 @@ let myClass = MyModule.UsefulClass()
 
 **Preferred:**
 ```swift
-if user.isHappy {
+if (user.isHappy == true) {
   // Do something
 } else {
   // Do something else
@@ -151,6 +131,29 @@ else {
 ```
 
 * There should be exactly one blank line between methods to aid in visual clarity and organization. Whitespace within methods should separate functionality, but having too many sections in a method often means you should refactor into several methods.
+
+**Preferred:**
+```swift
+func firstMethod() {
+  // Explanation
+  if (a == b) {
+    // Do something
+  }
+}
+
+func secondMethod() {
+  // Do something
+}
+```
+
+**Not Preferred:**
+```swift
+func firstMethod() {
+  if (a == b) { /* Do something */ }
+}
+func secondMethod() {
+  // Do something
+}```
 
 ## Comments
 
