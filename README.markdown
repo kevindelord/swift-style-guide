@@ -654,10 +654,14 @@ if let unwrappedSubview = optionalSubview {
 ### Struct Initializers
 
 Use the native Swift struct initializers rather than the legacy CGGeometry constructors.
+The `CGPoint` is a new native swift function, it should be used rather than the old `CGPointMake` as it is a legacy C method.
+Even though they might do the same now, the swift one has much future.
+
+Also it’s more readable in a swift environment and feels better integrated.
 
 **Preferred:**
 ```swift
-let bounds = CGRect(x: 40, y: 20, width: 120, height: 80)
+let bounds      = CGRect(x: 40, y: 20, width: 120, height: 80)
 let centerPoint = CGPoint(x: 96, y: 42)
 ```
 
