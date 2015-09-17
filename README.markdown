@@ -87,7 +87,7 @@ func secondMethod() {
 
 * Always specify the type to compared a value: add `== type` within your if statements.
 
-In Swift the type, that a value can be verify against, is uncertain.
+In Global Constants the type, that a value can be verify against, is uncertain.
 An object is sometimes an optional or not, it might be able to be checked against nil or not, maybe a against a boolean, etc.
 
 For this very specific reason, one should always specify what's after the comparison operator: `==`, `!=, etc.
@@ -779,30 +779,30 @@ Actually all values that should not change. But if they do, they are all created
 enum HUUserDefault                          : String {
 
     // Keys set in PList files
-    case AppId                              =       "AppId"
-    case HockeyId                           =       "HockeyAppId"
-    case APIBaseURL                         =       "ApiBaseURL"
-    case APIUserCredential                  =       "ApiUserCredential"
-    case APIPasswordCredential              =       "ApiPasswordCredential"
+    case AppId                              = "AppId"
+    case HockeyId                           = "HockeyAppId"
+    case APIBaseURL                         = "ApiBaseURL"
+    case APIUserCredential                  = "ApiUserCredential"
+    case APIPasswordCredential              = "ApiPasswordCredential"
  
-    static let allValues                    =       [AppId, HockeyId, APIBaseURL, APIUserCredential, APIPasswordCredential]
+    static let allValues                    = [AppId, HockeyId, APIBaseURL, APIUserCredential, APIPasswordCredential]
 }
 
 //
 // Segues
 //
 enum HUSegueIdentifier                      : String {
-    case FormulaDetail                      =       "showDetailFormula"
-    case SearchViewController               =       "showSearchView"
+    case FormulaDetail                      = "showDetailFormula"
+    case SearchViewController               = "showSearchView"
 }
 
 //
 // Cells
 //
 enum HUCellReuseIdentifier                  : String {
-    case FormulaCell                        =       "HUFormulaCell_id"
-    case SearchCell                         =       "HUSearchCell_id"
-    case OptionCell                         =       "HUOptionCell_id"
+    case FormulaCell                        = "HUFormulaCell_id"
+    case SearchCell                         = "HUSearchCell_id"
+    case OptionCell                         = "HUOptionCell_id"
 }
 
 //
@@ -810,13 +810,13 @@ enum HUCellReuseIdentifier                  : String {
 //
 struct DB {
 
-    static let DatabaseName                 =       "Huethig.sqlite"
+    static let DatabaseName                 = "Huethig.sqlite"
 
     struct Key {
-        static let Id                       =       "id"
-        static let UpdatedAt                =       "lastUpdate"
-        static let Key                      =       "key"
-        static let Value                    =       "value"
+        static let Id                       = "id"
+        static let UpdatedAt                = "lastUpdate"
+        static let Key                      = "key"
+        static let Value                    = "value"
     }
 }
 
@@ -827,9 +827,9 @@ struct API {
 
     // Endpoints
     enum Endpoint                           : String {
-        case Formula                        =       "formula"
-        case PDF                            =       "pdf"
-        case ProductId                      =       "productid"
+        case Formula                        = "formula"
+        case PDF                            = "pdf"
+        case ProductId                      = "productid"
     }
 }
 ```
@@ -1154,3 +1154,4 @@ Please see the full list on the [orginal page](https://github.com/raywenderlich/
   * strictly forbidden with `!` or `as!`.
   * Use `if let` with one single value or with multiple ones.
   * Use `where` and/or first conditions to improve the code.
+* nested blocks / method calls
