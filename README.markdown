@@ -275,48 +275,52 @@ Sometimes, things should be structs but need to conform to `AnyObject` or are hi
 Here's an example of a well-styled class definition:
 
 ```swift
-class Circle: Shape {
-  var x: Int, y: Int
-  var radius: Double
-  var diameter: Double {
-    get {
-      return radius * 2
+class circle      : Shape {
+
+    var x         : Int
+    var y         : Int
+    var radius    : Double
+
+    var diameter  : Double {
+        get {
+            return (radius * 2)
+        }
+        set {
+            radius = (newValue * 0.5)
+        }
     }
-    set {
-      radius = newValue * 0.5
+
+    init(x: Int, y: Int, radius: Double) {
+        self.x = x
+        self.y = y
+        self.radius = radius
     }
-  }
 
-  init(x: Int, y: Int, radius: Double) {
-    self.x = x
-    self.y = y
-    self.radius = radius
-  }
+    convenience init(x: Int, y: Int, diameter: Double) {
+        self.init(x: x, y: y, radius: diameter / 2)
+    }
 
-  convenience init(x: Int, y: Int, diameter: Double) {
-    self.init(x: x, y: y, radius: diameter / 2)
-  }
+    func describe() -> String {
+        return "I am a circle at \(centerString()) with an area of \(computeArea())"
+    }
 
-  func describe() -> String {
-    return "I am a circle at \(centerString()) with an area of \(computeArea())"
-  }
+    override func computeArea() -> Double {
+        return (M_PI * radius * radius)
+    }
 
-  override func computeArea() -> Double {
-    return M_PI * radius * radius
-  }
-
-  private func centerString() -> String {
-    return "(\(x),\(y))"
-  }
+    private func centerString() -> String {
+        return "(\(x),\(y))"
+    }
 }
 ```
 
 The example above demonstrates the following style guidelines:
 
  + Specify types for properties, variables, constants, argument declarations and other statements with a space after the colon but not before, e.g. `x: Int`, and `Circle: Shape`.
- + Define multiple variables and structures on a single line if they share a common purpose / context.
+ + Align the multiple variables and structures declaration.
  + Indent getter and setter definitions and property observers.
- + Don't add modifiers such as `internal` when they're already the default. Similarly, don't repeat the access modifier when overriding a method.
+ + Separate variable declarations with getter and setter.
+ + Note the rounded brackets.
 
 
 ### Use of Self
@@ -327,76 +331,97 @@ Use `self` when required to differentiate between property names and arguments i
 
 ```swift
 class BoardLocation {
-  let row: Int, column: Int
+    let row: Int, column: Int
 
-  init(row: Int, column: Int) {
-    self.row = row
-    self.column = column
-    
-    let closure = {
-      println(self.row)
+    init(row: Int, column: Int) {
+        self.row = row
+        self.column = column
+
+        let closure = {
+            println(self.row)
+        }
     }
-  }
 }
 ```
 
 ### Protocol Conformance
 
-When adding protocol conformance to a class, prefer adding a separate class extension for the protocol methods. This keeps the related methods grouped together with the protocol and can simplify instructions to add a protocol to a class with its associated methods.
+
+In Swift, protocols can be used, but it's better appreciated to use blocks.
+In the end they are the very same thing: a pointer to a function owned by an object (a specific object or self).
+
+
+The blocks are better as they are easier to read, easier to implement and to understand.
+Moreover they are better integrated in the language as they are in Obj-C.
+It is always possible to remove/replace a logic done with **custom** delegates.
+
+
+When adding native protocol conformance to a class, prefer adding a separate class extension for the protocol methods.
+This keeps the related methods grouped together with the protocol and can simplify instructions to add a protocol to a class with its associated methods.
 
 Also, don't forget the `// MARK: -` comment to keep things well-organized!
 
 **Preferred:**
 ```swift
 class MyViewcontroller: UIViewController {
-  // class stuff here
+    // class stuff here
 }
 
 // MARK: - UITableViewDataSource
 extension MyViewcontroller: UITableViewDataSource {
-  // table view data source methods
+    // table view data source methods
 }
 
 // MARK: - UIScrollViewDelegate
 extension MyViewcontroller: UIScrollViewDelegate {
-  // scroll view delegate methods
+    // scroll view delegate methods
 }
 ```
 
 **Not Preferred:**
 ```swift
 class MyViewcontroller: UIViewController, UITableViewDataSource, UIScrollViewDelegate {
-  // all methods
+    // all methods
 }
 ```
 
 ### Computed Properties
 
 For conciseness, if a computed property is read-only, omit the get clause. The get clause is required only when a set clause is provided.
+Please note the rounded brackets.
 
 **Preferred:**
 ```swift
 var diameter: Double {
-  return radius * 2
+    return (radius * 2)
 }
 ```
 
 **Not Preferred:**
 ```swift
 var diameter: Double {
-  get {
-    return radius * 2
-  }
+    get {
+      return radius * 2
+    }
 }
 ```
 
 ## Function Declarations
 
+Be extremely careful on the function names: they have to be very explicit on what they do.
+The other way around, the code should match the function name (the name should tell what the function does).
+It is super easy to keep coding and changing your code, and in the end have a function doing something completely different than what its name says.
+
+
+Other point, a function should not exceed 40 lines. This drastic limit forces the developer to think twice about the code and its structure.
+A better encapsulation will help you with this rule.
+
+
 Keep short function declarations on one line including the opening brace:
 
 ```swift
 func reticulateSplines(spline: [Double]) -> Bool {
-  // reticulate code goes here
+    // reticulate code goes here
 }
 ```
 
@@ -404,11 +429,10 @@ For functions with long signatures, add line breaks at appropriate points and ad
 
 ```swift
 func reticulateSplines(spline: [Double], adjustmentFactor: Double,
-    translateConstant: Int, comment: String) -> Bool {
-  // reticulate code goes here
+        translateConstant: Int, comment: String) -> Bool {
+    // reticulate code goes here
 }
 ```
-
 
 ## Closure Expressions
 
@@ -444,11 +468,21 @@ UIView.animateWithDuration(1.0,
 }
 ```
 
-For single-expression closures where the context is clear, use implicit returns:
+For single-expression closures where the context is clear, do not use implicit returns.
+The code as to be as self explained as possible.
+Please also note the rounded brackets.
 
+**Preferred:**
+```swift
+attendeeList.sort { (a, b) in
+    return (a > b)
+}
+```
+
+**Not Preferred:**
 ```swift
 attendeeList.sort { a, b in
-  a > b
+    a > b
 }
 ```
 
@@ -480,8 +514,8 @@ Constants are defined using the `let` keyword, and variables with the `var` keyw
 
 * The constants should be in one single constants files called Constants.swift or Constants.h. Of course this file should also be prefix depending on your project.
 * As said earlier, the more your file is structured the better: Create structures, add comments and pragma marks.
-* Try to avoid single and anarchic constants without logic or explanation around.
-* Here, what `constant` means is all strings/numbers that are fixed and can't be dynamically changed. 
+* Try to avoid single and anarchic constants without logic or explanation around. In such case they are just magic numbers hidden behind a constant.
+* The term `constant` refers to all strings/numbers that are fixed and can't be dynamically changed. 
 They are used for database keys, API endpoints and response codes, user default keys, segue identifiers, etc. Actually all values that should not change. But if they do, they are all created in one single file and the change will take mostly 5 seconds.
 
 **Preferred:**
@@ -586,7 +620,7 @@ Use optional binding when it's more convenient to unwrap once and perform multip
 
 ```swift
 if let textContainer = self.textContainer {
-  // do many things with textContainer
+    // do many things with textContainer
 }
 ```
 
@@ -601,7 +635,7 @@ var volume: Double?
 
 // later on...
 if let subview = subview, volume = volume {
-  // do something with unwrapped subview and volume
+    // do something with unwrapped subview and volume
 }
 ```
 
@@ -611,9 +645,9 @@ var optionalSubview: UIView?
 var volume: Double?
 
 if let unwrappedSubview = optionalSubview {
-  if let realVolume = volume {
-    // do something with unwrappedSubview and realVolume
-  }
+    if let realVolume = volume {
+        // do something with unwrappedSubview and realVolume
+    }
 }
 ```
 
@@ -683,32 +717,32 @@ Prefer the `for-in` style of `for` loop over the `for-condition-increment` style
 **Preferred:**
 ```swift
 for _ in 0..<3 {
-  println("Hello three times")
+    println("Hello three times")
 }
 
 for (index, person) in enumerate(attendeeList) {
-  println("\(person) is at position #\(index)")
+    println("\(person) is at position #\(index)")
 }
 ```
 
 **Not Preferred:**
 ```swift
 for var i = 0; i < 3; i++ {
-  println("Hello three times")
+    println("Hello three times")
 }
 
 for var i = 0; i < attendeeList.count; i++ {
-  let person = attendeeList[i]
-  println("\(person) is at position #\(i)")
+    let person = attendeeList[i]
+    println("\(person) is at position #\(i)")
 }
 ```
 
 
 ## Semicolons
 
-Swift does not require a semicolon after each statement in your code. They are only required if you wish to combine multiple statements on a single line.
+Swift does not require a semicolon after each statement in your code. They are only required if you wish to combine multiple statements on a single line, which of course should be avoided. 
 
-Do not write multiple statements on a single line separated with semicolons.
+Just do not write multiple statements on a single line separated with semicolons.
 
 The only exception to this rule is the `for-conditional-increment` construct, which requires semicolons. However, alternative `for-in` constructs should be used where possible.
 
@@ -738,77 +772,12 @@ let color = "red"
 let colour = "red"
 ```
 
-## Copyright Statement
-
-The following copyright statement should be included at the top of every source
-file:
-
-    /*
-     * Copyright (c) 2015 Razeware LLC
-     * 
-     * Permission is hereby granted, free of charge, to any person obtaining a copy
-     * of this software and associated documentation files (the "Software"), to deal
-     * in the Software without restriction, including without limitation the rights
-     * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-     * copies of the Software, and to permit persons to whom the Software is
-     * furnished to do so, subject to the following conditions:
-     * 
-     * The above copyright notice and this permission notice shall be included in
-     * all copies or substantial portions of the Software.
-     * 
-     * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-     * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-     * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-     * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-     * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-     * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-     * THE SOFTWARE.
-     */
-
-## Smiley Face
-
-Smiley faces are a very prominent style feature of the raywenderlich.com site! It is very important to have the correct smile signifying the immense amount of happiness and excitement for the coding topic. The closing square bracket `]` is used because it represents the largest smile able to be captured using ASCII art. A closing parenthesis `)` creates a half-hearted smile, and thus is not preferred.
-
-**Preferred:**
-```
-:]
-```
-
-**Not Preferred:**
-```
-:)
-```  
-
-
 ## Credits
 
-This style guide is a collaborative effort from the most stylish raywenderlich.com team members: 
+This style guide is a fork from the collaborative effort from the most stylish raywenderlich.com team members.
+Please see the full list on the [orginal page](https://github.com/raywenderlich/swift-style-guide#credits).
 
-* [Jawwad Ahmad](https://github.com/jawwad)
-* [Soheil Moayedi Azarpour](https://github.com/moayes)
-* [Scott Berrevoets](https://github.com/Scott90)
-* [Eric Cerney](https://github.com/ecerney)
-* [Sam Davies](https://github.com/sammyd)
-* [Evan Dekhayser](https://github.com/edekhayser)
-* [Jean-Pierre Distler](https://github.com/pdistler)
-* [Colin Eberhardt](https://github.com/ColinEberhardt)
-* [Greg Heo](https://github.com/gregheo)
-* [Matthijs Hollemans](https://github.com/hollance)
-* [Erik Kerber](https://github.com/eskerber)
-* [Christopher LaPollo](https://github.com/elephantronic)
-* [Ben Morrow](https://github.com/benmorrow)
-* [Andy Pereira](https://github.com/macandyp)
-* [Ryan Nystrom](https://github.com/rnystrom)
-* [Cesare Rocchi](https://github.com/funkyboy)
-* [Ellen Shapiro](https://github.com/designatednerd)
-* [Marin Todorov](https://github.com/icanzilb)
-* [Chris Wagner](https://github.com/cwagdev)
-* [Ray Wenderlich](https://github.com/rwenderlich)
-* [Jack Wu](https://github.com/jackwu95)
-
-Hat tip to [Nicholas Waynik](https://github.com/ndubbs) and the [Objective-C Style Guide](https://github.com/raywenderlich/objective-c-style-guide) team!
-
-We also drew inspiration from Apple’s reference material on Swift:
+## See Also
 
 * [The Swift Programming Language](https://developer.apple.com/library/prerelease/ios/documentation/swift/conceptual/swift_programming_language/index.html)
 * [Using Swift with Cocoa and Objective-C](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html)
