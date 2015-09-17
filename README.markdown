@@ -454,24 +454,44 @@ The example above demonstrates the following style guidelines:
 
 ### Use of Self
 
-For conciseness, avoid using `self` since Swift does not require it to access an object's properties or invoke its methods.
+Even though Swift does not require the usage of `self`, a developer should force himself use it everywhere he can.
+It is then easier for any developer to understand where does a value come from or where the current execution process is going.
 
-Use `self` when required to differentiate between property names and arguments in initializers, and when referencing properties in closure expressions (as required by the compiler):
 
+**Preferred:**
 ```swift
-class BoardLocation {
-    let row: Int, column: Int
+class MyViewController              : UIViewController {
 
-    init(row: Int, column: Int) {
-        self.row = row
-        self.column = column
+    @IBOutlet weak var titleLabel   : Int?
 
-        let closure = {
-            println(self.row)
-        }
+    func setTitle(text: String) {
+        self.titleLabel?.text = text
+        self.updateUI()
+    }
+
+    func updateUI() {
+        self.titleLabel?.backgroundColor = UIColor.clearColor()
     }
 }
 ```
+
+**Not Preferred:**
+```swift
+class MyViewController              : UIViewController {
+
+    @IBOutlet weak var titleLabel   : Int?
+
+    func setTitle(text: String) {
+        titleLabel?.text = text
+        updateUI()
+    }
+
+    func updateUI() {
+        titleLabel?.backgroundColor = UIColor.clearColor()
+    }
+}
+```
+
 
 ### Protocol Conformance
 
@@ -1034,5 +1054,4 @@ Please see the full list on the [orginal page](https://github.com/raywenderlich/
  * Example within a for loop
 * Swift 1.2 `if let` with one single value and with multiple ones.
  * Example with `where` and first conditions
-* Use `self.` everywhere.
 * Classes vc Structs: redesign example
