@@ -325,7 +325,7 @@ class MyViewController : UIViewController {
 **Not Preferred:**
 ```swift
 class MyViewController : UIViewController {
-// MARK actions
+// MARK: - Actions
     func superMethod() {
     }
 }
@@ -364,11 +364,13 @@ class MyViewController                      : UIViewController {
 }
 ```
 
+Please note the differences between the `// MARK: - `.
+
 **Not Preferred:**
 ```swift
 class MyViewController : UIViewController {
 
-// MARK Outlets
+//MARK Outlets
 
     @IBOutlet var lettersGameButton : UIButton?
     @IBOutlet var headBodyLegsGameButton : UIButton?
@@ -376,7 +378,7 @@ class MyViewController : UIViewController {
     var destinationType : FFGameType?
     let transitionManager = FFTransitionManager()
 
-// MARK View Lifecycle
+//MARK View Lifecycle
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -388,7 +390,6 @@ class MyViewController : UIViewController {
 }
 ```
 
-
 ## Classes and Structures
 
 ### Which one to use?
@@ -399,20 +400,24 @@ Classes have [reference semantics](https://developer.apple.com/library/mac/docum
 
 Sometimes, things should be structs but need to conform to `AnyObject` or are historically modeled as classes already (`NSDate`, `NSSet`). Try to follow these guidelines as closely as possible.
 
+### Class attributes
+
+TODO: as optional or always with a default value.
+
 ### Example definition
 
 Here's an example of a well-styled class definition:
 
 ```swift
-class circle      : Shape {
+class Circle      : Shape {
 
-    var x         : Int
-    var y         : Int
-    var radius    : Double
+    var x         : Int = 0
+    var y         : Int = 0
+    var radius    : Double?
 
     var diameter  : Double {
         get {
-            return (radius * 2)
+            return ((self.radius ?? 0) * 2)
         }
         set {
             radius = (newValue * 0.5)
@@ -426,31 +431,44 @@ class circle      : Shape {
     }
 
     convenience init(x: Int, y: Int, diameter: Double) {
-        self.init(x: x, y: y, radius: diameter / 2)
+        self.init(x: x, y: y, radius: diameter * 0.5)
     }
 
     func describe() -> String {
-        return "I am a circle at \(centerString()) with an area of \(computeArea())"
+        return "I am a circle at \(self.centerString()) with an area of \(self.computeArea())"
     }
 
     override func computeArea() -> Double {
+        let radius = (self.radius ?? 0)
         return (M_PI * radius * radius)
     }
 
+    // MARK: - Private
+
     private func centerString() -> String {
-        return "(\(x),\(y))"
+        return "(\(self.x),\(self.y))"
     }
 }
 ```
 
-The example above demonstrates the following style guidelines:
+When executing:
+```swift
+let circle = Circle(x: 2, y: 2, radius: 10)
+println(circle.describe())
+// I am a circle at (2,2) with an area of 314.159265358979
+```
 
- + Specify types for properties, variables, constants, argument declarations and other statements with a space after the colon but not before, e.g. `x: Int`, and `Circle: Shape`.
- + Align the multiple variables and structures declaration.
- + Indent getter and setter definitions and property observers.
- + Separate variable declarations with getter and setter.
- + Note the rounded brackets.
+The example above demonstrates the following **important** style guidelines:
 
+* Specify types for properties, variables, constants, argument declarations and other statements with a spaces around the colon, `x : Int`, and `Circle : Shape`. The colons have to be aligned with each others.
+* Align the multiple variable and structure declarations.
+* Indent getter and setter definitions and property observers.
+* Separate variable declarations with getter and setter.
+* Note the rounded brackets.
+* Note the separator `// MARK: -` and its indentation.
+* `self.` is always used.
+* Class attributes as optionals or with default values.
+* Show an example of `convenience init`.
 
 ### Use of Self
 
@@ -542,7 +560,7 @@ Please note the rounded brackets.
 **Preferred:**
 ```swift
 var diameter: Double {
-    return (radius * 2)
+    return (self.radius * 2)
 }
 ```
 
@@ -1102,4 +1120,3 @@ Please see the full list on the [orginal page](https://github.com/raywenderlich/
  * Example within a for loop
 * Swift 1.2 `if let` with one single value and with multiple ones.
  * Example with `where` and first conditions
-* Classes vc Structs: redesign example
