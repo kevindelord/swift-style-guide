@@ -13,7 +13,6 @@ Of course, efficacity, readability, and simplicity are the most important points
   * [Enumerations](#enumerations)
     * [Functions](#functions)
     * [Switch Cases](#switch-cases)
-  * [Class Prefixes](#class-prefixes)
 * [Spacing](#spacing)
 * [Rounded Brackets](#rounded-brackets)
 * [Ternary operator](#ternary-operator)
@@ -174,17 +173,6 @@ static func canCall(device: Device) -> Bool {
     }
 }
 ```
-
-### Class Prefixes
-
-Swift types are automatically namespaced by the module that contains them and you should not add a class prefix. If two names from different modules collide you can disambiguate by prefixing the type name with the module name.
-
-```swift
-import SomeModule
-
-let myClass = MyModule.UsefulClass()
-```
-
 
 ## Spacing
 
