@@ -23,7 +23,7 @@ Of course, efficacity, readability, and simplicity are the most important points
   * [Protocol Conformance](#protocol-conformance)
   * [Computed Properties](#computed-properties)
 * [Function Declarations](#function-declarations)
-* [Closure Expressions](#closure-expressions)
+* [Blocks](#blocks)
 * [Types](#types)
   * [Constants](#constants)
     * [Magic Numbers](#magic-numbers)
@@ -583,55 +583,102 @@ func reticulateSplines(spline: [Double], adjustmentFactor: Double,
 }
 ```
 
-## Closure Expressions
+## Blocks
 
-Use trailing closure syntax only if there's a single closure expression parameter at the end of the argument list. Give the closure parameters descriptive names.
+Blocks or closure or blocks are one of the most complicated subject when dealing with guidelines in Swift.
+The code needs to be clear, very easy to read and understandable in seconds.
+
+Here are some very specific rules:
+
+* Never write the block name if there is just one block in a function.
+* Never write the parameters of the block if there is none.
 
 **Preferred:**
 ```swift
 UIView.animateWithDuration(1.0) {
-  self.myView.alpha = 0
-}
-
-UIView.animateWithDuration(1.0,
-  animations: {
     self.myView.alpha = 0
-  },
-  completion: { finished in
-    self.myView.removeFromSuperview()
-  }
+}
+```
+
+**Not Preferred:**
+```swift
+UIView.animateWithDuration(1.0, animations: { () -> Void in
+    self.myView.alpha = 0
+}
+```
+
+* Always declare the parameters of the block inside brackets.
+* Always write all block names if there are more than one block.
+* Always specify the type of each parameters of the block if it is coming from a function. You can **not** be certain of the type.
+* Always write the full names of the parameters of a block.
+
+**Preferred:**
+```swift
+UIView.animateWithDuration(1.0, animations: {
+        self.myView.alpha = 0
+    }, completion: { (finished: Bool) in
+        self.myView.removeFromSuperview()
+    }
 )
 ```
 
 **Not Preferred:**
 ```swift
 UIView.animateWithDuration(1.0, animations: {
-  self.myView.alpha = 0
-})
-
-UIView.animateWithDuration(1.0,
-  animations: {
     self.myView.alpha = 0
-  }) { f in
+  }) { f in () -> Void in
     self.myView.removeFromSuperview()
 }
 ```
 
-For single-expression closures where the context is clear, do not use implicit returns.
+* For very specific context, when you can be sure of the type, you can shorten the syntax and remove the parameter types.
+* When returning a value, always use explicit returns.
+
 The code as to be as self explained as possible.
 Please also note the rounded brackets.
 
 **Preferred:**
 ```swift
-attendeeList.sort { (a, b) in
+var list = [1, 4, 2, 3]
+list.sort { (a, b) -> Bool in
     return (a > b)
 }
 ```
 
 **Not Preferred:**
 ```swift
-attendeeList.sort { a, b in
+var list = [1, 4, 2, 3]
+list.sort { a, b in
     a > b
+}
+```
+
+* When the context is very very easy clear you can also use the shortcuts `$0` and `$1`
+
+Please note the rounded brackets.
+
+```swift
+var list = [1, 4, 2, 3]
+list.sort { ($0 > $1) }
+```
+
+* When declaring a function that takes a block as parameter, **always declare the block as optional**.
+
+**Preferred:**
+```swift
+func myFunction(block: (() -> Void)?) {
+    if (something == true) {
+        block?()
+    }
+}
+```
+
+**Not Preferred:**
+```swift
+func myFunction(block: () -> Void) {
+    if (something == true) {
+        block()
+    }
 }
 ```
 
@@ -1049,6 +1096,7 @@ Please see the full list on the [orginal page](https://github.com/raywenderlich/
 
 ## TODO
 
+* Comparaison always against a type: `== true`
 * Class attributes as optionals
 * Optionals with the `??` operator
  * Example within a for loop
