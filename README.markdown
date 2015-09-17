@@ -866,10 +866,10 @@ Prefer compact code and let the compiler infer the type for a constant or variab
 
 **Preferred:**
 ```swift
-let message = "Click the button"
+let message       = "Click the button"
 let currentBounds = computeViewBounds()
-var names = [String]()
-let maximumWidth: CGFloat = 106.5
+var names         = [String]()
+let maximumWidth  : CGFloat = 106.5
 ```
 
 **Not Preferred:**
