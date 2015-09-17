@@ -8,12 +8,13 @@ Of course, efficacity, readability, and simplicity are the most important points
 
 ## Table of Contents
 
+* [Spacing](#spacing)
+* [Comparaison](#comparaison)
 * [Naming](#naming)
   * [Structures](#structures)
   * [Enumerations](#enumerations)
     * [Functions](#functions)
     * [Switch Cases](#switch-cases)
-* [Spacing](#spacing)
 * [Rounded Brackets](#rounded-brackets)
 * [Ternary operator](#ternary-operator)
 * [Comments](#comments)
@@ -40,6 +41,92 @@ Of course, efficacity, readability, and simplicity are the most important points
 * [Language](#language)
 * [Credits](#credits)
 
+## Spacing
+
+* Indent using tabs equivalent to 4 spaces, and indent by inserting tab characters. Be sure to set xcode like this:
+
+  ![Xcode indent settings](screens/indentation.png)
+
+* Also think about automatically trim the whitespaces:
+
+  ![Xcode trim whitespaces](screens/trim-whitespaces.png)
+
+* Tip: You can re-indent by selecting some code (or ⌘A to select all) and then Control-I (or Editor\Structure\Re-Indent in the menu). Some of the Xcode template code will have 4-space tabs hard coded, so this is a good way to fix that.
+
+* There should be exactly one blank line between methods to aid in visual clarity and organization. Whitespace within methods should separate functionality, but having too many sections in a method often means you should **refactor into several methods**.
+
+**Preferred:**
+```swift
+func firstMethod() {
+    // Explanation
+    if (a == b) {
+        // Do something
+    }
+}
+
+func secondMethod() {
+    // Do something
+}
+```
+
+**Not Preferred:**
+```swift
+func firstMethod() {
+    if (a == b) { /* Do something */ }
+}
+func secondMethod() {
+    // Do something
+}
+```
+
+## Comparaison
+
+* For historical reason and for more readability, always specify the value against a value is compared to.
+
+In Swift the type, that a value can be verify against, is uncertain.
+An object is sometimes an optional or not, it might be able to be checked against nil or not, maybe a against a boolean, etc.
+
+For this very specific reason, one should always specify what's after the comparaison operator: `==`, '!=', etc.
+
+**Preferred:**
+```swift
+if (finished == true) {
+    // do something
+}
+```
+
+**Not Preferred:**
+```swift
+if (finished == true) {
+    // do something
+}
+```
+
+**NOTE:** For an optional, prefer to use the operator `??` to compare the object against `nil`.
+
+* Braces for `if`/`else`/`switch`/`while` etc. always open and close on the same line as the statement.
+
+**Preferred:**
+```swift
+if (user.isHappy == true) {
+    // Do something
+    // You can even add an empty line before the end of the block
+
+} else {
+    // Do something else
+}
+```
+
+**Not Preferred:**
+```swift
+if user.isHappy
+{
+  // Do something
+}
+else {
+  // Do something else
+}
+```
 
 ## Naming
 
@@ -173,65 +260,6 @@ static func canCall(device: Device) -> Bool {
     case .iPhone: return true
     default: return false
     }
-}
-```
-
-## Spacing
-
-* Indent using tabs equivalent to 4 spaces, and indent by inserting tab characters. Be sure to set xcode like this:
-
-  ![Xcode indent settings](screens/indentation.png)
-
-* Also think about automatically trim the whitespaces:
-
-  ![Xcode trim whitespaces](screens/trim-whitespaces.png)
-
-* Method braces and other braces (`if`/`else`/`switch`/`while` etc.) always open on the same line as the statement but close on a new line.
-* Tip: You can re-indent by selecting some code (or ⌘A to select all) and then Control-I (or Editor\Structure\Re-Indent in the menu). Some of the Xcode template code will have 4-space tabs hard coded, so this is a good way to fix that.
-
-**Preferred:**
-```swift
-if (user.isHappy == true) {
-    // Do something
-} else {
-    // Do something else
-}
-```
-
-**Not Preferred:**
-```swift
-if user.isHappy
-{
-  // Do something
-}
-else {
-  // Do something else
-}
-```
-
-* There should be exactly one blank line between methods to aid in visual clarity and organization. Whitespace within methods should separate functionality, but having too many sections in a method often means you should **refactor into several methods**.
-
-**Preferred:**
-```swift
-func firstMethod() {
-    // Explanation
-    if (a == b) {
-        // Do something
-    }
-}
-
-func secondMethod() {
-    // Do something
-}
-```
-
-**Not Preferred:**
-```swift
-func firstMethod() {
-  if (a == b) { /* Do something */ }
-}
-func secondMethod() {
-  // Do something
 }
 ```
 
@@ -1113,7 +1141,6 @@ Please see the full list on the [orginal page](https://github.com/raywenderlich/
 
 ## TODO
 
-* Comparaison always against a type: `== true`
 * Class attributes as optionals
 * Optionals with the `??` operator
   * Example within a for loop
