@@ -697,9 +697,9 @@ Prefer the shortcut versions of type declarations over the full generics syntax.
 
 **Preferred:**
 ```swift
-var deviceModels: [String]
-var employees: [Int: String]
-var faxNumber: Int?
+var deviceModels  : [String]
+var employees     : [Int: String]
+var faxNumber     : Int?
 ```
 
 **Not Preferred:**
