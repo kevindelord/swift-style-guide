@@ -12,6 +12,7 @@ Of course, efficacity, readability, and simplicity are the most important points
   * [Enumerations](#enumerations)
   * [Class Prefixes](#class-prefixes)
 * [Spacing](#spacing)
+* [Magic Numbers](#magic-numbers)
 * [Comments](#comments)
 * [Code alignement and structure](#code-alignement-and-structure)
 * [Classes and Structures](#classes-and-structures)
@@ -174,7 +175,51 @@ func secondMethod() {
 
 ## Magic Numbers
 
+No magic numbers in any case, by any chance. It has to be or dynamic from an outlet, or calculated.
 
+If, somehow, it is absolutely NOT possible, then create a constant in the constants file inside a structure.
+
+The following example show how to create such structures. 
+The more your constants are *structured* the better.
+
+PS: Note how everything is aligned.
+
+**Preferred:**
+```swift
+// Constants.swift file
+
+// MARK: - Games
+
+struct GameConstants {
+
+    // Informative comment about the type of constant
+    static let ScrambleAnimationDelay   = 0.6
+
+    // Animation Duration for pop up in [...]
+    struct AnimationDuration {
+        static let FadeOut              = 0.3
+        static let FadeIn               = 0.5
+    }
+
+    // Top margin for view XY. Can't be dynamic because of [...]
+    static let TopViewLeftMargin        = 20
+}
+
+// ViewController.swift file
+
+UIView.animateWithDuration(GameConstants.AnimationDuration.FadeIn) {
+    self.myView.alpha = 0
+}
+```
+
+**Not Preferred:**
+```swift
+// ViewController.swift file
+
+UIView.animateWithDuration(0.5, animations: {
+    self.myView.alpha = 0
+})
+```
 
 ## Comments
 
