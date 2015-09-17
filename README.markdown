@@ -872,7 +872,7 @@ Those actually normalize the result before returning it.
 
 **Preferred:**
 ```swift
-let bounds      = CGRect(x: 40, y: 20, width: 120, height: 80)
+let bounds = CGRect(x: 40, y: 20, width: 120, height: 80)
 
 let x = CGRectGetMinX(bounds)
 let y = CGRectGetMinY(bounds)
@@ -1004,3 +1004,15 @@ Please see the full list on the [orginal page](https://github.com/raywenderlich/
 * [The Swift Programming Language](https://developer.apple.com/library/prerelease/ios/documentation/swift/conceptual/swift_programming_language/index.html)
 * [Using Swift with Cocoa and Objective-C](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html)
 * [Swift Standard Library Reference](https://developer.apple.com/library/prerelease/ios/documentation/General/Reference/SwiftStandardLibraryReference/index.html)
+
+## TODO
+
+* Defines in one single file to control the code
+* Prefix files and classes
+* No hard coded keys/values
+* Optionals with the `??` operator
+ * Example within a for loop
+* Swift 1.2 `if let` with one single value and with multiple ones.
+ * Example with `where` and first conditions
+* Use `self.` everywhere.
+* Classes vc Structs: redesign example
