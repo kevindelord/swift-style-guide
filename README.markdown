@@ -10,6 +10,8 @@ Of course, efficacity, readability, and simplicity are the most important points
 
 * [Spacing](#spacing)
 * [Comparaison](#comparaison)
+  * [Explicit Type](#explicit-type)
+  * [Brackets Position](#brackets-position)
 * [Naming](#naming)
   * [Structures](#structures)
   * [Enumerations](#enumerations)
@@ -81,12 +83,14 @@ func secondMethod() {
 
 ## Comparaison
 
-* For historical reason and for more readability, always specify the value against a value is compared to.
+### Explicit Type
+
+* Always specify the type to compared a value: add `== type` within your if statements.
 
 In Swift the type, that a value can be verify against, is uncertain.
 An object is sometimes an optional or not, it might be able to be checked against nil or not, maybe a against a boolean, etc.
 
-For this very specific reason, one should always specify what's after the comparaison operator: `==`, '!=', etc.
+For this very specific reason, one should always specify what's after the comparaison operator: `==`, `!=, etc.
 
 **Preferred:**
 ```swift
@@ -97,12 +101,14 @@ if (finished == true) {
 
 **Not Preferred:**
 ```swift
-if (finished == true) {
+if (finished) {
     // do something
 }
 ```
 
 **NOTE:** For an optional, prefer to use the operator `??` to compare the object against `nil`.
+
+### Brackets Position
 
 * Braces for `if`/`else`/`switch`/`while` etc. always open and close on the same line as the statement.
 
