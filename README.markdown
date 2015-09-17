@@ -15,7 +15,6 @@ Of course, efficacity, readability, and simplicity are the most important points
     * [Switch Cases](#switch-cases)
   * [Class Prefixes](#class-prefixes)
 * [Spacing](#spacing)
-* [Magic Numbers](#magic-numbers)
 * [Rounded Brackets](#rounded-brackets)
 * [Ternary operator](#ternary-operator)
 * [Comments](#comments)
@@ -28,6 +27,8 @@ Of course, efficacity, readability, and simplicity are the most important points
 * [Closure Expressions](#closure-expressions)
 * [Types](#types)
   * [Constants](#constants)
+    * [Magic Numbers](#magic-numbers)
+    * [Hard Coded Values](#hard-coded-values)
   * [Optionals](#optionals)
   * [Struct Initializers](#struct-initializers)
     * [Accessing CGRect](#accessing-cgrect)
@@ -242,54 +243,6 @@ func firstMethod() {
 func secondMethod() {
   // Do something
 }
-```
-
-## Magic Numbers
-
-No magic numbers in any case, by any chance. It has to be or dynamic from an outlet, or calculated.
-
-If, somehow, it is absolutely NOT possible, then create a constant in the constants file inside a structure.
-
-The following example show how to create such structures. 
-The more your constants are *structured* the better.
-
-PS: Note how everything is aligned.
-
-**Preferred:**
-```swift
-// Constants.swift file
-
-// MARK: - Games
-
-struct GameConstants {
-
-    // Informative comment about the type of constant
-    static let ScrambleAnimationDelay   = 0.6
-
-    // Animation Duration for pop up in [...]
-    struct AnimationDuration {
-        static let FadeOut              = 0.3
-        static let FadeIn               = 0.5
-    }
-
-    // Top margin for view XY. Can't be dynamic because of [...]
-    static let TopViewLeftMargin        = 20
-}
-
-// ViewController.swift file
-
-UIView.animateWithDuration(GameConstants.AnimationDuration.FadeIn) {
-    self.myView.alpha = 0
-}
-```
-
-**Not Preferred:**
-```swift
-// ViewController.swift file
-
-UIView.animateWithDuration(0.5, animations: {
-    self.myView.alpha = 0
-})
 ```
 
 ## Rounded Brackets
@@ -700,11 +653,14 @@ Constants are defined using the `let` keyword, and variables with the `var` keyw
 
 #### Global Constants
 
-* The constants should be in one single constants files called Constants.swift or Constants.h. Of course this file should also be prefix depending on your project.
-* As said earlier, the more your file is structured the better: Create structures, add comments and pragma marks.
+* The constants should be in one single constants files.
+* The more this file is structured the better: Create structures, add comments and pragma marks.
 * Try to avoid single and anarchic constants without logic or explanation around. In such case they are just magic numbers hidden behind a constant.
 * The term `constant` refers to all strings/numbers that are fixed and can't be dynamically changed. 
-They are used for database keys, API endpoints and response codes, user default keys, segue identifiers, etc. Actually all values that should not change. But if they do, they are all created in one single file and the change will take mostly 5 seconds.
+
+
+Constants are used for database keys, API endpoints and response codes, user default keys, segue identifiers, etc.
+Actually all values that should not change. But if they do, they are all created in one single file and the change will take mostly 5 seconds.
 
 **Preferred:**
 ```swift
@@ -790,6 +746,84 @@ let DB_VALUE = "value"
 let API_FORMULA = "formula"
 let API_PDF = "pdf"
 let API_PRODUCTID = "productid"
+```
+
+#### Magic Numbers
+
+No magic numbers in any case, by any chance. It has to be dynamic, or from an IBOutlet, or calculated.
+
+If, somehow, it is absolutely NOT possible, then create a constant in the constants file inside a structure.
+
+The following example show how to create such structures. 
+The more your constants are *structured* the better.
+
+PS: Note how everything is aligned.
+
+**Preferred:**
+```swift
+// Constants.swift file
+
+// MARK: - Games
+
+struct GameConstants {
+
+    // Informative comment about the type of constant
+    static let ScrambleAnimationDelay   = 0.6
+
+    // Animation Duration for pop up in [...]
+    struct AnimationDuration {
+        static let FadeOut              = 0.3
+        static let FadeIn               = 0.5
+    }
+
+    // Top margin for view XY. Can't be dynamic because of [...]
+    static let TopViewLeftMargin        = 20
+}
+
+// ViewController.swift file
+
+UIView.animateWithDuration(GameConstants.AnimationDuration.FadeIn) {
+    self.myView.alpha = 0
+}
+```
+
+**Not Preferred:**
+```swift
+// ViewController.swift file
+
+UIView.animateWithDuration(0.5, animations: {
+    self.myView.alpha = 0
+})
+```
+
+#### Hard Coded Values
+
+Hard-coded values are an easy thing that every quick-and-dirty developer does. But it is the worst in terms of code quality and maintability.
+
+For example what about hard-coded keys to read from the database? or to parse a json?
+One might think that they will never change and everything will be *fine*.
+Big mistake! What about a typo in one key that cause a crash or random behavior ?
+
+How many hours of debug will be needed to find and correct the error?
+
+**Preferred:**
+```swift
+func predicateFromJSON(json: [String : AnyObject]) -> NSPredicate? {
+    if let value = json[JSON.Key.Id] as? Int {
+        return NSPredicate(format: "\(DB.Key.Id) ==[c] \(value)")
+    }
+    return nil
+}
+```
+
+**Not Preferred:**
+```swift
+func predicateFromJSON(json: [String : AnyObject]) -> NSPredicate? {
+    if let id = json["id"] as? Int {
+        return NSPredicate(format: "id ==[c] \(id)")
+    }
+    return nil
+}
 ```
 
 ### Optionals
@@ -1007,9 +1041,7 @@ Please see the full list on the [orginal page](https://github.com/raywenderlich/
 
 ## TODO
 
-* Defines in one single file to control the code
-* Prefix files and classes
-* No hard coded keys/values
+* Class attributes as optionals
 * Optionals with the `??` operator
  * Example within a for loop
 * Swift 1.2 `if let` with one single value and with multiple ones.
