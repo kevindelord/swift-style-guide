@@ -30,6 +30,7 @@ Of course, efficacity, readability, and simplicity are the most important points
   * [Constants](#constants)
   * [Optionals](#optionals)
   * [Struct Initializers](#struct-initializers)
+    * [Accessing CGRect](#accessing-cgrect)
   * [Type Inference](#type-inference)
   * [Syntactic Sugar](#syntactic-sugar)
 * [Control Flow](#control-flow)
@@ -859,6 +860,36 @@ let centerPoint = CGPointMake(96, 42)
 ```
 
 Prefer the struct-scope constants `CGRect.infiniteRect`, `CGRect.nullRect`, etc. over global constants `CGRectInfinite`, `CGRectNull`, etc. For existing variables, you can use the shorter `.zeroRect`.
+
+#### Accessing CGRect
+
+A CGRect's width and height can be negative, a developer should always the standard `CGRectGet` functions to access a value.
+Those actually normalize the result before returning it.
+
+> CGGeometry Reference defines structures for geometric primitives and functions that operate on them. The data structure CGPoint represents a point in a two-dimensional coordinate system. The data structure CGRect represents the location and dimensions of a rectangle. The data structure CGSize represents the dimensions of width and height.
+>
+> The height and width stored in a CGRect data structure can be negative. For example, a rectangle with an origin of [0.0, 0.0] and a size of [10.0,10.0] is exactly equivalent to a rectangle with an origin of [10.0, 10.0] and a size of [-10.0,-10.0]. Your application can standardize a rectangle—that is, ensure that the height and width are stored as positive values—by calling the CGRectStandardize function. All functions described in this reference that take CGRect data structures as inputs implicitly standardize those rectangles before calculating their results. **For this reason, your applications should avoid directly reading and writing the data stored in the CGRect data structure. Instead, use the functions described here to manipulate rectangles and to retrieve their characteristics.**
+
+**Preferred:**
+```swift
+let bounds      = CGRect(x: 40, y: 20, width: 120, height: 80)
+
+let x = CGRectGetMinX(bounds)
+let y = CGRectGetMinY(bounds)
+let w = CGRectGetWidth(bounds)
+let h = CGRectGetHeight(bounds)
+
+```
+
+**Not Preferred:**
+```swift
+let bounds = CGRectMake(40, 20, 120, 80)
+
+let x = bounds.origin.x
+let y = bounds.origin.y
+let w = bounds.size.width
+let h = bounds.size.heigth
+```
 
 ### Type Inference
 
