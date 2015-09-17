@@ -607,9 +607,9 @@ UIView.animateWithDuration(1.0, animations: { () -> Void in
 }
 ```
 
-* Always declare the parameters of the block inside brackets.
-* Always write all block names if there are more than one block.
-* Always specify the type of each parameters of the block if it is coming from a function. You can **not** be certain of the type.
+* Always declare the parameters of the block inside **rounded brackets**.
+* Always **write all block names** if there are more than one block.
+* Always **specify the type** of each parameters of the block if it is coming from a function. You can **not** be certain of the type.
 * Always write the full names of the parameters of a block.
 
 **Preferred:**
@@ -632,7 +632,7 @@ UIView.animateWithDuration(1.0, animations: {
 ```
 
 * For very specific context, when you can be sure of the type, you can shorten the syntax and remove the parameter types.
-* When returning a value, always use explicit returns.
+* When returning a value, always use **explicit returns**.
 
 The code as to be as self explained as possible.
 Please also note the rounded brackets.
