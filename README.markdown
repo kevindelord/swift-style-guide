@@ -3,7 +3,7 @@
 This guide is a fork from the [Official raywenderlich.com Swift Style Guide](https://github.com/raywenderlich/swift-style-guide).
 It has then be modified and improved to match different styles and add some missing parts.
 
-This style guide is different from othersn nonetheless the goals are the same: define a style, syntax and structure while coding in Swift.
+This style guide is different from others, nonetheless the goals are the same: define a style, syntax and structure while coding in Swift.
 Of course, efficacity, readability, and simplicity are the most important points.
 
 ## Table of Contents
@@ -1021,7 +1021,6 @@ var names: [String] = []
 
 **NOTE**: Following this guideline means picking descriptive names is even more important than before.
 
-
 ### Syntactic Sugar
 
 Prefer the shortcut versions of type declarations over the full generics syntax.
@@ -1039,7 +1038,6 @@ var deviceModels: Array<String>
 var employees: Dictionary<Int, String>
 var faxNumber: Optional<Int>
 ```
-
 
 ## Control Flow
 
@@ -1067,7 +1065,6 @@ for var i = 0; i < attendeeList.count; i++ {
     println("\(person) is at position #\(i)")
 }
 ```
-
 
 ## Semicolons
 
@@ -1119,6 +1116,8 @@ Please see the full list on the [orginal page](https://github.com/raywenderlich/
 * Comparaison always against a type: `== true`
 * Class attributes as optionals
 * Optionals with the `??` operator
- * Example within a for loop
-* Swift 1.2 `if let` with one single value and with multiple ones.
- * Example with `where` and first conditions
+  * Example within a for loop
+* Unwrapping Optionals:
+  * strictly forbidden with `!` or `as!`.
+  * Use `if let` with one single value or with multiple ones.
+  * Use `where` and/or first conditions to improve the code.
