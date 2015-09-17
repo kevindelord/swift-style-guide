@@ -438,11 +438,11 @@ var diameter: Double {
 ## Function Declarations
 
 Be extremely careful on the function names: they have to be very explicit on what they do.
-The other way around, the code should match the function name (the name should tell what the function does).
+The other way around, the code should __match the function name__ (the name should tell what the function does).
 It is super easy to keep coding and changing your code, and in the end have a function doing something completely different than what its name says.
 
 
-Other point, a function should not exceed 40 lines. This drastic limit forces the developer to think twice about the code and its structure.
+Other point, a function should __not exceed 40 lines__. This drastic limit forces the developer to think twice about the code and its structure.
 A better encapsulation will help you with this rule.
 
 
