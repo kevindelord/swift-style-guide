@@ -29,8 +29,6 @@ Of course, efficacity, readability, and simplicity are the most important points
 * [Control Flow](#control-flow)
 * [Semicolons](#semicolons)
 * [Language](#language)
-* [Copyright Statement](#copyright-statement)
-* [Smiley Face](#smiley-face)
 * [Credits](#credits)
 
 
@@ -170,11 +168,38 @@ func secondMethod() {
 }
 ```
 
+## Magic Numbers
+
+
+
 ## Comments
 
-When they are needed, use comments to explain **why** a particular piece of code does something. Comments must be kept up-to-date or deleted.
+A beautiful code is also a documented code. You should always try to explain and document the logic your are implementing.
 
-Avoid block comments inline with code, as the code should be as self-documenting as possible. *Exception: This does not apply to those comments used to generate documentation.*
+Even if for you it looks simple, and it surely does "now", but it won't in 5 months for another developer.
+
+Comments above the functions are, of course, well appreciated to explain what they are doing, the purpose and general informations about them.
+
+But inline comments are also very used to describe step-by-step what is going on inside the function.
+
+```swift
+/**
+ * Function to calculate top margin for the current view depending on [...]
+ */
+func calculateTopMargin() -> CGFloat {
+
+    // Get the top x origin
+    let separatorFrame = self.separator?.frame.x
+
+    // Calculate position depending on [...]
+    let finalPosition = (separatorFrame * 2) + self.defaultGap()
+
+    // Apply frame
+    self.popUpView?.frame = CGRectMake(...)
+}
+```
+
+For more information about the documenting your code on Swift, please read this [blog post](http://nshipster.com/swift-documentation/) on NSHipster.
 
 ## Code alignement and structure
 
@@ -630,8 +655,8 @@ For optional binding, shadow the original name when appropriate rather than usin
 
 **Preferred:**
 ```swift
-var subview: UIView?
-var volume: Double?
+var subview : UIView?
+var volume  : Double?
 
 // later on...
 if let subview = subview, volume = volume {
