@@ -19,7 +19,9 @@ Of course, efficacity, readability, and simplicity are the most important points
 * [Comments](#comments)
 * [Code alignement and structure](#code-alignement-and-structure)
 * [Classes and Structures](#classes-and-structures)
+  * [Class attributes](#class-attributes)
   * [Use of Self](#use-of-self)
+  * [Class definition](#class-definition)
   * [Protocol Conformance](#protocol-conformance)
   * [Computed Properties](#computed-properties)
 * [Function Declarations](#function-declarations)
@@ -404,7 +406,46 @@ Sometimes, things should be structs but need to conform to `AnyObject` or are hi
 
 TODO: as optional or always with a default value.
 
-### Example definition
+### Use of Self
+
+Even though Swift does not require the usage of `self`, a developer should force himself use it everywhere he can.
+It is then easier for any developer to understand where does a value come from or where the current execution process is going.
+
+**Preferred:**
+```swift
+class MyViewController              : UIViewController {
+
+    @IBOutlet weak var titleLabel   : Int?
+
+    func setTitle(text: String) {
+        self.titleLabel?.text = text
+        self.updateUI()
+    }
+
+    func updateUI() {
+        self.titleLabel?.backgroundColor = UIColor.clearColor()
+    }
+}
+```
+
+**Not Preferred:**
+```swift
+class MyViewController              : UIViewController {
+
+    @IBOutlet weak var titleLabel   : Int?
+
+    func setTitle(text: String) {
+        titleLabel?.text = text
+        updateUI()
+    }
+
+    func updateUI() {
+        titleLabel?.backgroundColor = UIColor.clearColor()
+    }
+}
+```
+
+### Class definition
 
 Here's an example of a well-styled class definition:
 
@@ -470,46 +511,6 @@ The example above demonstrates the following **important** style guidelines:
 * Class attributes as optionals or with default values.
 * Show an example of `convenience init`.
 
-### Use of Self
-
-Even though Swift does not require the usage of `self`, a developer should force himself use it everywhere he can.
-It is then easier for any developer to understand where does a value come from or where the current execution process is going.
-
-
-**Preferred:**
-```swift
-class MyViewController              : UIViewController {
-
-    @IBOutlet weak var titleLabel   : Int?
-
-    func setTitle(text: String) {
-        self.titleLabel?.text = text
-        self.updateUI()
-    }
-
-    func updateUI() {
-        self.titleLabel?.backgroundColor = UIColor.clearColor()
-    }
-}
-```
-
-**Not Preferred:**
-```swift
-class MyViewController              : UIViewController {
-
-    @IBOutlet weak var titleLabel   : Int?
-
-    func setTitle(text: String) {
-        titleLabel?.text = text
-        updateUI()
-    }
-
-    func updateUI() {
-        titleLabel?.backgroundColor = UIColor.clearColor()
-    }
-}
-```
-
 
 ### Protocol Conformance
 
@@ -555,6 +556,7 @@ class MyViewcontroller: UIViewController, UITableViewDataSource, UIScrollViewDel
 ### Computed Properties
 
 For conciseness, if a computed property is read-only, omit the get clause. The get clause is required only when a set clause is provided.
+
 Please note the rounded brackets.
 
 **Preferred:**
