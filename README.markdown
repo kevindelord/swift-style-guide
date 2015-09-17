@@ -16,6 +16,8 @@ Of course, efficacity, readability, and simplicity are the most important points
   * [Class Prefixes](#class-prefixes)
 * [Spacing](#spacing)
 * [Magic Numbers](#magic-numbers)
+* [Rounded Brackets](#rounded-brackets)
+* [Ternary operator](#ternary-operator)
 * [Comments](#comments)
 * [Code alignement and structure](#code-alignement-and-structure)
 * [Classes and Structures](#classes-and-structures)
@@ -288,6 +290,49 @@ UIView.animateWithDuration(0.5, animations: {
     self.myView.alpha = 0
 })
 ```
+
+## Rounded Brackets
+
+Here we go with another restrictive rule: the rounded brackets. For historical reason and for a better readability a developer should use rounded brackets mostly everywhere.
+It keeps the code more understandable and prevent easy mistakes.
+
+They should be used when comparing values, ternary operators, if else, while, ?? (swift), where (swift) and returning more than one single value.
+Here is a small example in Swift showing all cases:
+
+**Preferred:**
+```swift
+Int i = 0
+var message : String? = nil
+BOOL check = (true == false)  // comparison
+ 
+while (check == true) {
+    if (i >= 10) {  // if
+        check = false
+    } else if (i == 2) {
+        i++
+    }
+    message = (check == true ? "valid" : "invalid") // ternary
+    if let msg = message as? String where (i > 7) { // where
+        println(message)
+    }
+    i++
+}
+return (message ?? "message does not exist") // ??
+```
+
+## Ternary operator
+
+The ternary operator is amazing handful and pretty, but it can also be badly used and gives headaches to any developers.
+
+A developer should only use it with just one level of operation and with rounded brackets.
+Without those rules, a developer will code this:
+
+**Not Preferred:**
+```swift
+value = a == b ? b != c ? 4 : d == e ? 6 : 1 : 0
+```
+
+This is horrible to read, debug and understand.
 
 ## Comments
 
