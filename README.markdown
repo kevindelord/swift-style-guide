@@ -9,7 +9,10 @@ Of course, efficacity, readability, and simplicity are the most important points
 ## Table of Contents
 
 * [Naming](#naming)
+  * [Structures](#structures)
   * [Enumerations](#enumerations)
+    * [Functions](#functions)
+    * [Switch Cases](#switch-cases)
   * [Class Prefixes](#class-prefixes)
 * [Spacing](#spacing)
 * [Magic Numbers](#magic-numbers)
@@ -76,6 +79,18 @@ class Guideline {
     func upvoteBy(amount: Int) { ... }
 }
 ```
+### Structures
+
+Use UpperCamelCase for static values within structures:
+
+```swift
+struct Duration {
+    static let FadeOut      = 0.3
+    static let FadeIn       = 0.8
+
+    var someVariable        : AnyObject?
+}
+```
 
 ### Enumerations
 
@@ -90,16 +105,69 @@ enum Shape {
 }
 ```
 
-### Structures
-
-Use UpperCamelCase for static values within structures:
+Use a type to your enum only and only if you need the `rawValue` in your code.
+Without this, prefer simple enumeration without type.
 
 ```swift
-struct Duration {
-    static let FadeOut      = 0.3
-    static let FadeIn       = 0.8
+enum Device : Int {
+    case iPhone = 0
+    case iPad
+    case iPod
+}
+```
 
-    var someVariable        : AnyObject?
+#### Functions
+
+Use an enum instead of a struct when you need to iterate through all elements or if you need a variable type.
+
+Enumerations and structures became amazing in Swift as they can now have (static) functions.
+
+This is extremely usefull when you need data or logic depending on an enum value, for example a title of a segue.
+
+```swift
+enum Device : Int {
+    case iPhone = 0
+    case iPad
+    case iPod
+
+    func title() -> String {
+        switch self {
+        case .iPhone: return L("device.iPhone")
+        case .iPad: return L("device.iPad")
+        case .iPod: return L("device.iPod")
+        }
+    }
+
+    static func titleForId(id: Int) -> String? {
+        return Device(rawValue: id)?.title()
+    }
+}
+```
+
+#### Switch Cases
+
+One other very handy thing Xcode does is to warn the developer when a case is missing inside a `switch` when iterating through an enum.
+It does warn you only if you do not set any `default` case.
+
+It can be annoying to write multiple times the same case. But, next time a developer adds a case to the enum, Xcode will tell him where he might misses something.
+
+**Preferred:**
+```swift
+static func canCall(device: Device) -> Bool {
+    switch device {
+    case .iPhone:       return true
+    case .iPod, .iPad:  return false
+    }
+}
+```
+
+**Not Preferred:**
+```swift
+static func canCall(device: Device) -> Bool {
+    switch device {
+    case .iPhone: return true
+    default: return false
+    }
 }
 ```
 
@@ -433,7 +501,7 @@ It is always possible to remove/replace a logic done with **custom** delegates.
 When adding native protocol conformance to a class, prefer adding a separate class extension for the protocol methods.
 This keeps the related methods grouped together with the protocol and can simplify instructions to add a protocol to a class with its associated methods.
 
-Also, don't forget the `// MARK: -` comment to keep things well-organized!
+Also, do not forget the `// MARK: -` comment to keep things well-organized!
 
 **Preferred:**
 ```swift
