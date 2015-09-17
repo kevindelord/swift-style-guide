@@ -87,7 +87,7 @@ func secondMethod() {
 
 * Always specify the type to compared a value: add `== type` within your if statements.
 
-In Global Constants the type, that a value can be verify against, is uncertain.
+In Swift the type, that a value can be verify against, is uncertain.
 An object is sometimes an optional or not, it might be able to be checked against nil or not, maybe a against a boolean, etc.
 
 For this very specific reason, one should always specify what's after the comparison operator: `==`, `!=, etc.
