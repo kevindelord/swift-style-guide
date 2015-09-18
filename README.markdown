@@ -9,7 +9,7 @@ Of course, efficacity, readability, and simplicity are the most important points
 ## Table of Contents
 
 * [Spacing](#spacing)
-* [Comparaison](#comparaison)
+* [Comparison](#comparison)
   * [Explicit Type](#explicit-type)
   * [Brackets Position](#brackets-position)
 * [Naming](#naming)
@@ -81,7 +81,7 @@ func secondMethod() {
 }
 ```
 
-## Comparaison
+## Comparison
 
 ### Explicit Type
 
@@ -90,7 +90,7 @@ func secondMethod() {
 In Swift the type, that a value can be verify against, is uncertain.
 An object is sometimes an optional or not, it might be able to be checked against nil or not, maybe a against a boolean, etc.
 
-For this very specific reason, one should always specify what's after the comparaison operator: `==`, `!=, etc.
+For this very specific reason, one should always specify what's after the comparison operator: `==`, `!=`, etc.
 
 **Preferred:**
 ```swift
@@ -1154,3 +1154,4 @@ Please see the full list on the [orginal page](https://github.com/raywenderlich/
   * strictly forbidden with `!` or `as!`.
   * Use `if let` with one single value or with multiple ones.
   * Use `where` and/or first conditions to improve the code.
+* Nested blocks / method calls
