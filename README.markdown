@@ -20,20 +20,28 @@ Of course, efficacity, readability, and simplicity are the most important points
 * [Rounded Brackets](#rounded-brackets)
 * [Ternary operator](#ternary-operator)
 * [Comments](#comments)
-* [Code alignement and structure](#code-alignement-and-structure)
-* [Classes and Structures](#classes-and-structures)
-  * [Class attributes](#class-attributes)
+* [Code Alignement And Structure](#code-alignement-and-structure)
+* [Classes](#classes)
+  * [Class or Structure](#class-or-structure)
+  * [Class Attributes](#class-attributes)
   * [Use of Self](#use-of-self)
-  * [Class definition](#class-definition)
+  * [Class Definition](#class-definition)
   * [Protocol Conformance](#protocol-conformance)
   * [Computed Properties](#computed-properties)
 * [Function Declarations](#function-declarations)
 * [Blocks](#blocks)
 * [Types](#types)
   * [Constants](#constants)
+    * [Global Constants](#global-constants)
     * [Magic Numbers](#magic-numbers)
     * [Hard Coded Values](#hard-coded-values)
   * [Optionals](#optionals)
+    * [Optional Chaining](#optional-chaining)
+    * [Single Optional Binding](#single-optional-binding)
+    * [Multiple Optional Bindings](#multiple-optional-bindings)
+    * [More Condition Check](#more-condition-check)
+    * [?? Operator](#??-operator)
+    * [Naming Convention](#naming-convention)
   * [Struct Initializers](#struct-initializers)
     * [Accessing CGRect](#accessing-cgrect)
   * [Type Inference](#type-inference)
@@ -341,7 +349,7 @@ func calculateTopMargin() -> CGFloat {
 
 For more information about the documenting your code on Swift, please read this [blog post](http://nshipster.com/swift-documentation/) on NSHipster.
 
-## Code alignement and structure
+## Code Alignement And Structure
 
 * The pragma mark should be use as much as possible to actually separate and structure your classes and code within different files.
 
@@ -368,7 +376,7 @@ class MyViewController : UIViewController {
 ```
 
 * Make sure the code is aligned to itself. This is just about structure and better looking code: for example the `=` character, the start of the lines, the function names, etc. The alignment is done with "tabulations".
-It is also extremely appreciated to use comments to separate the class attributes and pragma mark between functions.
+It is also extremely appreciated to use comments to separate the [Class Attributes](#class-attributes) and pragma mark between functions.
 
 **Preferred:**
 ```swift
@@ -426,7 +434,7 @@ class MyViewController : UIViewController {
 }
 ```
 
-## Classes and Structures
+## Classes
 
 ### Class or Structure ?
 
@@ -436,7 +444,7 @@ Classes have [reference semantics](https://developer.apple.com/library/mac/docum
 
 Sometimes, things should be structs but need to conform to `AnyObject` or are historically modeled as classes already (`NSDate`, `NSSet`). Try to follow these guidelines as closely as possible.
 
-### Class attributes
+### Class Attributes
 
 When declaring a class, you should never use explicit types unless you directly specify a default value.
 The best thing to do is to use optionals whenever you can.
@@ -467,8 +475,8 @@ class Plane {
 
 ### Use of Self
 
-Even though Swift does not require the usage of `self`, a developer should force himself use it everywhere he can.
-It is then easier for any developer to understand where does a value come from or where the current execution process is going.
+Even though Swift does not require the usage of `self`, a developer should force himself to use it everywhere he can.
+It is then easier for any other developer to understand where does a value come from or where is the current execution process going.
 
 **Preferred:**
 ```swift
@@ -504,7 +512,7 @@ class MyViewController              : UIViewController {
 }
 ```
 
-### Class definition
+### Class Definition
 
 Here's an example of a well-styled class definition:
 
@@ -567,7 +575,7 @@ The example above demonstrates the following **important** style guidelines:
 * Note the rounded brackets.
 * Note the separator `// MARK: -` and its indentation.
 * `self.` is always used.
-* Class attributes as optionals or with default values.
+* [Class Attributes](#class-attributes) as optionals or with default values.
 * Show an example of `convenience init`.
 
 
@@ -964,25 +972,121 @@ func predicateFromJSON(json: [String : AnyObject]) -> NSPredicate? {
 
 Declare variables and function return types as optional with `?` where a nil value is acceptable.
 
-Use implicitly unwrapped types declared with `!` only for instance variables that you know will be initialized later before use, such as subviews that will be set up in `viewDidLoad`.
+You should just simply **never unwrap an optional** value using `!` or `as!`.
+There is always a better way to keep the code safe and avoid crashes.
 
-When accessing an optional value, use optional chaining if the value is only accessed once or if there are many optionals in the chain:
+If you keep focusing on doing a nice code right in the begining you won't have any trouble to avoid unwrapping crashes.
 
+#### Optional Chaining
+
+When accessing an optional value, use optional chaining if the value is only accessed once or if there are many optionals in the chain. This way no crash will occur if one of the objects is `nil`.
+
+**Preferred:**
 ```swift
 self.textContainer?.textLabel?.setNeedsDisplay()
 ```
 
+**Not Preferred:**
+```swift
+self.textContainer!.textLabel!.setNeedsDisplay()
+```
+
+#### Single Optional Binding
+
 Use optional binding when it's more convenient to unwrap once and perform multiple operations:
 
 ```swift
-if let textContainer = self.textContainer {
-    // do many things with textContainer
+if let _textContainer = self.textContainer {
+    // do many things with _textContainer
+}
+
+if let _superText = self.generateSuperText() as? String where (_superText.count > 0) {
+    // do many things with _superText
 }
 ```
 
+Unlike the [Multiple Optional Bindings](#multiple-optional-bindings), when binding one single optional you can:
+- inline the `if let` and the variable
+- inline the `where` with the variable
+
+#### Multiple Optional Bindings
+
+Starting [Swift 1.2](http://nshipster.com/swift-1.2/) you can create multiple bindings:
+
+> Swift 1.2 allows multiple simultaneous optional bindings, providing an escape from the trap of needing deeply nested if let statements to unwrap multiple values. Multiple optional bindings are separated by commas and can be paired with a where clause that acts like the expression in a traditional if statement. 
+
+About syntax, please the following points:
+- New line after the first `let`.
+- All variables are aligned.
+- The opening brackets `{` at the end of the last line.
+- The two levels of indentation.
+- The [Naming Convention](#naming-convention) between the _binded_ and optional variables.
+
+```swift
+let a = "10".toInt()
+let b = "5".toInt()
+let c = "3".toInt()
+```
+
+**Preferred:**
+```swift
+if let
+    _a = a,
+    _b = b,
+    _c = c
+    where (_c != 0) {
+        println("\((_a + _b) / _c)")
+        // 5
+}
+```
+
+**Not Preferred:**
+```swift
+if let a = a, b = b, c = c where c != 0 {
+    println("\((a + b) / c)")
+    // 5
+}
+```
+
+#### More Condition Check
+
+In some case you need a `if` statement before binding optionals.
+With swift you could even integrate this one in the same `if let`.
+
+Please note the indentation differences.
+
+**Preferred:**
+```swift
+if (array.count == 0),
+    let
+        _a = a,
+        _b = b
+        where (b > a) {
+            println(a)
+}
+```
+
+**Not Preferred:**
+```swift
+if (array.count == 0) {
+    if let
+        _a = a,
+        _b = b
+        where (b > a) {
+            println(a)
+    }
+}
+```
+
+#### ?? Operator
+
+TODO + Example within a for loop
+
+#### Naming Convention
+
 When naming optional variables and properties, avoid naming them like `optionalString` or `maybeView` since their optional-ness is already in the type declaration.
 
-For optional binding, shadow the original name when appropriate rather than using names like `unwrappedView` or `actualLabel`.
+For optional binding, add a small prefix to the original name rather than using names like `unwrappedView` or `actualLabel`. Usually `_` is quick and easy to understand.
 
 **Preferred:**
 ```swift
@@ -990,20 +1094,22 @@ var subview : UIView?
 var volume  : Double?
 
 // later on...
-if let subview = subview, volume = volume {
-    // do something with unwrapped subview and volume
+if let
+    _subview = subview,
+    _volume = volume {
+        // do something with unwrapped subview and volume
 }
 ```
 
 **Not Preferred:**
 ```swift
-var optionalSubview: UIView?
-var volume: Double?
+var optionalSubview : UIView?
+var volume          : Double?
 
-if let unwrappedSubview = optionalSubview {
-    if let realVolume = volume {
+if let
+    unwrappedSubview = optionalSubview,
+    realVolume = volume {
         // do something with unwrappedSubview and realVolume
-    }
 }
 ```
 
@@ -1172,11 +1278,4 @@ Please see the full list on the [orginal page](https://github.com/raywenderlich/
 
 ## TODO
 
-* Class attributes as optionals
-* Optionals with the `??` operator
-  * Example within a for loop
-* Unwrapping Optionals:
-  * strictly forbidden with `!` or `as!`.
-  * Use `if let` with one single value or with multiple ones.
-  * Use `where` and/or first conditions to improve the code.
 * Nested blocks / method calls
