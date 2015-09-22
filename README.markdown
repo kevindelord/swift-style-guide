@@ -51,6 +51,7 @@ Of course, efficacity, readability, and simplicity are the most important points
 * [Language](#language)
 * [Credits](#credits)
 * [See Also](#see-also)
+* [TODO](#todo)
 
 ## Spacing
 
@@ -1289,6 +1290,9 @@ let colour = "red"
 
 This style guide is a fork from the collaborative effort from the most stylish raywenderlich.com team members.
 Please see the full list on the [orginal page](https://github.com/raywenderlich/swift-style-guide#credits).
+
+The current fork has been mainly improved and maintained by:
+* [Kevin Delord](https://github.com/kevindelord)
 
 ## See Also
 
