@@ -428,7 +428,7 @@ class MyViewController : UIViewController {
 
 ## Classes and Structures
 
-### Which one to use?
+### Class or Structure ?
 
 Remember, structs have [value semantics](https://developer.apple.com/library/mac/documentation/Swift/Conceptual/Swift_Programming_Language/ClassesAndStructures.html#//apple_ref/doc/uid/TP40014097-CH13-XID_144). Use structs for things that do not have an identity. An array that contains [a, b, c] is really the same as another array that contains [a, b, c] and they are completely interchangeable. It doesn't matter whether you use the first array or the second, because they represent the exact same thing. That's why arrays are structs.
 
@@ -438,7 +438,32 @@ Sometimes, things should be structs but need to conform to `AnyObject` or are hi
 
 ### Class attributes
 
-TODO: as optional or always with a default value.
+When declaring a class, you should never use explicit types unless you directly specify a default value.
+The best thing to do is to use optionals whenever you can.
+
+In general, you can not be sure that all attributes will be correctly created, linked, instanciated, initialised, etc.
+
+**Preferred:**
+```swift
+class Plane {
+    var pilot           : Pilot?
+    var passengerCount  : Int = 0
+    var passengers      = [Passenger]()
+
+    @IBOutlet var text  : UILabel?
+}
+```
+
+**Not Preferred:**
+```swift
+class Plane {
+    var pilot           : Pilot!
+    var passengerCount  : Int!
+    var passengers      : [Passenger]!
+
+    @IBOutlet var text  : UILabel!
+}
+```
 
 ### Use of Self
 
