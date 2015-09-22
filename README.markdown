@@ -50,6 +50,7 @@ Of course, efficacity, readability, and simplicity are the most important points
 * [Semicolons](#semicolons)
 * [Language](#language)
 * [Credits](#credits)
+* [See Also](#see-also)
 
 ## Spacing
 
@@ -310,7 +311,7 @@ return (message ?? "message does not exist") // ??
 
 The ternary operator is amazing handful and pretty, but it can also be badly used and gives headaches to any developers.
 
-A developer should only use it with just one level of operation and with rounded brackets.
+A developer should only use it with just one level of operation and with [rounded brackets](#rounded-brackets).
 Without those rules, a developer will code this:
 
 **Not Preferred:**
@@ -572,7 +573,7 @@ The example above demonstrates the following **important** style guidelines:
 * Align the multiple variable and structure declarations.
 * Indent getter and setter definitions and property observers.
 * Separate variable declarations with getter and setter.
-* Note the rounded brackets.
+* Note the [rounded brackets](#rounded-brackets).
 * Note the separator `// MARK: -` and its indentation.
 * `self.` is always used.
 * [Class Attributes](#class-attributes) as optionals or with default values.
@@ -624,7 +625,7 @@ class MyViewcontroller: UIViewController, UITableViewDataSource, UIScrollViewDel
 
 For conciseness, if a computed property is read-only, omit the get clause. The get clause is required only when a set clause is provided.
 
-Please note the rounded brackets.
+Please note the [rounded brackets](#rounded-brackets).
 
 **Preferred:**
 ```swift
@@ -694,7 +695,7 @@ UIView.animateWithDuration(1.0, animations: { () -> Void in
 }
 ```
 
-* Always declare the parameters of the block inside **rounded brackets**.
+* Always declare the parameters of the block inside **[rounded brackets](#rounded-brackets)**.
 * Always **write all block names** if there are more than one block.
 * Always **specify the type** of each parameters of the block if it is coming from a function. You can **not** be certain of the type.
 * Always write the full names of the parameters of a block.
@@ -722,7 +723,7 @@ UIView.animateWithDuration(1.0, animations: {
 * When returning a value, always use **explicit returns**.
 
 The code as to be as self explained as possible.
-Please also note the rounded brackets.
+Please also note the [rounded brackets](#rounded-brackets).
 
 **Preferred:**
 ```swift
@@ -742,7 +743,7 @@ list.sort { a, b in
 
 * When the context is very very easy clear you can also use the shortcuts `$0` and `$1`
 
-Please note the rounded brackets.
+Please note the [rounded brackets](#rounded-brackets).
 
 ```swift
 var list = [1, 4, 2, 3]
@@ -1080,7 +1081,26 @@ if (array.count == 0) {
 
 #### ?? Operator
 
-TODO + Example within a for loop
+Swift has very neat operator used to safely unwrapped optionals: `??`
+
+Close to the [Ternary operator](#ternary-operator), this one returns the optional value or a default value if `nil` is found.
+
+**Preferred:**
+```swift
+let text = (self.generateSuperText() as? String ?? "default value")
+```
+
+**Not Preferred:**
+```swift
+var text : String?
+if let _superText = self.generateSuperText() as? String {
+    text = _superText
+} else {
+    text = "default value"
+}
+```
+
+Please note the [rounded brackets](#rounded-brackets).
 
 #### Naming Convention
 
