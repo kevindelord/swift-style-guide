@@ -9,6 +9,8 @@ Of course, efficacity, readability, and simplicity are the most important points
 ## Table of Contents
 
 * [Spacing](#spacing)
+  * [Empty lines](#empty-lines)
+  * [Whitespaces](#whitespaces)
 * [Comparison](#comparison)
   * [Explicit Type](#explicit-type)
   * [Brackets Position](#brackets-position)
@@ -65,8 +67,9 @@ Of course, efficacity, readability, and simplicity are the most important points
 
 * Tip: You can re-indent by selecting some code (or ⌘A to select all) and then Control-I (or Editor\Structure\Re-Indent in the menu). Some of the Xcode template code will have 4-space tabs hard coded, so this is a good way to fix that.
 
-* There should be exactly one blank line between methods to aid in visual clarity and organization. Whitespace within methods should separate functionality, but having too many sections in a method often means you should **refactor into several methods**.
+### Empty lines
 
+* There should be exactly **one blank line between methods** to aid in visual clarity and organization. 
 **Preferred:**
 ```swift
 func firstMethod() {
@@ -88,6 +91,39 @@ func firstMethod() {
 }
 func secondMethod() {
     // Do something
+}
+```
+
+### Whitespaces
+
+Whitespace within methods should separate functionality, but having too many sections in a method often means you should **refactor into several methods**.
+
+A single whitespace must be use between elements:
+- after/before `if` and `else`.
+- when calculating and comparing values.
+- when opening and closing brackets.
+- when declaring a function.
+
+**Preferred:**
+```swift
+func dummyFunction(number: Int) -> Int {
+    var result = 0
+
+    if (number > 0) {
+        result = (number * number)
+    }
+    return result
+}
+```
+
+**Not Preferred:**
+```swift
+func dummyFunction(number: Int)->Int {
+    var result = 0
+    if(number>0){
+        result = (number*number)
+    }
+    return result
 }
 ```
 
