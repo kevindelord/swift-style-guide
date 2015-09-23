@@ -23,6 +23,9 @@ Of course, efficacity, readability, and simplicity are the most important points
 * [Ternary operator](#ternary-operator)
 * [Comments](#comments)
 * [Code Alignement And Structure](#code-alignement-and-structure)
+  * [Pragma Mark](#pragma-mark)
+  * [Alignment](#alignment)
+  * [Nested Blocks](#nested-blocks)
 * [Classes](#classes)
   * [Class or Structure](#class-or-structure)
   * [Class Attributes](#class-attributes)
@@ -53,7 +56,6 @@ Of course, efficacity, readability, and simplicity are the most important points
 * [Language](#language)
 * [Credits](#credits)
 * [See Also](#see-also)
-* [TODO](#todo)
 
 ## Spacing
 
@@ -389,7 +391,9 @@ For more information about the documenting your code on Swift, please read this 
 
 ## Code Alignement And Structure
 
-* The pragma mark should be use as much as possible to actually separate and structure your classes and code within different files.
+### Pragma Mark
+
+The pragma mark should be use as much as possible to actually separate and structure your classes and code within different files.
 
 The pragma mark should be indented, capitalised and using a separator. It should describe what the next methods are about.
 
@@ -413,7 +417,9 @@ class MyViewController : UIViewController {
 }
 ```
 
-* Make sure the code is aligned to itself. This is just about structure and better looking code: for example the `=` character, the start of the lines, the function names, etc. The alignment is done with "tabulations".
+### Alignment
+
+Make sure the code is aligned to itself. This is just about structure and better looking code: for example the `=` character, the start of the lines, the function names, etc. The alignment is done with "tabulations".
 It is also extremely appreciated to use comments to separate the [Class Attributes](#class-attributes) and pragma mark between functions.
 
 **Preferred:**
@@ -471,6 +477,31 @@ class MyViewController : UIViewController {
     }
 }
 ```
+
+### Nested Blocks
+
+As said earlier, a line should not be too long and obvisouly as readable as possible.
+
+Where it gets complicated it's when you can/want to nest blocks or functions.
+Meaning calling a function and giving the result directly to another without creating a variable in between.
+
+This is absolutely not a bad thing, if it is well done and well structured. 
+
+**Preferred:**
+```swift
+let action = UIAlertAction(title:L("ALERTVIEW_BUTTON_CANCEL"), style:.Cancel, handler:nil)
+let subCrazy = UIMoreCrazyThing(string: "Crazy", action)
+UICrazyThing(subCrazieness: subCrazy)
+```
+
+**Not Preferred:**
+```swift
+UICrazyThing(subCrazieness: UIMoreCrazyThing(string: "Crazy", UIAlertAction(title:L("ALERTVIEW_BUTTON_CANCEL"), style:.Cancel, handler:nil)))
+```
+
+The first version has shorter lines and is more readable. The second fit in one line but is more complicated to read.
+
+Of course, for very small and simple cases you can nest your functions, but be mindful of other developers and their ability to read and understand your code.
 
 ## Classes
 
@@ -689,6 +720,9 @@ It is super easy to keep coding and changing your code, and in the end have a fu
 
 Other point, a function should __not exceed 40 lines__. This drastic limit forces the developer to think twice about the code and its structure.
 A better encapsulation will help you with this rule.
+
+
+Antoher good thing is to keep the lines of code maximum __between 100 and 120 characters__.
 
 
 Keep short function declarations on one line including the opening brace:
@@ -1335,7 +1369,3 @@ The current fork has been mainly improved and maintained by:
 * [The Swift Programming Language](https://developer.apple.com/library/prerelease/ios/documentation/swift/conceptual/swift_programming_language/index.html)
 * [Using Swift with Cocoa and Objective-C](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html)
 * [Swift Standard Library Reference](https://developer.apple.com/library/prerelease/ios/documentation/General/Reference/SwiftStandardLibraryReference/index.html)
-
-## TODO
-
-* Nested blocks / method calls
