@@ -23,7 +23,7 @@ Of course, efficacity, readability, and simplicity are the most important points
 * [Ternary operator](#ternary-operator)
 * [Comments](#comments)
 * [Code Alignement And Structure](#code-alignement-and-structure)
-  * [Pragma Mark](#pragma-mark)
+  * [Mark](#mark)
   * [Alignment](#alignment)
   * [Nested Closures](#nested-closures)
 * [Classes](#classes)
@@ -390,11 +390,11 @@ For more information about the documenting your code on Swift, please read this 
 
 ## Code Alignement And Structure
 
-### Pragma Mark
+### Mark
 
-The pragma mark should be use as much as possible to actually separate and structure your classes and code within different files.
+The mark should be use as much as possible to actually separate and structure your classes and code within different files.
 
-The pragma mark should be indented, capitalised and using a separator. It should describe what the next methods are about.
+The mark should be indented, capitalised and using a separator. It should describe what the next methods are about.
 
 **Preferred:**
 ```swift
@@ -419,7 +419,7 @@ class MyViewController : UIViewController {
 ### Alignment
 
 Make sure the code is aligned to itself. This is just about structure and better looking code: for example the `=` character, the start of the lines, the function names, etc. The alignment is done with "tabulations".
-It is also extremely appreciated to use comments to separate the [Class Attributes](#class-attributes) and pragma mark between functions.
+It is also extremely appreciated to use comments to separate the [Class Attributes](#class-attributes) and mark between functions.
 
 **Preferred:**
 ```swift
@@ -869,7 +869,7 @@ Constants are defined using the `let` keyword, and variables with the `var` keyw
 #### Global Constants
 
 * The constants should be in one single constants files.
-* The more this file is structured the better: Create structures, add comments and pragma marks.
+* The more this file is structured the better: Create structures, add comments and marks.
 * Try to avoid single and anarchic constants without logic or explanation around. In such case they are just magic numbers hidden behind a constant.
 * The term `constant` refers to all strings/numbers that are fixed and can't be dynamically changed. 
 
