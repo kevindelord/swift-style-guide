@@ -743,7 +743,7 @@ func reticulateSplines(spline: [Double], adjustmentFactor: Double,
 
 ## Closures
 
-Closures or blocks (ObjC) are one of the most complicated subject when dealing with guidelines in Swift.
+Closures (like blocks in Objective-C) are one of the most complicated subject when dealing with guidelines in Swift.
 The code needs to be clear, very easy to read and understandable in seconds.
 
 Here are some very specific rules:
