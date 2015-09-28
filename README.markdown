@@ -34,6 +34,7 @@ Of course, efficacity, readability, and simplicity are the most important points
   * [Protocol Conformance](#protocol-conformance)
   * [Computed Properties](#computed-properties)
 * [Function Declarations](#function-declarations)
+  * [Visibility](#visibility)
 * [Closures](#closures)
 * [Types](#types)
   * [Constants](#constants)
@@ -504,7 +505,7 @@ Of course, for very small and simple cases you can nest your functions, but be m
 
 ## Classes
 
-### Class or Structure ?
+### Class or Structure
 
 Remember, structs have [value semantics](https://developer.apple.com/library/mac/documentation/Swift/Conceptual/Swift_Programming_Language/ClassesAndStructures.html#//apple_ref/doc/uid/TP40014097-CH13-XID_144). Use structs for things that do not have an identity. An array that contains [a, b, c] is really the same as another array that contains [a, b, c] and they are completely interchangeable. It doesn't matter whether you use the first array or the second, because they represent the exact same thing. That's why arrays are structs.
 
