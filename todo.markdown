@@ -1,6 +1,6 @@
 ## TODO:
 
-done :]
+- When to declare methods as private
 
 ## Sample markdown
 

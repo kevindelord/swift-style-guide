@@ -23,9 +23,9 @@ Of course, efficacity, readability, and simplicity are the most important points
 * [Ternary operator](#ternary-operator)
 * [Comments](#comments)
 * [Code Alignement And Structure](#code-alignement-and-structure)
-  * [Pragma Mark](#pragma-mark)
+  * [Mark](#mark)
   * [Alignment](#alignment)
-  * [Nested Blocks](#nested-blocks)
+  * [Nested Closures](#nested-closures)
 * [Classes](#classes)
   * [Class or Structure](#class-or-structure)
   * [Class Attributes](#class-attributes)
@@ -34,7 +34,7 @@ Of course, efficacity, readability, and simplicity are the most important points
   * [Protocol Conformance](#protocol-conformance)
   * [Computed Properties](#computed-properties)
 * [Function Declarations](#function-declarations)
-* [Blocks](#blocks)
+* [Closures](#closures)
 * [Types](#types)
   * [Constants](#constants)
     * [Global Constants](#global-constants)
@@ -164,7 +164,6 @@ if (finished) {
 ```swift
 if (user.isHappy == true) {
     // Do something
-    // You can even add an empty line before the end of the block
 
 } else {
     // Do something else
@@ -391,11 +390,11 @@ For more information about the documenting your code on Swift, please read this 
 
 ## Code Alignement And Structure
 
-### Pragma Mark
+### Mark
 
-The pragma mark should be use as much as possible to actually separate and structure your classes and code within different files.
+The mark should be use as much as possible to actually separate and structure your classes and code within different files.
 
-The pragma mark should be indented, capitalised and using a separator. It should describe what the next methods are about.
+The mark should be indented, capitalised and using a separator. It should describe what the next methods are about.
 
 **Preferred:**
 ```swift
@@ -420,7 +419,7 @@ class MyViewController : UIViewController {
 ### Alignment
 
 Make sure the code is aligned to itself. This is just about structure and better looking code: for example the `=` character, the start of the lines, the function names, etc. The alignment is done with "tabulations".
-It is also extremely appreciated to use comments to separate the [Class Attributes](#class-attributes) and pragma mark between functions.
+It is also extremely appreciated to use comments to separate the [Class Attributes](#class-attributes) and mark between functions.
 
 **Preferred:**
 ```swift
@@ -478,11 +477,11 @@ class MyViewController : UIViewController {
 }
 ```
 
-### Nested Blocks
+### Nested Closures
 
 As said earlier, a line should not be too long and obvisouly as readable as possible.
 
-Where it gets complicated it's when you can/want to nest blocks or functions.
+Where it gets complicated it's when you can/want to nest closures or functions.
 Meaning calling a function and giving the result directly to another without creating a variable in between.
 
 This is absolutely not a bad thing, if it is well done and well structured. 
@@ -651,11 +650,11 @@ The example above demonstrates the following **important** style guidelines:
 ### Protocol Conformance
 
 
-In Swift, protocols can be used, but it's better appreciated to use blocks.
+In Swift, protocols can be used, but it's better appreciated to use closures.
 In the end they are the very same thing: a pointer to a function owned by an object (a specific object or self).
 
 
-The blocks are better as they are easier to read, easier to implement and to understand.
+The closures are better as they are easier to read, easier to implement and to understand.
 Moreover they are better integrated in the language as they are in Obj-C.
 It is always possible to remove/replace a logic done with **custom** delegates.
 
@@ -742,15 +741,15 @@ func reticulateSplines(spline: [Double], adjustmentFactor: Double,
 }
 ```
 
-## Blocks
+## Closures
 
-Blocks or closure or blocks are one of the most complicated subject when dealing with guidelines in Swift.
+Closures (like blocks in Objective-C) are one of the most complicated subject when dealing with guidelines in Swift.
 The code needs to be clear, very easy to read and understandable in seconds.
 
 Here are some very specific rules:
 
-* Never write the block name if there is just one block in a function.
-* Never write the parameters of the block if there is none.
+* Never write the closure name if there is just one closure in a function.
+* Never write the parameters of the closure if there is none.
 
 **Preferred:**
 ```swift
@@ -766,10 +765,10 @@ UIView.animateWithDuration(1.0, animations: { () -> Void in
 }
 ```
 
-* Always declare the parameters of the block inside **[rounded brackets](#rounded-brackets)**.
-* Always **write all block names** if there are more than one block.
-* Always **specify the type** of each parameters of the block if it is coming from a function. You can **not** be certain of the type.
-* Always write the full names of the parameters of a block.
+* Always declare the parameters of the closure inside **[rounded brackets](#rounded-brackets)**.
+* Always **write all closure names** if there are more than one closure.
+* Always **specify the type** of each parameters of the closure if it is coming from a function. You can **not** be certain of the type.
+* Always write the full names of the parameters of a closure.
 
 **Preferred:**
 ```swift
@@ -821,22 +820,24 @@ var list = [1, 4, 2, 3]
 list.sort { ($0 > $1) }
 ```
 
-* When declaring a function that takes a block as parameter, **always declare the block as optional**.
+###Closures as parameter
+
+* When declaring a function that takes a closure as parameter, **always declare the closure as optional**.
 
 **Preferred:**
 ```swift
-func myFunction(block: (() -> Void)?) {
+func myFunction(closure: (() -> Void)?) {
     if (something == true) {
-        block?()
+        closure?()
     }
 }
 ```
 
 **Not Preferred:**
 ```swift
-func myFunction(block: () -> Void) {
+func myFunction(closure: () -> Void) {
     if (something == true) {
-        block()
+        closure()
     }
 }
 ```
@@ -868,7 +869,7 @@ Constants are defined using the `let` keyword, and variables with the `var` keyw
 #### Global Constants
 
 * The constants should be in one single constants files.
-* The more this file is structured the better: Create structures, add comments and pragma marks.
+* The more this file is structured the better: Create structures, add comments and marks.
 * Try to avoid single and anarchic constants without logic or explanation around. In such case they are just magic numbers hidden behind a constant.
 * The term `constant` refers to all strings/numbers that are fixed and can't be dynamically changed. 
 
