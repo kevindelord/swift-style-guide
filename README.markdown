@@ -423,18 +423,18 @@ It is also extremely appreciated to use comments to separate the [Class Attribut
 
 **Preferred:**
 ```swift
-class MyViewController                      : UIViewController {
+class MyViewController                           : UIViewController {
 
     // MARK: - Outlets
 
-    @IBOutlet var lettersGameButton         : UIButton?
-    @IBOutlet var headBodyLegsGameButton    : UIButton?
-    @IBOutlet var colorMatcherGameButton    : UIButton?
+    @IBOutlet weak var lettersGameButton         : UIButton?
+    @IBOutlet weak var headBodyLegsGameButton    : UIButton?
+    @IBOutlet weak var colorMatcherGameButton    : UIButton?
 
     // MARK: - Instance Variables
 
-    var destinationType                     : FFGameType?
-    let transitionManager                   = FFTransitionManager()
+    var destinationType                          : FFGameType?
+    let transitionManager                        = FFTransitionManager()
 
     // MARK: - View Lifecycle
 
@@ -522,22 +522,22 @@ In general, you can not be sure that all attributes will be correctly created, l
 **Preferred:**
 ```swift
 class Plane {
-    var pilot           : Pilot?
-    var passengerCount  : Int = 0
-    var passengers      = [Passenger]()
+    var pilot                : Pilot?
+    var passengerCount       : Int = 0
+    var passengers           = [Passenger]()
 
-    @IBOutlet var text  : UILabel?
+    @IBOutlet weak var text  : UILabel?
 }
 ```
 
 **Not Preferred:**
 ```swift
 class Plane {
-    var pilot           : Pilot!
-    var passengerCount  : Int!
-    var passengers      : [Passenger]!
+    var pilot                : Pilot!
+    var passengerCount       : Int!
+    var passengers           : [Passenger]!
 
-    @IBOutlet var text  : UILabel!
+    @IBOutlet weak var text  : UILabel!
 }
 ```
 
@@ -741,6 +741,42 @@ func reticulateSplines(spline: [Double], adjustmentFactor: Double,
 }
 ```
 
+### Visibility
+
+Declare your functions and properties private whenever possible. This way you can be sure that you and other developers only has access to what is safe to access.
+
+**Preferred:**
+```swift
+class MyViewcontroller: UIViewController {
+    private var progress: Int?
+
+    func animateProgress() {
+       self.calculateProgressBasedOnMoonPhase()
+       // ...
+    }
+
+    private func calculateProgressBasedOnMoonPhase() {
+       // ...
+    }
+}
+```
+
+**Not Preferred:**
+```swift
+class MyViewcontroller: UIViewController {
+    var progress: Int?
+
+    func animateProgress() {
+       self.calculateProgressBasedOnMoonPhase()
+       // ...
+    }
+
+    func calculateProgressBasedOnMoonPhase() {
+       // ...
+    }
+}
+```
+
 ## Closures
 
 Closures (like blocks in Objective-C) are one of the most complicated subject when dealing with guidelines in Swift.
@@ -885,30 +921,30 @@ Actually all values that should not change. But if they do, they are all created
 enum HUUserDefault                          : String {
 
     // Keys set in PList files
-    case AppId                              =       "AppId"
-    case HockeyId                           =       "HockeyAppId"
-    case APIBaseURL                         =       "ApiBaseURL"
-    case APIUserCredential                  =       "ApiUserCredential"
-    case APIPasswordCredential              =       "ApiPasswordCredential"
+    case AppId                              = "AppId"
+    case HockeyId                           = "HockeyAppId"
+    case APIBaseURL                         = "ApiBaseURL"
+    case APIUserCredential                  = "ApiUserCredential"
+    case APIPasswordCredential              = "ApiPasswordCredential"
  
-    static let allValues                    =       [AppId, HockeyId, APIBaseURL, APIUserCredential, APIPasswordCredential]
+    static let allValues                    = [AppId, HockeyId, APIBaseURL, APIUserCredential, APIPasswordCredential]
 }
 
 //
 // Segues
 //
 enum HUSegueIdentifier                      : String {
-    case FormulaDetail                      =       "showDetailFormula"
-    case SearchViewController               =       "showSearchView"
+    case FormulaDetail                      = "showDetailFormula"
+    case SearchViewController               = "showSearchView"
 }
 
 //
 // Cells
 //
 enum HUCellReuseIdentifier                  : String {
-    case FormulaCell                        =       "HUFormulaCell_id"
-    case SearchCell                         =       "HUSearchCell_id"
-    case OptionCell                         =       "HUOptionCell_id"
+    case FormulaCell                        = "HUFormulaCell_id"
+    case SearchCell                         = "HUSearchCell_id"
+    case OptionCell                         = "HUOptionCell_id"
 }
 
 //
@@ -916,13 +952,13 @@ enum HUCellReuseIdentifier                  : String {
 //
 struct DB {
 
-    static let DatabaseName                 =       "Huethig.sqlite"
+    static let DatabaseName                 = "Huethig.sqlite"
 
     struct Key {
-        static let Id                       =       "id"
-        static let UpdatedAt                =       "lastUpdate"
-        static let Key                      =       "key"
-        static let Value                    =       "value"
+        static let Id                       = "id"
+        static let UpdatedAt                = "lastUpdate"
+        static let Key                      = "key"
+        static let Value                    = "value"
     }
 }
 
@@ -933,9 +969,9 @@ struct API {
 
     // Endpoints
     enum Endpoint                           : String {
-        case Formula                        =       "formula"
-        case PDF                            =       "pdf"
-        case ProductId                      =       "productid"
+        case Formula                        = "formula"
+        case PDF                            = "pdf"
+        case ProductId                      = "productid"
     }
 }
 ```
@@ -1349,12 +1385,14 @@ Use US English spelling to match Apple's API.
 
 **Preferred:**
 ```swift
-let color = "red"
+let color     = "red"
+let favorites = [1, 2, 3]
 ```
 
 **Not Preferred:**
 ```swift
-let colour = "red"
+let colour     = "red"
+let favourites = [1, 2, 3]
 ```
 
 ## Credits
