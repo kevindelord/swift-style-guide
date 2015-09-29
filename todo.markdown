@@ -1,12 +1,12 @@
 ## TODO:
 
-* Other prefix for unwrapped values
+* Find/Specify another prefix for unwrapped values inside `if let`.
 
 ## QUESTION:
 
-- none
+* Should we force the protocol implementations inside extensions ?
 
-## Sample markdown
+## Sample markdown:
 
 **Preferred:**
 ```swift
