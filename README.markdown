@@ -452,7 +452,7 @@ class MyViewController                           : UIViewController {
 }
 ```
 
-Please note the differences between the `// MARK: - `.
+Please note the differences between the `// MARK: - ` and the missing `weak` references for the IBOutlets.
 
 **Not Preferred:**
 ```swift
