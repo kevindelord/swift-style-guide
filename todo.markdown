@@ -1,19 +1,6 @@
 ## TODO:
 
-* other prefix for unwrapped values
-* if let condition:
-
-```swift
-if (array.count == 0),
-    let
-        _a = a,
-        (a.count < 0),
-        _b = b
-        where (b > a) {
-            println(a)
-}
-```
-
+* Other prefix for unwrapped values
 
 ## QUESTION:
 
