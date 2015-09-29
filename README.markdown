@@ -744,7 +744,9 @@ func reticulateSplines(spline: [Double], adjustmentFactor: Double,
 
 ### Visibility
 
-Declare your functions and properties private whenever possible. This way you can be sure that you and other developers only has access to what is safe to access.
+By default, declare your functions and properties as `private`. Variables should also be declared as constants using `let`. See [Constants](#constants) for more information.
+
+Later on whenever you need to change them, let the compiler complain and then change it to `public` or `var`. This way you can be sure that you and other developers only have access to what is safe to access.
 
 **Preferred:**
 ```swift
