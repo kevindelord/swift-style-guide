@@ -1165,7 +1165,7 @@ if let a = a, b = b, c = c where c != 0 {
 #### More Condition Check
 
 In some case you need a `if` statement before binding optionals.
-With swift you could even integrate this one in the same `if let`.
+With Swift you could even integrate this one in the same `if let`.
 
 Please note the indentation differences.
 
@@ -1189,6 +1189,38 @@ if (array.count == 0) {
         where (b > a) {
             println(a)
     }
+}
+```
+
+Another great thing is that you can add `if` statements inside a [Multiple Optional Bindings](#multiple-optional-bindings).
+In other words, check a new unwrapped value before unwrapping any others.
+
+Please note the indentation differences.
+
+```swift
+let indexes = [1, 2]
+let users : [AnyObject]? = ["bob", "peter", "john"]
+let max : Int? = 5
+```
+
+**Preferred:**
+```swift
+if (indexes.count >= 0),
+    let _users  = users where (_users.count > 0),
+    let _max    = max where (_max > _users.count) {
+        print(_users)
+}
+```
+
+**Not Preferred:**
+```swift
+if (indexes.count >= 0),
+    let
+    _users = users
+    where (_users.count > 0),
+    let _max = max
+    where (_max > _users.count) {
+        print(_users)
 }
 ```
 
