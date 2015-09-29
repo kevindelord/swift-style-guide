@@ -184,9 +184,9 @@ else {
 
 ## Naming
 
-* Use descriptive names with **UpperCamelCase** for class names and static variables: `class MySuperClass { }`.
-* Use **lowerCamelCase** for class attributes, methods and local variables: `var mySuperAttribute = 0`.
-* When creating outlets, always specify the **type as a suffix**: `titleLabel` instead of `labelTitle`.
+* Use descriptive names with **UpperCamelCase** for class names and static variables.
+* Use **lowerCamelCase** for class attributes, methods and local variables.
+* When creating outlets, always specify the **type as a suffix**.
 
 **Preferred:**
 ```swift

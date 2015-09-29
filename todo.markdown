@@ -1,6 +1,5 @@
 ## TODO:
 
-* naming: attributes should have the type written as a suffix not as prefix
 * other prefix for unwrapped values
 * if let condition:
 
