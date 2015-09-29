@@ -763,7 +763,7 @@ UIView.animateWithDuration(1.0) {
 ```swift
 UIView.animateWithDuration(1.0, animations: { () -> Void in
     self.myView.alpha = 0
-}
+})
 ```
 
 * Always declare the parameters of the block inside **[rounded brackets](#rounded-brackets)**.
