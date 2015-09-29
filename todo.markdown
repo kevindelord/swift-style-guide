@@ -4,7 +4,7 @@
 
 ## QUESTION:
 
-* Do extensions know about private attributes/functions 
+- none
 
 ## Sample markdown
 

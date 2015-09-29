@@ -32,6 +32,7 @@ Of course, efficacity, readability, and simplicity are the most important points
   * [Use of Self](#use-of-self)
   * [Class Definition](#class-definition)
   * [Protocol Conformance](#protocol-conformance)
+  * [About Extensions](#about-extensions)
   * [Computed Properties](#computed-properties)
 * [Function Declarations](#function-declarations)
   * [Visibility](#visibility)
@@ -45,7 +46,8 @@ Of course, efficacity, readability, and simplicity are the most important points
     * [Optional Chaining](#optional-chaining)
     * [Single Optional Binding](#single-optional-binding)
     * [Multiple Optional Bindings](#multiple-optional-bindings)
-    * [More Condition Check](#more-condition-check)
+    * [Single Condition Check](#single-condition-check)
+    * [Multiple Condition Check](#multiple-condition-check)
     * [?? Operator](#??-operator)
     * [Naming Convention](#naming-convention)
   * [Struct Initializers](#struct-initializers)
@@ -652,17 +654,14 @@ The example above demonstrates the following **important** style guidelines:
 
 ### Protocol Conformance
 
-
 In Swift, protocols can be used, but it's better appreciated to use closures.
 In the end they are the very same thing: a pointer to a function owned by an object (a specific object or self).
-
 
 The closures are better as they are easier to read, easier to implement and to understand.
 Moreover they are better integrated in the language as they are in Obj-C.
 It is always possible to remove/replace a logic done with **custom** delegates.
 
-
-When adding native protocol conformance to a class, prefer adding a separate class extension for the protocol methods.
+When adding native protocol conformance to a class, prefer adding a separate **class extension for the protocol methods**.
 This keeps the related methods grouped together with the protocol and can simplify instructions to add a protocol to a class with its associated methods.
 
 Also, do not forget the `// MARK: -` comment to keep things well-organized!
@@ -690,6 +689,28 @@ class MyViewcontroller: UIViewController, UITableViewDataSource, UIScrollViewDel
     // all methods
 }
 ```
+
+#### About Extensions
+
+From the [official documentation](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Extensions.html#//apple_ref/doc/uid/TP40014097-CH24-ID151):
+
+> Extensions add new functionality to an existing class, structure, enumeration, or protocol type. This includes the ability to extend types for which you do not have access to the original source code (known as retroactive modeling). Extensions are similar to categories in Objective-C. (Unlike Objective-C categories, Swift extensions do not have names.)
+
+__Do extensions know about private attributes and functions ?__
+
+* Yes, extensions know about private attributes and functions from the main class if the extension is declared on the same file. It is also true the way around.
+
+__Can an exention add class attributes ?__
+
+* No, extensions may not contain stored properties.
+
+__Where should I write an extension ?__
+
+Where it makes sense. For example:
+
+* Below the original class if the extension is very specific to the current file/class.
+* In a dedicated file if the extension tends to be very long and/or independant from the orinal class.
+* In a file grouping multiple extensions of the same context.
 
 ### Computed Properties
 
@@ -1162,7 +1183,7 @@ if let a = a, b = b, c = c where c != 0 {
 }
 ```
 
-#### More Condition Check
+#### Single Condition Check
 
 In some case you need a `if` statement before binding optionals.
 With Swift you could even integrate this one in the same `if let`.
@@ -1191,6 +1212,8 @@ if (array.count == 0) {
     }
 }
 ```
+
+#### Multiple Condition Check
 
 Another great thing is that you can add `if` statements inside a [Multiple Optional Bindings](#multiple-optional-bindings).
 In other words, check a new unwrapped value before unwrapping any others.
