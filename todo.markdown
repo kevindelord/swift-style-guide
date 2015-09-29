@@ -1,26 +1,12 @@
 ## TODO:
 
-* naming: attributes should have the type written as a suffix not as prefix
-* other prefix for unwrapped values
-* if let condition:
-
-```swift
-if (array.count == 0),
-    let
-        _a = a,
-        (a.count < 0),
-        _b = b
-        where (b > a) {
-            println(a)
-}
-```
-
+* Find/Specify another prefix for unwrapped values inside `if let`.
 
 ## QUESTION:
 
-* Do extensions know about private attributes/functions 
+* Should we force the protocol implementations inside extensions ?
 
-## Sample markdown
+## Sample markdown:
 
 **Preferred:**
 ```swift
