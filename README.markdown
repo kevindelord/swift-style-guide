@@ -184,23 +184,25 @@ else {
 
 ## Naming
 
-Use descriptive names with camel case for classes, methods, variables, etc. Class names should be capitalized, while method names and variables should start with a lower case letter.
+* Use descriptive names with **UpperCamelCase** for class names and static variables: `class MySuperClass { }`.
+* Use **lowerCamelCase** for class attributes, methods and local variables: `var mySuperAttribute = 0`.
+* When creating outlets, always specify the **type as a suffix**: `titleLabel` instead of `labelTitle`.
 
 **Preferred:**
-
 ```swift
 class WidgetContainer {
-    var widgetButton: UIButton
-    let widgetHeightPercentage = 0.85
+    var widgetButton                    : UIButton
+    let widgetHeightPercentage          = 0.85
+    @IBOutlet weak var descriptionLabel : UILabel?
 }
 ```
 
 **Not Preferred:**
-
 ```swift
 class app_widgetContainer {
     var wBut: UIButton
     let WHeightPCT = 0.85
+    @IBOutlet weak var labelDescription : UILabel?
 }
 ```
 
