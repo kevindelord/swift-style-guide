@@ -460,7 +460,7 @@ class MyViewController : UIViewController {
 
 //MARK Outlets
 
-    @IBOutlet var lettersGameButton : UIButton?
+    @IBOutlet var lettersGameButton      : UIButton?
     @IBOutlet var headBodyLegsGameButton : UIButton?
     @IBOutlet var colorMatcherGameButton : UIButton?
     var destinationType : FFGameType?
