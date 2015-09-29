@@ -1199,8 +1199,8 @@ Please note the indentation differences.
 
 ```swift
 let indexes = [1, 2]
-let users : [AnyObject]? = ["bob", "peter", "john"]
-let max : Int? = 5
+let users   : [AnyObject]? = ["bob", "peter", "john"]
+let max     : Int? = 5
 ```
 
 **Preferred:**
