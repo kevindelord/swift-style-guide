@@ -1,6 +1,10 @@
 ## TODO:
 
 * Find/Specify another prefix for unwrapped values inside `if let`.
+* Swift 2.0 + Protocol extension: http://www.appcoda.com/swift-2-introduction/
+* Swift 2.0 + Defer
+* Swift 2.0 + Guard
+* Swift 2.0 + Try/Catch
 
 ## QUESTION:
 
