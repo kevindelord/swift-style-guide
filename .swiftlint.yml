@@ -1,0 +1,28 @@
+disabled_rules: # rule identifiers to exclude from running. Comment out to allow the rule
+## compatible rules:
+  # - force_cast
+  # - function_body_length
+  # - leading_whitespace
+  # - return_arrow_whitespace
+  # - trailing_newline
+  # - trailing_whitespace
+  # - operator_whitespace
+## To be confirmed with another project
+  # - todo
+  # - file_length
+  # - type_body_length
+  # - type_name
+## not compatibles rules:
+  - line_length # << max length set to 100. will be updated and configurable in the next versions.
+  - variable_name # << `static let Variable` should start with a lowercase.
+  - nesting # << types should be max 1 level deep -> no structs within structs.
+  - colon # << force the colon to be 'attached' to the variable `let abc: Void`
+  - control_statement # << if without rounded brackets!
+included: # paths to include during linting. `--path` is ignored if present. takes precendence over `excluded`.
+  - Core
+  - DKExtensionsSwift
+  - Helpers
+excluded: # paths to ignore during linting. overridden by `included`.
+  - Carthage
+  - Pods
+  - SwiftyJSON
