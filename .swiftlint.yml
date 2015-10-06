@@ -11,7 +11,7 @@ disabled_rules: # rule identifiers to exclude from running. Comment out to allow
   # - file_length
   # - type_body_length
   # - type_name
-## not compatibles rules:
+## not compatible rules:
   - line_length # << max length set to 100. will be updated and configurable in the next versions.
   - variable_name # << `static let Variable` should start with a lowercase.
   - nesting # << types should be max 1 level deep -> no structs within structs.
