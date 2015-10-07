@@ -23,6 +23,7 @@ included: # paths to include during linting. `--path` is ignored if present. tak
   - Submodules
   - Helpers
   - Classes
+  - Database
 excluded: # paths to ignore during linting. overridden by `included`.
   - Carthage
   - Pods
