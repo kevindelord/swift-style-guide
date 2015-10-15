@@ -35,6 +35,7 @@ Of course, efficacity, readability, and simplicity are the most important points
   * [Protocol Conformance](#protocol-conformance)
   * [About Extensions](#about-extensions)
   * [Computed Properties](#computed-properties)
+  * [Property Observers](#property-observers)
 * [Function Declarations](#function-declarations)
   * [Visibility](#visibility)
 * [Closures](#closures)
@@ -782,7 +783,46 @@ var diameter: Double {
 ```swift
 var diameter: Double {
     get {
-      return radius * 2
+        return radius * 2
+    }
+}
+```
+
+### Property Observers
+
+> Property observers observe and respond to changes in a property’s value. Property observers are called every time a property’s value is set, even if the new value is the same as the property’s current value.
+
+The two [available observers](https://developer.apple.com/library/watchos/documentation/Swift/Conceptual/Swift_Programming_Language/Properties.html) are `willSet` and `didSet`.
+They are both very useful but as well pretty dangerous.
+
+The main problems are that:
+- They are declared _with_ the variable which makes some logic code to appear where you '_just_' declare attributes.
+- Another developer might not be aware of the observer(s) and gets very confused when facing incoherent behaviors.
+- Everything can be done there: not only managing the value itself but also reloading table views, perform segues, etc.
+
+Whenever you use such observers make sure to:
+- Execute as less code as possible.
+- Write code that ONLY interact with the variable iself and nothing else.
+- Keep the context of the interaction consistent.
+- Avoid under-the-hood logics at all costs.
+
+**Preferred:**
+```swift
+var diameter: Double {
+    didSet {
+        if (diameter > oldValue)  {
+            print("Increase diameter by \(diameter - oldValue) cm")
+        }
+    }
+}
+```
+
+**Not Preferred:**
+```swift
+var diameter: Double {
+    didSet {
+        self.tableview.reloadData()
+        APIManager.fetchJSON()
     }
 }
 ```
