@@ -1,7 +1,6 @@
 ## TODO:
 
 * Swift 2.0: Error Handling
-* Swift 2.0: Do/Try/Catch
 
 ## QUESTION:
 

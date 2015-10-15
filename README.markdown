@@ -64,6 +64,7 @@ Of course, efficacity, readability, and simplicity are the most important points
   * [Defer](#defer)
 * [Error Handling](#error-handling)
   * [Do Try Catch](#do-try-catch)
+  * [Throw Custom Errors](#throw-custom-errors)
 * [Semicolons](#semicolons)
 * [Language](#language)
 * [Credits](#credits)
@@ -1675,9 +1676,85 @@ Prints: `1 5 2 3 4`
 
 ## Error Handling
 
-TODO: small introduction
+Before Swift 2.0 developers had to pass a pointer of a NSError object to functions like this one:
+
+```swift
+var error: NSError?
+let value = NSString(contentsOfURL: url, encoding: 0, error: &error)
+if (error == nil) {
+    print(value)
+}
+```
+
+The native framework changed, you now have to use the `do-try-catch` keywords.
 
 ### Do Try Catch
+
+For example if you want to remove a file from the disk using the `NSFileManager`, the function `removeItemAtURL` _could_ actually **throws** an exception in case of error.
+
+It is declared like this: `func removeItemAtURL(URL: NSURL) throws`
+
+* In case you want to simply `try` the function and `catch` the error in order to `return` a value:
+
+```swift
+func deleteItemAtURL(url: NSURL) -> Bool {
+    do {
+        try NSFileManager.defaultManager().removeItemAtURL(url)
+        return true
+    } catch {
+        print(error)
+        return false
+    }
+}
+```
+
+* In case you would like to receive the `error` as a `NSError` object and not as an `ErrorType`:
+
+```swift
+func deleteItemAtURL(url: NSURL) -> Bool {
+    do {
+        try NSFileManager.defaultManager().removeItemAtURL(url)
+        return true
+    } catch let error as NSError {
+        UIAlertView.showErrorMessage(error.localizedDescription)
+        return false
+    }
+}
+```
+
+* Or, if you assume that it _will_ work and you do **not want to handle the error**, but still don't let the app crash:
+
+```swift
+func deleteItemAtURL(url: NSURL) {
+    _ = try? NSFileManager.defaultManager().removeItemAtURL(url)
+}
+```
+
+This example returns the result as an optional inside the `_` variable. Another great feature here, you don't even need to specify a type, `var`, or `let` :]
+
+* But maybe you do **not want to handle the error**, but still want to get a value from the `tried` function:
+
+```swift
+func allStoredAssets() {
+    if let
+        directory = self.getApplicationDocumentsDirectory(),
+        files = try? NSFileManager.defaultManager().contentsOfDirectoryAtPath(directory.absoluteString) {
+            for file in (files ?? []) {
+                print(file)
+            }
+    }
+}
+```
+
+**Attention:** if you need to cast the result of the `try?` function with `as?` the variable will be a **double optional**. This does not occur with the `do-try-catch` pattern.
+
+Example:
+```swift
+let jsonArray = try? NSJSONSerialization.JSONObjectWithData(jsonData, options: .MutableContainers) as? [[NSObject:AnyObject]]
+```
+The type of `jsonArray` is: `[[NSObject : AnyObject]]**??**`
+
+### Throw Custom Errors
 
 TODO
 
