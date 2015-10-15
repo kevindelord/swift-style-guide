@@ -64,7 +64,7 @@ Of course, efficacity, readability, and simplicity are the most important points
   * [Defer](#defer)
 * [Error Handling](#error-handling)
   * [Do Try Catch](#do-try-catch)
-  * [Throw Custom Errors](#throw-custom-errors)
+  * [Custom Errors Handling](#custom-errors-handling)
 * [Semicolons](#semicolons)
 * [Language](#language)
 * [Credits](#credits)
@@ -1754,15 +1754,15 @@ let jsonArray = try? NSJSONSerialization.JSONObjectWithData(jsonData, options: .
 ```
 The type of `jsonArray` is: `[[NSObject : AnyObject]]??`
 
-### Throw Custom Errors
+### Custom Errors Handling
 
-In Swift, errors are represented by values of types conforming to the ErrorType protocol.
+In Swift, errors are represented by values of types conforming to the [ErrorType protocol](https://developer.apple.com/library/watchos/documentation/Swift/Reference/Swift_ErrorType_Protocol/index.html).
 
-Developers are able to create custom error types conforming to this protocol using enums (and [functions](#functions) inside!).
+Developers are able to create **custom error types** conforming to this protocol using enums (and [functions](#functions) inside!).
 
 For example, we take a plane that needs to take off with a missing pilot. An error should be thrown.
 
-* You can create an enumeration that adopts ErrorType like this for the _invalid plane errors_:
+* You can create an enumeration that adopts `ErrorType` like this for the _invalid plane errors_:
 
 ```swift
 enum InvalidPlaneError: ErrorType {
