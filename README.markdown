@@ -700,7 +700,7 @@ __Do extensions know about private attributes and functions ?__
 
 * Yes, extensions know about private attributes and functions from the main class if the extension is declared on the same file. It is also true the way around.
 
-__Can an exention add class attributes ?__
+__Can an extension add class attributes ?__
 
 * No, extensions may not contain stored properties.
 
