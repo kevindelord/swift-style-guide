@@ -57,6 +57,11 @@ Of course, efficacity, readability, and simplicity are the most important points
   * [Type Inference](#type-inference)
   * [Syntactic Sugar](#syntactic-sugar)
 * [Control Flow](#control-flow)
+  * [For Loops](#for-loops)
+  * [Guard](#guard)
+  * [Defer](#defer)
+* [Error Handling](#error-handling)
+  * [Do Try Catch](#do-try-catch)
 * [Semicolons](#semicolons)
 * [Language](#language)
 * [Credits](#credits)
@@ -1487,6 +1492,8 @@ var faxNumber: Optional<Int>
 
 ## Control Flow
 
+### For Loops
+
 Prefer the `for-in` style of `for` loop over the `for-condition-increment` style.
 
 Since Swift 2.0 you can also use the `for-in-where` style instead `for-in { if }`.
@@ -1525,6 +1532,22 @@ for number in numbers {
     }
 }
 ```
+
+### Guard
+
+TODO
+
+### Defer
+
+TODO
+
+## Error Handling
+
+TODO: small introduction
+
+### Do Try Catch
+
+TODO
 
 ## Semicolons
 
