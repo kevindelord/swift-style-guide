@@ -351,7 +351,7 @@ while (check == true) {
     }
     message = (check == true ? "valid" : "invalid") // ternary
     if let msg = message as? String where (i > 7) { // where
-        println(message)
+        print(message)
     }
     i++
 }
@@ -372,7 +372,7 @@ while check == true {
     }
     message = check == true ? "valid" : "invalid" // ternary
     if let msg = message as? String where i > 7 { // where
-        println(message)
+        print(message)
     }
     i++
 }
@@ -689,7 +689,7 @@ class Circle      : Shape {
 When executing:
 ```swift
 let circle = Circle(x: 2, y: 2, radius: 10)
-println(circle.describe())
+print(circle.describe())
 // I am a circle at (2,2) with an area of 314.159265358979
 ```
 
@@ -1263,7 +1263,7 @@ if let
     _b = b,
     _c = c
     where (_c != 0) {
-        println("\((_a + _b) / _c)")
+        print("\((_a + _b) / _c)")
         // 5
 }
 ```
@@ -1271,7 +1271,7 @@ if let
 **Not Preferred:**
 ```swift
 if let a = a, b = b, c = c where c != 0 {
-    println("\((a + b) / c)")
+    print("\((a + b) / c)")
     // 5
 }
 ```
@@ -1290,7 +1290,7 @@ if (array.count == 0),
         _a = a,
         _b = b
         where (b > a) {
-            println(a)
+            print(a)
 }
 ```
 
@@ -1301,7 +1301,7 @@ if (array.count == 0) {
         _a = a,
         _b = b
         where (b > a) {
-            println(a)
+            print(a)
     }
 }
 ```
@@ -1489,26 +1489,40 @@ var faxNumber: Optional<Int>
 
 Prefer the `for-in` style of `for` loop over the `for-condition-increment` style.
 
+Since Swift 2.0 you can also use the `for-in-where` style instead `for-in { if }`.
+
 **Preferred:**
 ```swift
 for _ in 0..<3 {
-    println("Hello three times")
+    print("Hello three times")
 }
 
 for (index, person) in enumerate(attendeeList) {
-    println("\(person) is at position #\(index)")
+    print("\(person) is at position #\(index)")
+}
+
+let numbers = [20, 18, 39, 49, 68, 230, 499, 238, 239, 723, 332]
+for number in numbers where (number > 100) {
+    print(number)
 }
 ```
 
 **Not Preferred:**
 ```swift
 for var i = 0; i < 3; i++ {
-    println("Hello three times")
+    print("Hello three times")
 }
 
 for var i = 0; i < attendeeList.count; i++ {
     let person = attendeeList[i]
-    println("\(person) is at position #\(i)")
+    print("\(person) is at position #\(i)")
+}
+
+let numbers = [20, 18, 39, 49, 68, 230, 499, 238, 239, 723, 332]
+for number in numbers {
+    if (number > 100) {
+        print(number)
+    }
 }
 ```
 
