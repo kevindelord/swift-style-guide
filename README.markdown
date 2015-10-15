@@ -1756,7 +1756,74 @@ The type of `jsonArray` is: `[[NSObject : AnyObject]]??`
 
 ### Throw Custom Errors
 
-TODO
+In Swift, errors are represented by values of types conforming to the ErrorType protocol.
+
+Developers are able to create custom error types conforming to this protocol using enums (and [functions](#functions) inside!).
+
+For example, we take a plane that needs to take off with a missing pilot. An error should be thrown.
+
+* You can create an enumeration that adopts ErrorType like this for the _invalid plane errors_:
+
+```swift
+enum InvalidPlaneError: ErrorType {
+    case MissingPilot
+    case NoPassengers
+
+    func description() -> String {
+        switch self {
+        case .MissingPilot: return "It seems that the pilot missed the flight!"
+        case .NoPassengers: return "Maybe someone forgot the passengers?"
+        }
+    }
+}
+```
+
+* You can declare a throwing function and `throw` some errors like this:
+
+```swift
+func takeOff() throws {
+    guard let _ = self.planePilot else {
+        throw InvalidPlaneError.MissingPilot
+    }
+    guard let passengers = self.waitingPassengers where (passengers.count > 0) else {
+        throw InvalidPlaneError.NoPassengers
+    }
+    print("start to fly")
+}
+```
+
+* Finally, you can `catch` you custom errors by specifying the type you want to handle:
+
+```swift
+func boardingFinished() {
+    do {
+        try self.takeOff()
+    } catch InvalidPlaneError.MissingPilot {
+        print(InvalidPlaneError.MissingPilot.description())
+        // do something
+    } catch InvalidPlaneError.NoPassengers {
+        print(InvalidPlaneError.NoPassengers.description())
+        // do something
+    } catch {
+        print(error)
+    }
+}
+```
+
+* Thanks to the enum type you could even improve the error handling like this:
+
+```swift
+func boardingFinished() {
+    do {
+        try self.takeOff()
+    } catch let error as InvalidPlaneError {
+        print(error.description())
+        // do something
+    } catch {
+        print(error)
+    }
+}
+```
 
 ## Semicolons
 
