@@ -2,7 +2,6 @@
 
 * Swift 2.0 + Protocol extension: http://www.appcoda.com/swift-2-introduction/
 * Swift 2.0 + Defer
-* Swift 2.0 + Guard
 * Swift 2.0 + Try/Catch
 
 * Should we force the protocol implementations inside extensions ?

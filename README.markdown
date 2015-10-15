@@ -1535,7 +1535,68 @@ for number in numbers {
 
 ### Guard
 
-TODO
+> A guard statement, like an if statement, executes statements depending on the Boolean value of an expression. You use a guard statement to require that a condition must be true in order for the code after the guard statement to be executed.
+
+If the condition, defined in the guard statement is not met, the code inside the else branch is executed. On the other hand, if the condition is met, it skips the else clause and continues the code execution.
+
+With guard, you focus on handling the condition you don't want. Furthermore, it forces you to handle one case at a time, avoiding nested conditions. Thus, the code is cleaner and easier to read.
+
+**Preferred:**
+```swift
+func printInfo(webArticle: Article?) {
+    guard let article = webArticle else {
+        print("Error: invalid web article")
+        return
+    }
+    guard let title = article.title where (title.characters.count > 100) else {
+        print("Error: title too short")
+        return
+    }
+    print("Title: (title)")
+}
+```
+
+**Not Preferred:**
+```swift
+func printInfo(webArticle: Article?) {
+    if let article = webArticle {
+        if let title = article.title where (title.characters.count > 100) {
+            print("Title: (title)")
+        } else {
+            print("Error: title too short")
+        }
+    } else {
+        print("Error: invalid web article")
+    }
+}
+```
+
+But, if you don't need to handle one case at a time (for example if you don't need to print a specific message for each error) then the [Multiple Optional Bindings](#multiple-optional-bindings) is still the **best solution**.
+
+**Preferred:**
+```swift
+func printInfo(webArticle: Article?) {
+    if let
+        article = webArticle,
+        title = article.title
+        where (title.characters.count > 100) {
+            print("Title: (title)")
+    }
+}
+```
+
+**Not Preferred:**
+```swift
+func printInfo(webArticle: Article?) {
+    guard let article = webArticle else {
+        return
+    }
+    guard let title = article.title where (title.characters.count > 100) else {
+        return
+    }
+    print("Title: (title)")
+}
+```
 
 ### Defer
 
@@ -1598,3 +1659,4 @@ The current fork has been mainly improved and maintained by:
 * [The Swift Programming Language](https://developer.apple.com/library/prerelease/ios/documentation/swift/conceptual/swift_programming_language/index.html)
 * [Using Swift with Cocoa and Objective-C](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html)
 * [Swift Standard Library Reference](https://developer.apple.com/library/prerelease/ios/documentation/General/Reference/SwiftStandardLibraryReference/index.html)
+* [Swift 2.0 Tutorial](#http://www.appcoda.com/swift2/)
