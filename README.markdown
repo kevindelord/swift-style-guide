@@ -35,7 +35,7 @@ Of course, efficacity, readability, and simplicity are the most important points
   * [Protocol Conformance](#protocol-conformance)
   * [Computed Properties](#computed-properties)
   * [Property Observers](#property-observers)
-* [Extensions](#about-extensions)
+* [Extensions](#extensions)
   * [Class Extensions](#class-extensions)
   * [Protocol Extensions](#protocol-extensions)
 * [Function Declarations](#function-declarations)
@@ -839,7 +839,45 @@ Where it makes sense. For example:
 
 ### Protocol Extensions
 
-TODO
+Swift 2 allows developers to apply extensions to protocol types. Prior to Swift 2, protocols contain only method and property declarations. You were required to provide your own implementation when adopting the protocols in a class.
+
+With protocol extensions, you can add methods or properties to existing protocols.
+
+That means providing default implementations for methods defined in the protocols through extensions.
+
+**Preferred:**
+```swift
+protocol Container {
+    var items   : [String] { get set }
+    func numberOfItems() -> Int
+}
+
+extension Container {
+    func numberOfItems() -> Int {
+        return items.count
+    }
+}
+
+class Vowels    : Container {
+    var items   : [String] = ["A", "E", "I", "O", "U", "Y"]
+}
+```
+
+**Not Preferred:**
+```swift
+protocol Container {
+    var items   : [String] { get set }
+    func numberOfItems() -> Int
+}
+
+class Vowels    : Container {
+    var items   : [String] = ["A", "E", "I", "O", "U", "Y"]
+
+    func numberOfItems() -> Int {
+        return items.count
+    }
+}
+```
 
 ## Function Declarations
 
