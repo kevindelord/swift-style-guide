@@ -1690,7 +1690,7 @@ The native framework changed, you now have to use the `do-try-catch` keywords.
 
 ### Do Try Catch
 
-For example if you want to remove a file from the disk using the `NSFileManager`, the function `removeItemAtURL` _could_ actually **throws** an exception in case of error.
+For example if you want to remove a file from the disk using the `NSFileManager`, the function `removeItemAtURL` **throws** an exception in case of error.
 
 It is declared like this: `func removeItemAtURL(URL: NSURL) throws`
 
@@ -1750,9 +1750,9 @@ func allStoredAssets() {
 
 Example:
 ```swift
-let jsonArray = try? NSJSONSerialization.JSONObjectWithData(jsonData, options: .MutableContainers) as? [[NSObject:AnyObject]]
+let jsonArray = try? NSJSONSerialization.JSONObjectWithData(jsonData, options: .MutableContainers) as? [[NSObject : AnyObject]]
 ```
-The type of `jsonArray` is: `[[NSObject : AnyObject]]**??**`
+The type of `jsonArray` is: `[[NSObject : AnyObject]]??`
 
 ### Throw Custom Errors
 
