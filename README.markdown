@@ -189,7 +189,7 @@ else {
 * Use descriptive names with **UpperCamelCase** for class names and static variables.
 * Use **lowerCamelCase** for class attributes, methods and local variables.
 * When creating outlets, always specify the **type as a suffix**.
-* Only use numeric characters in variable name. No digit allowed.
+* Only use alphabetic characters in variable name. No digit allowed.
 
 **Preferred:**
 ```swift
@@ -330,6 +330,9 @@ Here we go with another restrictive rule: the rounded brackets. For historical r
 It keeps the code more understandable and prevent easy mistakes.
 
 They should be used when comparing values, ternary operators, if else, while, ?? (swift), where (swift) and returning more than one single value.
+
+The main point is to really structure the comparison and the returned/used values; make a very clear code for the next developer.
+
 Here is a small example in Swift showing all cases:
 
 **Preferred:**
@@ -351,6 +354,52 @@ while (check == true) {
     i++
 }
 return (message ?? "message does not exist") // ??
+```
+
+**Not Preferred:**
+```swift
+Int i = 0
+var message : String? = nil
+BOOL check = true == false  // comparison
+
+while check == true {
+    if i >= 10 {  // if
+        check = false
+    } else if i == 2 {
+        i++
+    }
+    message = check == true ? "valid" : "invalid" // ternary
+    if let msg = message as? String where i > 7 { // where
+        println(message)
+    }
+    i++
+}
+return message ?? "message does not exist" // ??
+```
+
+### If
+
+There is also no need to put too much rounded brackets where it isn't needed.
+They should be used to separate different _'deepness/level'_ of comparison.
+
+Try to think about rounded brackets like little blocks that should be executed without taking care of what's around them.
+
+For example:
+
+**Preferred:**
+```swift
+if (a == b) { ... }
+if (a == b && c == d) { ... }
+if (a == b && (c == d || e == f)) { ... }
+```
+
+This is too much:
+
+**Not Preferred:**
+```swift
+if ((a == b)) { ... }
+if ((a == b) && (c == d)) { ... }
+if ((a == b) && ((c == d) || (e == f))) { ... }
 ```
 
 ## Ternary operator
