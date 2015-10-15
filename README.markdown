@@ -1659,4 +1659,4 @@ The current fork has been mainly improved and maintained by:
 * [The Swift Programming Language](https://developer.apple.com/library/prerelease/ios/documentation/swift/conceptual/swift_programming_language/index.html)
 * [Using Swift with Cocoa and Objective-C](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html)
 * [Swift Standard Library Reference](https://developer.apple.com/library/prerelease/ios/documentation/General/Reference/SwiftStandardLibraryReference/index.html)
-* [Swift 2.0 Tutorial](#http://www.appcoda.com/swift2/)
+* [Swift 2.0 Tutorial](http://www.appcoda.com/swift2/)
