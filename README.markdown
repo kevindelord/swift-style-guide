@@ -845,6 +845,8 @@ With protocol extensions, you can add methods or properties to existing protocol
 
 That means providing default implementations for methods defined in the protocols through extensions.
 
+The following example shows how to extend a protocol and implement default functions. This is a very good practice as it **reduces the amount of code** within the classes.
+
 **Preferred:**
 ```swift
 protocol Container {
