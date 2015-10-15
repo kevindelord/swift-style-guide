@@ -1600,7 +1600,29 @@ func printInfo(webArticle: Article?) {
 
 ### Defer
 
-TODO
+The code defined in the defer block will be executed just right before the completion of the **current scope**, regardless of errors.
+
+The defer statement should be used for cleanup or default operations.
+
+Here are two small examples when using `defer`:
+
+```swift
+func start() {
+    print("1")
+    defer {
+        print("2")
+    }
+
+    self.performBlockAfterDelay(1) {
+        print("3")
+        defer {
+            print("4")
+        }
+    }
+    print("5")
+}
+```
+Prints: `1 5 2 3 4`
 
 ## Error Handling
 
