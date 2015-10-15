@@ -1602,7 +1602,7 @@ func printInfo(webArticle: Article?) {
         print("Error: title too short")
         return
     }
-    print("Title: (title)")
+    print("Title: \(title)")
 }
 ```
 
@@ -1762,7 +1762,7 @@ Developers are able to create **custom error types** conforming to this protocol
 
 For example, we take a plane that needs to take off with a missing pilot. An error should be thrown.
 
-* You can create an enumeration that adopts `ErrorType` like this for the _invalid plane errors_:
+* You can create an enumeration that adopts `ErrorType like this for the _invalid plane errors_:
 
 ```swift
 enum InvalidPlaneError: ErrorType {
