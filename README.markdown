@@ -20,6 +20,7 @@ Of course, efficacity, readability, and simplicity are the most important points
     * [Functions](#functions)
     * [Switch Cases](#switch-cases)
 * [Rounded Brackets](#rounded-brackets)
+  * [If](#if)
 * [Ternary operator](#ternary-operator)
 * [Comments](#comments)
 * [Code Alignement And Structure](#code-alignement-and-structure)
@@ -189,7 +190,7 @@ else {
 * Use descriptive names with **UpperCamelCase** for class names and static variables.
 * Use **lowerCamelCase** for class attributes, methods and local variables.
 * When creating outlets, always specify the **type as a suffix**.
-* Only use alphabetic characters in variable name. No digit allowed.
+* Only use **alphabetic characters** in variable names. No digit allowed.
 
 **Preferred:**
 ```swift
@@ -211,7 +212,7 @@ class app_widgetContainer {
 }
 ```
 
-For functions and init methods, prefer named parameters for all arguments unless the context is very clear. Include external parameter names if it makes function calls more readable.
+* For functions and init methods, prefer named parameters for all arguments unless the context is very clear. Include external parameter names if it makes function calls more readable.
 
 ```swift
 func dateFromString(dateString: String) -> NSDate
@@ -224,7 +225,7 @@ convertPointAt(column: 42, row: 13)
 timedAction(delay: 1.0, perform: someOtherAction)
 ```
 
-For methods, follow the standard Apple convention of referring to the first parameter in the method name:
+* For methods, follow the standard Apple convention of referring to the first parameter in the method name:
 
 ```swift
 class Guideline {
