@@ -189,11 +189,13 @@ else {
 * Use descriptive names with **UpperCamelCase** for class names and static variables.
 * Use **lowerCamelCase** for class attributes, methods and local variables.
 * When creating outlets, always specify the **type as a suffix**.
+* Only use numeric characters in variable name. No digit allowed.
 
 **Preferred:**
 ```swift
 class WidgetContainer {
-    var widgetButton                    : UIButton
+    var widgetButton                    : UIButton? = nil
+    var secondLeftWidgetButton          : UIButton? = nil
     let widgetHeightPercentage          = 0.85
     @IBOutlet weak var descriptionLabel : UILabel?
 }
@@ -202,7 +204,8 @@ class WidgetContainer {
 **Not Preferred:**
 ```swift
 class app_widgetContainer {
-    var wBut: UIButton
+    var wBut: UIButton? = nil
+    var wBut2: UIButton? = nil
     let WHeightPCT = 0.85
     @IBOutlet weak var labelDescription : UILabel?
 }

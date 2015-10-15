@@ -7,7 +7,6 @@ if ( a == b && c == d) {}
 if ( a == b && (c == d || e == f)) {}
 ```
 
-* Naming: Don't use digit in variable name: no `superTitle3`
 * Find/Specify another prefix for unwrapped values inside `if let`.
 * Swift 2.0 + Protocol extension: http://www.appcoda.com/swift-2-introduction/
 * Swift 2.0 + Defer
