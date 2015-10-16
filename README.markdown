@@ -20,6 +20,7 @@ Of course, efficacity, readability, and simplicity are the most important points
     * [Functions](#functions)
     * [Switch Cases](#switch-cases)
 * [Rounded Brackets](#rounded-brackets)
+  * [If](#if)
 * [Ternary operator](#ternary-operator)
 * [Comments](#comments)
 * [Code Alignement And Structure](#code-alignement-and-structure)
@@ -32,8 +33,11 @@ Of course, efficacity, readability, and simplicity are the most important points
   * [Use of Self](#use-of-self)
   * [Class Definition](#class-definition)
   * [Protocol Conformance](#protocol-conformance)
-  * [About Extensions](#about-extensions)
   * [Computed Properties](#computed-properties)
+  * [Property Observers](#property-observers)
+* [Extensions](#extensions)
+  * [Class Extensions](#class-extensions)
+  * [Protocol Extensions](#protocol-extensions)
 * [Function Declarations](#function-declarations)
   * [Visibility](#visibility)
 * [Closures](#closures)
@@ -55,6 +59,12 @@ Of course, efficacity, readability, and simplicity are the most important points
   * [Type Inference](#type-inference)
   * [Syntactic Sugar](#syntactic-sugar)
 * [Control Flow](#control-flow)
+  * [For Loops](#for-loops)
+  * [Guard](#guard)
+  * [Defer](#defer)
+* [Error Handling](#error-handling)
+  * [Do Try Catch](#do-try-catch)
+  * [Custom Errors Handling](#custom-errors-handling)
 * [Semicolons](#semicolons)
 * [Language](#language)
 * [Credits](#credits)
@@ -189,11 +199,13 @@ else {
 * Use descriptive names with **UpperCamelCase** for class names and static variables.
 * Use **lowerCamelCase** for class attributes, methods and local variables.
 * When creating outlets, always specify the **type as a suffix**.
+* Only use **alphabetic characters** in variable names. No digit allowed.
 
 **Preferred:**
 ```swift
 class WidgetContainer {
-    var widgetButton                    : UIButton
+    var widgetButton                    : UIButton? = nil
+    var secondLeftWidgetButton          : UIButton? = nil
     let widgetHeightPercentage          = 0.85
     @IBOutlet weak var descriptionLabel : UILabel?
 }
@@ -202,13 +214,14 @@ class WidgetContainer {
 **Not Preferred:**
 ```swift
 class app_widgetContainer {
-    var wBut: UIButton
+    var wBut: UIButton? = nil
+    var wBut2: UIButton? = nil
     let WHeightPCT = 0.85
     @IBOutlet weak var labelDescription : UILabel?
 }
 ```
 
-For functions and init methods, prefer named parameters for all arguments unless the context is very clear. Include external parameter names if it makes function calls more readable.
+* For functions and init methods, prefer named parameters for all arguments unless the context is very clear. Include external parameter names if it makes function calls more readable.
 
 ```swift
 func dateFromString(dateString: String) -> NSDate
@@ -221,7 +234,7 @@ convertPointAt(column: 42, row: 13)
 timedAction(delay: 1.0, perform: someOtherAction)
 ```
 
-For methods, follow the standard Apple convention of referring to the first parameter in the method name:
+* For methods, follow the standard Apple convention of referring to the first parameter in the method name:
 
 ```swift
 class Guideline {
@@ -327,6 +340,9 @@ Here we go with another restrictive rule: the rounded brackets. For historical r
 It keeps the code more understandable and prevent easy mistakes.
 
 They should be used when comparing values, ternary operators, if else, while, ?? (swift), where (swift) and returning more than one single value.
+
+The main point is to really structure the comparison and the returned/used values; make a very clear code for the next developer.
+
 Here is a small example in Swift showing all cases:
 
 **Preferred:**
@@ -343,11 +359,57 @@ while (check == true) {
     }
     message = (check == true ? "valid" : "invalid") // ternary
     if let msg = message as? String where (i > 7) { // where
-        println(message)
+        print(message)
     }
     i++
 }
 return (message ?? "message does not exist") // ??
+```
+
+**Not Preferred:**
+```swift
+Int i = 0
+var message : String? = nil
+BOOL check = true == false  // comparison
+
+while check == true {
+    if i >= 10 {  // if
+        check = false
+    } else if i == 2 {
+        i++
+    }
+    message = check == true ? "valid" : "invalid" // ternary
+    if let msg = message as? String where i > 7 { // where
+        print(message)
+    }
+    i++
+}
+return message ?? "message does not exist" // ??
+```
+
+### If
+
+There is also no need to put too much rounded brackets where it isn't needed.
+They should be used to separate different _'deepness/level'_ of comparison.
+
+Try to think about rounded brackets like little blocks that should be executed without taking care of what's around them.
+
+For example:
+
+**Preferred:**
+```swift
+if (a == b) { ... }
+if (a == b && c == d) { ... }
+if (a == b && (c == d || e == f)) { ... }
+```
+
+This is too much:
+
+**Not Preferred:**
+```swift
+if ((a == b)) { ... }
+if ((a == b) && (c == d)) { ... }
+if ((a == b) && ((c == d) || (e == f))) { ... }
 ```
 
 ## Ternary operator
@@ -635,7 +697,7 @@ class Circle      : Shape {
 When executing:
 ```swift
 let circle = Circle(x: 2, y: 2, radius: 10)
-println(circle.describe())
+print(circle.describe())
 // I am a circle at (2,2) with an area of 314.159265358979
 ```
 
@@ -651,10 +713,9 @@ The example above demonstrates the following **important** style guidelines:
 * [Class Attributes](#class-attributes) as optionals or with default values.
 * Show an example of `convenience init`.
 
-
 ### Protocol Conformance
 
-In Swift, protocols can be used, but it's better appreciated to use closures.
+In Swift, custom protocols can be used of course, but closures are better appreciated.
 In the end they are the very same thing: a pointer to a function owned by an object (a specific object or self).
 
 The closures are better as they are easier to read, easier to implement and to understand.
@@ -662,7 +723,9 @@ Moreover they are better integrated in the language as they are in Obj-C.
 It is always possible to remove/replace a logic done with **custom** delegates.
 
 When adding native protocol conformance to a class, prefer adding a separate **class extension for the protocol methods**.
-This keeps the related methods grouped together with the protocol and can simplify instructions to add a protocol to a class with its associated methods.
+This keeps the related methods grouped together.
+
+You should create **one extension per protocol**.
 
 Also, do not forget the `// MARK: -` comment to keep things well-organized!
 
@@ -690,7 +753,70 @@ class MyViewcontroller: UIViewController, UITableViewDataSource, UIScrollViewDel
 }
 ```
 
-#### About Extensions
+### Computed Properties
+
+For conciseness, if a computed property is read-only, omit the get clause. The get clause is required only when a set clause is provided.
+
+Please note the [rounded brackets](#rounded-brackets).
+
+**Preferred:**
+```swift
+var diameter: Double {
+    return (self.radius * 2)
+}
+```
+
+**Not Preferred:**
+```swift
+var diameter: Double {
+    get {
+        return radius * 2
+    }
+}
+```
+
+### Property Observers
+
+> Property observers observe and respond to changes in a property’s value. Property observers are called every time a property’s value is set, even if the new value is the same as the property’s current value.
+
+The two [available observers](https://developer.apple.com/library/watchos/documentation/Swift/Conceptual/Swift_Programming_Language/Properties.html) are `willSet` and `didSet`.
+They are both very useful but as well pretty dangerous.
+
+The main problems are that:
+- They are declared _with_ the variable which makes some logic code to appear where you '_just_' declare attributes.
+- Another developer might not be aware of the observer(s) and gets very confused when facing incoherent behaviors.
+- Everything can be done there: not only managing the value itself but also reloading table views, perform segues, etc.
+
+Whenever you use such observers make sure to:
+- Execute as less code as possible.
+- Write code that ONLY interact with the variable iself and nothing else.
+- Keep the context of the interaction consistent.
+- Avoid under-the-hood logics at all costs.
+
+**Preferred:**
+```swift
+var diameter: Double {
+    didSet {
+        if (diameter > oldValue)  {
+            print("Increase diameter by \(diameter - oldValue) cm")
+        }
+    }
+}
+```
+
+**Not Preferred:**
+```swift
+var diameter: Double {
+    didSet {
+        self.tableview.reloadData()
+        APIManager.fetchJSON()
+    }
+}
+```
+
+## Extensions
+
+### Class Extensions
 
 From the [official documentation](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Extensions.html#//apple_ref/doc/uid/TP40014097-CH24-ID151):
 
@@ -712,24 +838,46 @@ Where it makes sense. For example:
 * In a dedicated file if the extension tends to be very long and/or independant from the orinal class.
 * In a file grouping multiple extensions of the same context.
 
-### Computed Properties
+### Protocol Extensions
 
-For conciseness, if a computed property is read-only, omit the get clause. The get clause is required only when a set clause is provided.
+Swift 2 allows developers to apply extensions to protocol types. Prior to Swift 2, protocols contain only method and property declarations. You were required to provide your own implementation when adopting the protocols in a class.
 
-Please note the [rounded brackets](#rounded-brackets).
+With protocol extensions, you can add methods or properties to existing protocols.
+
+That means providing default implementations for methods defined in the protocols through extensions.
+
+The following example shows how to extend a protocol and implement default functions. This is a very good practice as it **reduces the amount of code** within the classes.
 
 **Preferred:**
 ```swift
-var diameter: Double {
-    return (self.radius * 2)
+protocol Container {
+    var items   : [String] { get set }
+    func numberOfItems() -> Int
+}
+
+extension Container {
+    func numberOfItems() -> Int {
+        return items.count
+    }
+}
+
+class Vowels    : Container {
+    var items   : [String] = ["A", "E", "I", "O", "U", "Y"]
 }
 ```
 
 **Not Preferred:**
 ```swift
-var diameter: Double {
-    get {
-      return radius * 2
+protocol Container {
+    var items   : [String] { get set }
+    func numberOfItems() -> Int
+}
+
+class Vowels    : Container {
+    var items   : [String] = ["A", "E", "I", "O", "U", "Y"]
+
+    func numberOfItems() -> Int {
+        return items.count
     }
 }
 ```
@@ -1170,7 +1318,7 @@ if let
     _b = b,
     _c = c
     where (_c != 0) {
-        println("\((_a + _b) / _c)")
+        print("\((_a + _b) / _c)")
         // 5
 }
 ```
@@ -1178,7 +1326,7 @@ if let
 **Not Preferred:**
 ```swift
 if let a = a, b = b, c = c where c != 0 {
-    println("\((a + b) / c)")
+    print("\((a + b) / c)")
     // 5
 }
 ```
@@ -1197,7 +1345,7 @@ if (array.count == 0),
         _a = a,
         _b = b
         where (b > a) {
-            println(a)
+            print(a)
 }
 ```
 
@@ -1208,7 +1356,7 @@ if (array.count == 0) {
         _a = a,
         _b = b
         where (b > a) {
-            println(a)
+            print(a)
     }
 }
 ```
@@ -1394,28 +1542,286 @@ var faxNumber: Optional<Int>
 
 ## Control Flow
 
+### For Loops
+
 Prefer the `for-in` style of `for` loop over the `for-condition-increment` style.
+
+Since Swift 2.0 you can also use the `for-in-where` style instead `for-in { if }`.
 
 **Preferred:**
 ```swift
 for _ in 0..<3 {
-    println("Hello three times")
+    print("Hello three times")
 }
 
 for (index, person) in enumerate(attendeeList) {
-    println("\(person) is at position #\(index)")
+    print("\(person) is at position #\(index)")
+}
+
+let numbers = [20, 18, 39, 49, 68, 230, 499, 238, 239, 723, 332]
+for number in numbers where (number > 100) {
+    print(number)
 }
 ```
 
 **Not Preferred:**
 ```swift
 for var i = 0; i < 3; i++ {
-    println("Hello three times")
+    print("Hello three times")
 }
 
 for var i = 0; i < attendeeList.count; i++ {
     let person = attendeeList[i]
-    println("\(person) is at position #\(i)")
+    print("\(person) is at position #\(i)")
+}
+
+let numbers = [20, 18, 39, 49, 68, 230, 499, 238, 239, 723, 332]
+for number in numbers {
+    if (number > 100) {
+        print(number)
+    }
+}
+```
+
+### Guard
+
+> A guard statement, like an if statement, executes statements depending on the Boolean value of an expression. You use a guard statement to require that a condition must be true in order for the code after the guard statement to be executed.
+
+If the condition, defined in the guard statement is not met, the code inside the else branch is executed. On the other hand, if the condition is met, it skips the else clause and continues the code execution.
+
+With guard, you focus on handling the condition you don't want. Furthermore, it forces you to handle one case at a time, avoiding nested conditions. Thus, the code is cleaner and easier to read.
+
+**Preferred:**
+```swift
+func printInfo(webArticle: Article?) {
+    guard let article = webArticle else {
+        print("Error: invalid web article")
+        return
+    }
+    guard let title = article.title where (title.characters.count > 100) else {
+        print("Error: title too short")
+        return
+    }
+    print("Title: \(title)")
+}
+```
+
+**Not Preferred:**
+```swift
+func printInfo(webArticle: Article?) {
+    if let article = webArticle {
+        if let title = article.title where (title.characters.count > 100) {
+            print("Title: (title)")
+        } else {
+            print("Error: title too short")
+        }
+    } else {
+        print("Error: invalid web article")
+    }
+}
+```
+
+But, if you don't need to handle one case at a time (for example if you don't need to print a specific message for each error) then the [Multiple Optional Bindings](#multiple-optional-bindings) is still the **best solution**.
+
+**Preferred:**
+```swift
+func printInfo(webArticle: Article?) {
+    if let
+        article = webArticle,
+        title = article.title
+        where (title.characters.count > 100) {
+            print("Title: (title)")
+    }
+}
+```
+
+**Not Preferred:**
+```swift
+func printInfo(webArticle: Article?) {
+    guard let article = webArticle else {
+        return
+    }
+    guard let title = article.title where (title.characters.count > 100) else {
+        return
+    }
+    print("Title: (title)")
+}
+```
+
+### Defer
+
+The code defined in the defer block will be executed just right before the completion of the **current scope**, regardless of errors.
+
+The defer statement should be used for cleanup or default operations.
+
+Here are two small examples when using `defer`:
+
+```swift
+func start() {
+    print("1")
+    defer {
+        print("2")
+    }
+
+    self.performBlockAfterDelay(1) {
+        print("3")
+        defer {
+            print("4")
+        }
+    }
+    print("5")
+}
+```
+Prints: `1 5 2 3 4`
+
+## Error Handling
+
+Before Swift 2.0 developers had to pass a pointer of a NSError object to functions like this one:
+
+```swift
+var error: NSError?
+let value = NSString(contentsOfURL: url, encoding: 0, error: &error)
+if (error == nil) {
+    print(value)
+}
+```
+
+The native framework changed, you now have to use the `do-try-catch` keywords.
+
+### Do Try Catch
+
+For example if you want to remove a file from the disk using the `NSFileManager`, the function `removeItemAtURL` **throws** an exception in case of error.
+
+It is declared like this: `func removeItemAtURL(URL: NSURL) throws`
+
+* In case you want to simply `try` the function and `catch` the error in order to `return` a value:
+
+```swift
+func deleteItemAtURL(url: NSURL) -> Bool {
+    do {
+        try NSFileManager.defaultManager().removeItemAtURL(url)
+        return true
+    } catch {
+        print(error)
+        return false
+    }
+}
+```
+
+* In case you would like to receive the `error` as a `NSError` object and not as an `ErrorType`:
+
+```swift
+func deleteItemAtURL(url: NSURL) -> Bool {
+    do {
+        try NSFileManager.defaultManager().removeItemAtURL(url)
+        return true
+    } catch let error as NSError {
+        UIAlertView.showErrorMessage(error.localizedDescription)
+        return false
+    }
+}
+```
+
+* Or, if you assume that it _will_ work and you do **not want to handle the error**, but still don't let the app crash:
+
+```swift
+func deleteItemAtURL(url: NSURL) {
+    _ = try? NSFileManager.defaultManager().removeItemAtURL(url)
+}
+```
+
+This example returns the result as an optional inside the `_` variable. Another great feature here, you don't even need to specify a type, `var`, or `let` :]
+
+* But maybe you do **not want to handle the error**, but still want to get a value from the `tried` function:
+
+```swift
+func allStoredAssets() {
+    if let
+        directory = self.getApplicationDocumentsDirectory(),
+        files = try? NSFileManager.defaultManager().contentsOfDirectoryAtPath(directory.absoluteString) {
+            for file in (files ?? []) {
+                print(file)
+            }
+    }
+}
+```
+
+**Attention:** if you need to cast the result of the `try?` function with `as?` the variable will be a **double optional**. This does not occur with the `do-try-catch` pattern.
+
+Example:
+```swift
+let jsonArray = try? NSJSONSerialization.JSONObjectWithData(jsonData, options: .MutableContainers) as? [[NSObject : AnyObject]]
+```
+The type of `jsonArray` is: `[[NSObject : AnyObject]]??`
+
+### Custom Errors Handling
+
+In Swift, errors are represented by values of types conforming to the [ErrorType protocol](https://developer.apple.com/library/watchos/documentation/Swift/Reference/Swift_ErrorType_Protocol/index.html).
+
+Developers are able to create **custom error types** conforming to this protocol using enums (and [functions](#functions) inside!).
+
+For example, we take a plane that needs to take off with a missing pilot. An error should be thrown.
+
+* You can create an enumeration that adopts `ErrorType like this for the _invalid plane errors_:
+
+```swift
+enum InvalidPlaneError: ErrorType {
+    case MissingPilot
+    case NoPassengers
+
+    func description() -> String {
+        switch self {
+        case .MissingPilot: return "It seems that the pilot missed the flight!"
+        case .NoPassengers: return "Maybe someone forgot the passengers?"
+        }
+    }
+}
+```
+
+* You can declare a throwing function and `throw` some errors like this:
+
+```swift
+func takeOff() throws {
+    guard let _ = self.planePilot else {
+        throw InvalidPlaneError.MissingPilot
+    }
+    guard let passengers = self.waitingPassengers where (passengers.count > 0) else {
+        throw InvalidPlaneError.NoPassengers
+    }
+    print("start to fly")
+}
+```
+
+* Finally, you can `catch` you custom errors by specifying the type you want to handle:
+
+```swift
+func boardingFinished() {
+    do {
+        try self.takeOff()
+    } catch InvalidPlaneError.MissingPilot {
+        print(InvalidPlaneError.MissingPilot.description())
+        // do something
+    } catch InvalidPlaneError.NoPassengers {
+        print(InvalidPlaneError.NoPassengers.description())
+        // do something
+    } catch {
+        print(error)
+    }
+}
+```
+
+* Thanks to the enum type you could even improve the error handling like this:
+
+```swift
+func boardingFinished() {
+    do {
+        try self.takeOff()
+    } catch let error as InvalidPlaneError {
+        print(error.description())
+        // do something
+    } catch {
+        print(error)
+    }
 }
 ```
 
@@ -1468,3 +1874,4 @@ The current fork has been mainly improved and maintained by:
 * [The Swift Programming Language](https://developer.apple.com/library/prerelease/ios/documentation/swift/conceptual/swift_programming_language/index.html)
 * [Using Swift with Cocoa and Objective-C](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html)
 * [Swift Standard Library Reference](https://developer.apple.com/library/prerelease/ios/documentation/General/Reference/SwiftStandardLibraryReference/index.html)
+* [Swift 2.0 Tutorial](http://www.appcoda.com/swift2/)
