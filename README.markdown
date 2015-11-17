@@ -318,8 +318,8 @@ It can be annoying to write multiple times the same case. But, next time a devel
 ```swift
 static func isUserRegistered(user: UserState) -> Bool {
     switch user {
-    case .NotRegistered:                                  return true
-    case .RegisteredWithoutEmail, .RegisteredWithEmail:   return false
+    case .NotRegistered:                                  return false
+    case .RegisteredWithoutEmail, .RegisteredWithEmail:   return true
     }
 }
 ```
@@ -328,8 +328,8 @@ static func isUserRegistered(user: UserState) -> Bool {
 ```swift
 static func isUserRegistered(user: UserState) -> Bool {
     switch user {
-    case .NotRegistered:                                  return true
-    default: return false
+    case .NotRegistered: return false
+    default: return true
     }
 }
 ```
