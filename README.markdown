@@ -272,10 +272,10 @@ Use a type to your enum only and only if you need the `rawValue` in your code.
 Without this, prefer simple enumeration without type.
 
 ```swift
-enum Device : Int {
-    case iPhone = 0
-    case iPad
-    case iPod
+enum UserState : Int {
+    case NotRegistered = 0
+    case RegisteredWithoutEmail
+    case RegisteredWithEmail
 }
 ```
 
