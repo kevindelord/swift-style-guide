@@ -288,21 +288,21 @@ Enumerations and structures became amazing in Swift as they can now have (static
 This is extremely usefull when you need data or logic depending on an enum value, for example a title of a segue.
 
 ```swift
-enum Device : Int {
-    case iPhone = 0
-    case iPad
-    case iPod
+enum UserState : Int {
+    case NotRegistered = 0
+    case RegisteredWithoutEmail
+    case RegisteredWithEmail
 
     func title() -> String {
         switch self {
-        case .iPhone: return L("device.iPhone")
-        case .iPad: return L("device.iPad")
-        case .iPod: return L("device.iPod")
+        case .NotRegistered: return L("user.pleaseRegister")
+        case .RegisteredWithoutEmail: return L("user.pleaseSpecifyEmail")
+        case .RegisteredWithEmail: return L("user.registrationComplete")
         }
     }
 
     static func titleForId(id: Int) -> String? {
-        return Device(rawValue: id)?.title()
+        return UserState(rawValue: id)?.title()
     }
 }
 ```
@@ -316,20 +316,20 @@ It can be annoying to write multiple times the same case. But, next time a devel
 
 **Preferred:**
 ```swift
-static func canCall(device: Device) -> Bool {
-    switch device {
-    case .iPhone:       return true
-    case .iPod, .iPad:  return false
+static func isUserRegistered(user: UserState) -> Bool {
+    switch user {
+    case .NotRegistered:                                  return false
+    case .RegisteredWithoutEmail, .RegisteredWithEmail:   return true
     }
 }
 ```
 
 **Not Preferred:**
 ```swift
-static func canCall(device: Device) -> Bool {
-    switch device {
-    case .iPhone: return true
-    default: return false
+static func isUserRegistered(user: UserState) -> Bool {
+    switch user {
+    case .NotRegistered: return false
+    default: return true
     }
 }
 ```
