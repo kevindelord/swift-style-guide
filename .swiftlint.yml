@@ -1,31 +1,57 @@
-disabled_rules: # rule identifiers to exclude from running. Comment out to allow the rule
-## compatible rules:
-  # - force_cast
-  # - function_body_length
-  # - leading_whitespace
-  # - return_arrow_whitespace
-  # - trailing_newline
-  # - trailing_whitespace
-  # - operator_whitespace
-  # - todo
-  # - file_length
-  # - type_body_length
-  # - type_name
-## not compatible rules:
-  - line_length # << max length set to 100. will be updated and configurable in the next versions.
-  - variable_name # << `static let Variable` should start with a lowercase.
-  - nesting # << types should be max 1 level deep -> no structs within structs.
-  - colon # << force the colon to be 'attached' to the variable `let abc: Void`
-  - control_statement # << if without rounded brackets!
-included: # paths to include during linting. `--path` is ignored if present. takes precendence over `excluded`.
-  - Core
-  - DKExtensionsSwift
-  - Submodules
-  - Helpers
-  - Classes
-  - Database
+disabled_rules: # rule identifiers to exclude from running
+  - colon	# exaclty one space after the : >>> let abc: Void\n
+  - control_statement # no rounded brackets around conditions. we would need this the other way around
+  - nesting	# func nesting max 1 level
+  - variable_name_max_length # not configurable, warning at 40, error at 60
+  - variable_name # variables should start with a lower case character. Does not work with our structs
+  - todo # to be decided
+
+#included: # paths to include during linting. `--path` is ignored if present. takes precendence over `excluded`.
+#  - Core
+#  - DKExtensionsSwift
+#  - Submodules
+#  - Helpers
+#  - Classes
+
 excluded: # paths to ignore during linting. overridden by `included`.
   - Carthage
   - Pods
-  - SwiftyJSON
   - External
+
+# rule parameters
+file_length:
+  - 600 #warning
+  - 800 #error
+
+function_body_length:
+  - 40 #warning
+  - 80 #error
+
+line_length:
+  - 300 #warning
+  - 350 #error
+
+type_body_length:
+  - 400 #warning
+  - 500 #error
+
+####### enabled rules #######
+#  - comma # k,v >> k, v
+#  - file_length # max number of lines per file
+#  - force_cast # as!
+#  - force_try # try!
+#  - function_body_length # max length of function body
+#  - leading_whitespace # empty lines with whitespaces only
+#  - legacy_constructor # e.g CGPointMake(...) >>> CGPoint(x: ..., y: ...)
+#  - line_length # max length of a line
+#  - opening_brace # [].map(){ ... } >>> [].map() { ... }
+#  - operator_function_whitespace # func  thing () {...} >>> func thing() {...}
+#  - return_arrow_whitespace # func thing()->Bool >>> func thing() -> Bool
+#  - statement_position # }else if { >>> } else if {
+#  - trailing_newline # new line at the end of a file
+#  - trailing_semicolon # no ;
+#  - trailing_whitespace # no trailing whitespaced
+#  - type_body_length # max body length
+#  - type_name # types should start with a capital letter
+#  - valid_docs # docs should match the method signature
+#  - variable_name_min_length # variables should have a 3 letter minimum name
