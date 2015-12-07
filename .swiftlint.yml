@@ -1,10 +1,10 @@
 disabled_rules: # rule identifiers to exclude from running
-  - colon
-  - control_statement # we would need this the other way around
-  - nesting
-  - variable_name_max_length
-  - variable_name
-  - todo
+  - colon	# exaclty one space after the : >>> let abc: Void\n
+  - control_statement # no rounded brackets around conditions. we would need this the other way around
+  - nesting	# func nesting max 1 level
+  - variable_name_max_length # not configurable, warning at 40, error at 60
+  - variable_name # variables should start with a lower case character. Does not work with our structs
+  - todo # to be decided
 
 #included: # paths to include during linting. `--path` is ignored if present. takes precendence over `excluded`.
 #  - Core
@@ -36,22 +36,22 @@ type_body_length:
   - 500 #error
 
 ####### enabled rules #######
-#  - comma
-#  - file_length
-#  - force_cast
-#  - force_try
-#  - function_body_length
-#  - leading_whitespace
-#  - legacy_constructor
-#  - line_length
-#  - opening_brace
-#  - operator_function_whitespace
-#  - return_arrow_whitespace
-#  - statement_position
-#  - trailing_newline
-#  - trailing_semicolon
-#  - trailing_whitespace
-#  - type_body_length
-#  - type_name
-#  - valid_docs
-#  - variable_name_min_length
+#  - comma # k,v >> k, v
+#  - file_length # max number of lines per file
+#  - force_cast # as!
+#  - force_try # try!
+#  - function_body_length # max length of function body
+#  - leading_whitespace # empty lines with whitespaces only
+#  - legacy_constructor # e.g CGPointMake(...) >>> CGPoint(x: ..., y: ...)
+#  - line_length # max length of a line
+#  - opening_brace # [].map(){ ... } >>> [].map() { ... }
+#  - operator_function_whitespace # func  thing () {...} >>> func thing() {...}
+#  - return_arrow_whitespace # func thing()->Bool >>> func thing() -> Bool
+#  - statement_position # }else if { >>> } else if {
+#  - trailing_newline # new line at the end of a file
+#  - trailing_semicolon # no ;
+#  - trailing_whitespace # no trailing whitespaced
+#  - type_body_length # max body length
+#  - type_name # types should start with a capital letter
+#  - valid_docs # docs should match the method signature
+#  - variable_name_min_length # variables should have a 3 letter minimum name
