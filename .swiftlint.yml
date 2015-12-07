@@ -1,6 +1,6 @@
 disabled_rules: # rule identifiers to exclude from running
   - colon
-  - control_statement
+  - control_statement # we would need this the other way around
   - nesting
   - variable_name_max_length
   - variable_name
@@ -16,7 +16,7 @@ disabled_rules: # rule identifiers to exclude from running
 excluded: # paths to ignore during linting. overridden by `included`.
   - Carthage
   - Pods
-#  - External
+  - External
 
 # rule parameters
 file_length:
@@ -24,12 +24,12 @@ file_length:
   - 800 #error
 
 function_body_length:
-  - 80 #warning
-  - 120 #error
+  - 40 #warning
+  - 80 #error
 
 line_length:
-  - 400 #warning
-  - 500 #error
+  - 300 #warning
+  - 350 #error
 
 type_body_length:
   - 400 #warning
