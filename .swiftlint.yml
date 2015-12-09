@@ -6,13 +6,6 @@ disabled_rules: # rule identifiers to exclude from running
   - variable_name # variables should start with a lower case character. Does not work with our structs
   - todo # to be decided
 
-#included: # paths to include during linting. `--path` is ignored if present. takes precendence over `excluded`.
-#  - Core
-#  - DKExtensionsSwift
-#  - Submodules
-#  - Helpers
-#  - Classes
-
 excluded: # paths to ignore during linting. overridden by `included`.
   - Carthage
   - Pods
