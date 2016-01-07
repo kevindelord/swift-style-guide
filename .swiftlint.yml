@@ -1,10 +1,14 @@
+###
+# Swiftlint configuration file.
+# Latest version supported: 0.5.4
+# Any newer version hasn't been checked yet and might not follow the style guide.
+###
+
 disabled_rules: # rule identifiers to exclude from running
   - colon	# exaclty one space after the : >>> let abc: Void\n
   - control_statement # no rounded brackets around conditions. we would need this the other way around
   - nesting	# func nesting max 1 level
-  - variable_name_max_length # not configurable, warning at 40, error at 60
-  - variable_name # variables should start with a lower case character. Does not work with our structs
-  - todo # to be decided
+  - todo # TODO can be written in the code but should be linked to a ticket on JIRA.
 
 excluded: # paths to ignore during linting. overridden by `included`.
   - Carthage
@@ -47,4 +51,5 @@ type_body_length:
 #  - type_body_length # max body length
 #  - type_name # types should start with a capital letter
 #  - valid_docs # docs should match the method signature
-#  - variable_name_min_length # variables should have a 3 letter minimum name
+#  - variable_name_min_length # variables should have a 3 letter minimum name and 40 maximum.
+#  - variable_name # variables should start with a lower case character or a capitalized one if `static`.
