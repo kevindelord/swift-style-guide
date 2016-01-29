@@ -647,18 +647,24 @@ class MyViewController              : UIViewController {
 }
 ```
 
+### Final
+
+Classes should start as `final`, and only be changed to allow subclassing if a valid need for inheritance has been identified. Even in that case, as many definitions as possible within the class should be final as well, following the same rules.
+
+Rationale: [Composition](https://en.wikipedia.org/wiki/Composition_over_inheritance) is usually preferable to inheritance, and opting in to inheritance hopefully means that more thought will be put into the decision.
+
 ### Class Definition
 
 Here's an example of a well-styled class definition:
 
 ```swift
-class Circle      : Shape {
+final class Circle      : Shape {
 
-    var x         : Int = 0
-    var y         : Int = 0
-    var radius    : Double?
+    var x               : Int = 0
+    var y               : Int = 0
+    var radius          : Double?
 
-    var diameter  : Double {
+    var diameter        : Double {
         get {
             return ((self.radius ?? 0) * 2)
         }
