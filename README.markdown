@@ -1320,11 +1320,11 @@ let c = "3".toInt()
 **Preferred:**
 ```swift
 if let
-    _a = a,
-    _b = b,
-    _c = c
-    where (_c != 0) {
-        print("\((_a + _b) / _c)")
+    a = a,
+    b = b,
+    c = c
+    where (c != 0) {
+        print("\((a + b) / c)")
         // 5
 }
 ```
@@ -1350,8 +1350,8 @@ if (array.count == 0),
     let
         _a = a,
         _b = b
-        where (b > a) {
-            print(a)
+        where (_b > _a) {
+            print(_a)
 }
 ```
 
@@ -1361,8 +1361,8 @@ if (array.count == 0) {
     if let
         _a = a,
         _b = b
-        where (b > a) {
-            print(a)
+        where (_b > _a) {
+            print(_a)
     }
 }
 ```
@@ -1407,6 +1407,8 @@ Swift has very neat operator used to safely unwrapped optionals: `??`
 
 Close to the [Ternary operator](#ternary-operator), this one returns the optional value or a default value if `nil` is found.
 
+Please note the [rounded brackets](#rounded-brackets).
+
 **Preferred:**
 ```swift
 let text = (self.generateSuperText() as? String ?? "default value")
@@ -1422,34 +1424,35 @@ if let _superText = self.generateSuperText() as? String {
 }
 ```
 
-Please note the [rounded brackets](#rounded-brackets).
-
 #### Naming Convention
 
 When naming optional variables and properties, avoid naming them like `optionalString` or `maybeView` since their optional-ness is already in the type declaration.
 
-For optional binding, add a small prefix to the original name rather than using names like `unwrappedView` or `actualLabel`. Usually `_` is quick and easy to understand.
+For optional binding, you can either add a small prefix to the original name or simply reuse the same name.
+
+Everything better than using names like `unwrappedView` or `actualLabel`. Usually `_` is quick and easy to understand.
+
+**Note:** Using the same name works and keeps the code in a good shape. Use underscores if you think it makes the code easier to understand.
 
 **Preferred:**
 ```swift
 var subview : UIView?
 var volume  : Double?
 
-// later on...
 if let
-    _subview = subview,
+    subview = subview,
     _volume = volume {
-        // do something with unwrapped subview and volume
+        // do something with unwrapped subview and _volume
 }
 ```
 
 **Not Preferred:**
 ```swift
-var optionalSubview : UIView?
-var volume          : Double?
+var subview   : UIView?
+var volume    : Double?
 
 if let
-    unwrappedSubview = optionalSubview,
+    unwrappedSubview = subview,
     realVolume = volume {
         // do something with unwrappedSubview and realVolume
 }

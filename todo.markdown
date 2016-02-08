@@ -4,8 +4,6 @@
 
 ## QUESTION:
 
-* Find/Specify another prefix for unwrapped values inside `if let`.
-
 * Should we force the weak references in blocks ?
 
 https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/WorkingwithBlocks/WorkingwithBlocks.html
