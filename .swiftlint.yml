@@ -10,6 +10,7 @@ disabled_rules: # rule identifiers to exclude from running
   - nesting	# func nesting max 1 level
   - todo # TODO can be written in the code but should be linked to a ticket on JIRA.
   - cyclomatic_complexity # our switch statements make it impossible to follow this rule (https://en.wikipedia.org/wiki/Cyclomatic_complexity)
+  - function_parameter_count # only 5 function parameters are allow. Our APIManager usually requires more.
 
 excluded: # paths to ignore during linting. overridden by `included`.
   - Carthage
