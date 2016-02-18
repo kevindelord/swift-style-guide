@@ -9,6 +9,7 @@ disabled_rules: # rule identifiers to exclude from running
   - control_statement # no rounded brackets around conditions. we would need this the other way around
   - nesting	# func nesting max 1 level
   - todo # TODO can be written in the code but should be linked to a ticket on JIRA.
+  - cyclomatic_complexity # our switch statements make it impossible to follow this rule (https://en.wikipedia.org/wiki/Cyclomatic_complexity)
 
 excluded: # paths to ignore during linting. overridden by `included`.
   - Carthage
