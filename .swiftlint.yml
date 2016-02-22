@@ -1,6 +1,6 @@
 ###
 # Swiftlint configuration file.
-# Latest version supported: 0.5.4
+# Latest version supported: 0.9.0
 # Any newer version hasn't been checked yet and might not follow the style guide.
 ###
 
@@ -9,6 +9,8 @@ disabled_rules: # rule identifiers to exclude from running
   - control_statement # no rounded brackets around conditions. we would need this the other way around
   - nesting	# func nesting max 1 level
   - todo # TODO can be written in the code but should be linked to a ticket on JIRA.
+  - cyclomatic_complexity # our switch statements make it impossible to follow this rule (https://en.wikipedia.org/wiki/Cyclomatic_complexity)
+  - function_parameter_count # only 5 function parameters are allow. Our APIManager usually requires more.
 
 excluded: # paths to ignore during linting. overridden by `included`.
   - Carthage
