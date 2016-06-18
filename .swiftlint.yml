@@ -37,7 +37,6 @@ type_body_length:
   - 500 #error
   
 opt_in_rules:
-  - empty_count
   - missing_docs
   - force_unwrapping
 
