@@ -73,7 +73,7 @@ custom_rules:
   multiple_empty_lines:
     name: "Multiple Empty Lines"
     regex: "((?:\s*\n){3,})"
-    message: "There are too empty lines"
+    message: "There are too many empty lines"
     severity: warning
   unnecessary_type:
     name: "Unnecessary Type"
@@ -113,7 +113,7 @@ custom_rules:
   prefer_structs_over_classes:
     name: "Prefer structs over classes"
     regex: "(?m-s)(class[\s]{1}[a-zA-Z]*[\s]*(:\s*NSObject\s*|\s*)\{$)"
-    message: "Missing Link to Jira for TODO"
+    message: "Prefer structs over classes"
     severity: warning
   missing_todo_link:
     name: "Missing TODO Link"
