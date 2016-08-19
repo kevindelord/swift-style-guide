@@ -94,7 +94,7 @@ custom_rules:
     name: "Incomplete if"
     regex: "(^ *if \(((?!( is | > | < | (=|!|<|>)= )).)*\) \{)"
     message: "if should contain == true or == false"
-    severity: error
+    severity: warning
   single_line_body:
     name: "Single Line Body"
     regex: "(?i-sm)((if|while|do|for)*? \{(?!\n|.?(s|g)et).+?\}\n)"
@@ -104,7 +104,7 @@ custom_rules:
     name: "Missing Closure Data Type"
     regex: "(\{[\s]{1}\([^:]+?\)[\s]{1}in)"
     message: "Data Type in Closure is missing"
-    severity: error
+    severity: warning
   invalid_mark_format:
     name: "Invalid MARK Format"
     regex: "(?m-s)(\/\/[\s]*?MARK(?!(\:[\s]{1}\-[\s]{1}){1}))"
