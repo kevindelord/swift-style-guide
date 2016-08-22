@@ -52,7 +52,7 @@ custom_rules:
     severity: warning
   comments_capitalized_ignore_possible_code:
     name: "Capitalize First Word In Comment"
-    regex: "(^ +// +(?!swiftlint)[a-z]+)"
+    regex: "(^ +// {1}(?!swiftlint)[a-z]+)"
     message: "The first word of a comment should be capitalized"
     severity: warning
   empty_first_line:
