@@ -17,6 +17,7 @@ excluded: # paths to ignore during linting. overridden by `included`.
   - Carthage
   - Pods
   - External
+  - Submodules
 
 # rule parameters
 cyclomatic_complexity:
@@ -38,7 +39,7 @@ line_length:
 type_body_length:
   - 400 #warning
   - 500 #error
-  
+
 opt_in_rules:
   - missing_docs
   - force_unwrapping
@@ -48,37 +49,77 @@ custom_rules:
     name: "Space After Comment"
     regex: "(^ *//\w+)"
     message: "There should be a space after //"
-    severity: error
+    severity: warning
   comments_capitalized_ignore_possible_code:
     name: "Capitalize First Word In Comment"
     regex: "(^ +// +(?!swiftlint)[a-z]+)"
     message: "The first word of a comment should be capitalized"
-    severity: error
+    severity: warning
   empty_first_line:
     name: "Empty First Line"
     regex: "(^[ a-zA-Z ]*(?:protocol|extension|class|struct) (?!(?:var|let))[ a-zA-Z:]*\{\n *\S+)"
     message: "There should be an empty line after a declaration"
-    severity: error
+    severity: warning
   empty_line_after_guard:
     name: "Empty Line After Guard"
     regex: "(^ *guard[ a-zA-Z0-9=?.\(\),><!]*\{[ a-zA-Z0-9=?.\(\),><!]*\}\n *(?!(?:return|guard))\S+)"
     message: "There should be an empty line after a guard"
-    severity: error
+    severity: warning
   empty_line_after_super:
     name: "Empty Line After Super"
     regex: "(^ *super\.[ a-zA-Z0-9=?.\(\)\{\}:,><!]*\n *(?!(?:\}|return))\S+)"
     message: "There should be an empty line after super"
-    severity: error
+    severity: warning
   multiple_empty_lines:
     name: "Multiple Empty Lines"
     regex: "((?:\s*\n){3,})"
-    message: "There are too many line breaks"
-    severity: error
+    message: "There are too many empty lines"
+    severity: warning
   unnecessary_type:
     name: "Unnecessary Type"
-    regex: "[ a-zA-Z0-9]*(?:let|var) [ a-zA-Z0-9]*: ([a-zA-Z0-9]*)[\? ]*= \1"
+    regex: "(?sm)[ \ta-zA-Z0-9]?(?:let|var){1} [ \ta-zA-Z0-9]+?:[ \t]+?([a-zA-Z0-9]+?)[\t ]+?=[\t ]?\1"
     message: "Type Definition Not Needed"
-    severity: error
+    severity: warning
+  missing_brackets:
+    name: "Missing brackets"
+    regex: "(^ *if (((?!(let|var|\())).)*\{)"
+    message: "If statements should be surrounded by rounded brackets"
+    severity: warning
+  empty_closure_params:
+    name: "Empty closure params"
+    regex: "\{ (\(\) -> Void in)$"
+    message: "`() -> Void in` should be avoided"
+    severity: warning
+  incomplete_if:
+    name: "Incomplete if"
+    regex: "(^ *if \(((?!( is | > | < | (=|!|<|>)= )).)*\) \{)"
+    message: "if should contain == true or == false"
+    severity: warning
+  single_line_body:
+    name: "Single Line Body"
+    regex: "(?i-sm)((if|while|do|for)*? \{(?!\n|.?(s|g)et).+?\}\n)"
+    message: "Single line bodies are not allowed"
+    severity: warning
+  missing_closure_datatype:
+    name: "Missing Closure Data Type"
+    regex: "(\{[\s]{1}\([^:]+?\)[\s]{1}in)"
+    message: "Data Type in Closure is missing"
+    severity: warning
+  invalid_mark_format:
+    name: "Invalid MARK Format"
+    regex: "(?m-s)(\/\/[\s]*?MARK(?!(\:[\s]{1}\-[\s]{1}){1}))"
+    message: "Use format: MARK: - Your Info"
+    severity: warning
+  prefer_structs_over_classes:
+    name: "Prefer structs over classes"
+    regex: "(?m-s)(class[\s]{1}[a-zA-Z]*[\s]*(:\s*NSObject\s*|\s*)\{$)"
+    message: "Prefer structs over classes"
+    severity: warning
+  missing_todo_link:
+    name: "Missing TODO Link"
+    regex: "(?i-s)((//|\*)[\s]*?(TODO|FIXME)((?!https://smartmobilefactory.atlassian.net).)*$)"
+    message: "Missing Link to Jira for TODO"
+    severity: warning
 
 ####### enabled rules #######
 #  - comma # k,v >> k, v
