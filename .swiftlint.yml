@@ -112,7 +112,7 @@ custom_rules:
     severity: warning
   prefer_structs_over_classes:
     name: "Prefer structs over classes"
-    regex: "(?m-s)(class[\s]{1}[a-zA-Z]*[\s]*(:\s*NSObject\s*|\s*)\{$)"
+    regex: "(?m-s)(class[\s]{1}[a-zA-Z]*[\s]*\{$)"
     message: "Prefer structs over classes"
     severity: warning
   missing_todo_link:
