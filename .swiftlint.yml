@@ -52,7 +52,7 @@ custom_rules:
     severity: warning
   comments_capitalized_ignore_possible_code:
     name: "Capitalize First Word In Comment"
-    regex: "(^ +// {1}(?!swiftlint)[a-z]+)"
+    regex: "(^ +// +(?!swiftlint)[a-z]+)"
     message: "The first word of a comment should be capitalized"
     severity: warning
   empty_first_line:
@@ -112,7 +112,7 @@ custom_rules:
     severity: warning
   prefer_structs_over_classes:
     name: "Prefer structs over classes"
-    regex: "(?m-s)(class[\s]{1}[a-zA-Z]*[\s]*(:\s*NSObject\s*|\s*)\{$)"
+    regex: "(?m-s)(class[\s]{1}[a-zA-Z]*[\s]*\{$)"
     message: "Prefer structs over classes"
     severity: warning
   missing_todo_link:
