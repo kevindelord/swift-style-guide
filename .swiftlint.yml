@@ -1,6 +1,6 @@
 ###
 # Swiftlint configuration file.
-# Latest version supported: 0.11.1
+# Latest version supported: 0.12.0
 # Any newer version hasn't been checked yet and might not follow the style guide.
 #
 # To update your local version of this file, execute the following command line:
@@ -8,7 +8,7 @@
 ###
 
 disabled_rules: # rule identifiers to exclude from running
-  - colon	# exaclty one space after the : >>> let abc: Void\n
+  - colon # exaclty one space after the : >>> let abc: Void\n
   - control_statement # no rounded brackets around conditions. we would need this the other way around
   - todo # TODO can be written in the code but should be linked to a ticket on JIRA.
   - nesting # func nesting max 1 level
@@ -43,8 +43,36 @@ type_body_length:
 opt_in_rules:
   - missing_docs
   - force_unwrapping
+  - conditional_returns_on_newline
+  - private_outlet
+  - vertical_whitespace
 
 custom_rules:
+  extra_whitespace:
+    name: "Extra whitespaces"
+    regex: "([a-zA-Z0-9=?.\(\),><!'\"][ ]{2,}[a-zA-Z0-9?.\(\),><!'\"])"
+    message: "Remove extra whitespaces"
+    severity: warning
+  unnecessary_datatype:
+    name: "Unnecessary Datatype"
+    regex: "(?m-s)(let|var).*(:\s\[+(\w|:| |\t)+\]+\s*=\s*\[:*\])"
+    message: "Unnecessary datatype. Use '= [DataType]()' instead of ': [DataType] = []'"
+    severity: warning
+  missing_parameter_name:
+    name: "Missing parameter name"
+    regex: "(_( |\t|:|\))( |\t|=)(?! try).*)"
+    message: "Variable named '_' should be avoided. Please use a valid name."
+    severity: warning
+  missing_closure_name:
+    name: "Missing closure name"
+    regex: "^\s*\}\) \{.*"
+    message: "Add the missing closure name"
+    severity: warning
+  empty_commented_line:
+    name: "Empty Commented Out Line"
+    regex: "(\t+| +)//\n"
+    message: "Remove useless comment lines or use /* format */"
+    severity: warning
   comments_space:
     name: "Space After Comment"
     regex: "(^ *//\w+)"
@@ -52,7 +80,7 @@ custom_rules:
     severity: warning
   comments_capitalized_ignore_possible_code:
     name: "Capitalize First Word In Comment"
-    regex: "(^ +// +(?!swiftlint)[a-z]+)"
+    regex: "(\s??// +(?!swiftlint)[a-z]+)"
     message: "The first word of a comment should be capitalized"
     severity: warning
   empty_first_line:
@@ -75,6 +103,11 @@ custom_rules:
     regex: "((?:\s*\n){3,})"
     message: "There are too many empty lines"
     severity: warning
+  unnecessary_leading_void_in:
+    name: "Unnecessary -> Void in at the end of the line"
+    regex: "(-> (Void|\(\)) in$)"
+    message: "Unnecessary '-> Void in' at the end of the line. Use only 'in'"
+    severity: warning
   unnecessary_type:
     name: "Unnecessary Type"
     regex: "(?sm)[ \ta-zA-Z0-9]?(?:let|var){1} [ \ta-zA-Z0-9]+?:[ \t]+?([a-zA-Z0-9]+?)[\t ]+?=[\t ]?\1"
@@ -82,7 +115,7 @@ custom_rules:
     severity: warning
   missing_brackets:
     name: "Missing brackets"
-    regex: "(^ *if (((?!(let|var|\())).)*\{)"
+    regex: "(^(\t| )*(if|\} else if) (((?!(let|var|\())).)*\{)"
     message: "If statements should be surrounded by rounded brackets"
     severity: warning
   empty_closure_params:
@@ -115,31 +148,8 @@ custom_rules:
     regex: "(?m-s)(class[\s]{1}[a-zA-Z]*[\s]*\{$)"
     message: "Prefer structs over classes"
     severity: warning
-  missing_todo_link:
-    name: "Missing TODO Link"
-    regex: "(?i-s)((//|\*)[\s]*?(TODO|FIXME)((?!https://smartmobilefactory.atlassian.net).)*$)"
-    message: "Missing Link to Jira for TODO"
+  missing_brackets_unwrap:
+    name: "Missing rounded brackets around ??"
+    regex: "(\?\?[^)]*$)"
+    message: "Missing rounded brackets around ??"
     severity: warning
-
-####### enabled rules #######
-#  - comma # k,v >> k, v
-#  - file_length # max number of lines per file
-#  - force_cast # as!
-#  - force_try # try!
-#  - function_body_length # max length of function body
-#  - leading_whitespace # empty lines with whitespaces only
-#  - legacy_constructor # e.g CGPointMake(...) >>> CGPoint(x: ..., y: ...)
-#  - line_length # max length of a line
-#  - opening_brace # [].map(){ ... } >>> [].map() { ... }
-#  - operator_function_whitespace # func  thing () {...} >>> func thing() {...}
-#  - return_arrow_whitespace # func thing()->Bool >>> func thing() -> Bool
-#  - statement_position # }else if { >>> } else if {
-#  - trailing_newline # new line at the end of a file
-#  - trailing_semicolon # no ;
-#  - trailing_whitespace # no trailing whitespaced
-#  - type_body_length # max body length
-#  - type_name # types should start with a capital letter
-#  - valid_docs # docs should match the method signature
-#  - variable_name_min_length # variables should have a 3 letter minimum name and 40 maximum.
-#  - variable_name # variables should start with a lower case character or a capitalized one if `static`.
-#  - cyclomatic_complexity # limit the number of entries inside an enum or struct.
