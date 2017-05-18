@@ -1,6 +1,7 @@
 ## TODO:
 
-* none
+* Swift 3.x
+* Insert new rules.
 
 ## Sample markdown:
 
