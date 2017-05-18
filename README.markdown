@@ -15,10 +15,12 @@ Of course, efficacity, readability, and simplicity are the most important points
   * [Explicit Type](#explicit-type)
   * [Brackets Position](#brackets-position)
 * [Naming](#naming)
+  * [Classes and attribute](#classes-and-attribute)
+  * [Functions](#functions)
   * [Structures](#structures)
   * [Enumerations](#enumerations)
-    * [Functions](#functions)
-    * [Switch Cases](#switch-cases)
+* [Functions in Enumerations](#functions-in-enumerations)
+* [Switch Cases](#switch-cases)
 * [Rounded Brackets](#rounded-brackets)
   * [If](#if)
 * [Ternary operator](#ternary-operator)
@@ -85,7 +87,9 @@ Of course, efficacity, readability, and simplicity are the most important points
 ### Empty lines
 
 * There should be exactly **one blank line between methods** to aid in visual clarity and organization. 
+
 **Preferred:**
+
 ```swift
 func firstMethod() {
     // Explanation
@@ -100,6 +104,7 @@ func secondMethod() {
 ```
 
 **Not Preferred:**
+
 ```swift
 func firstMethod() {
     if (a == b) { /* Do something */ }
@@ -109,17 +114,49 @@ func secondMethod() {
 }
 ```
 
+* There should be exactly one emmpty lines between the end bracket of a block and some code.
+
+
+**Preferred:**
+
+```swift
+func firstMethod() -> Bool {
+    // Explanation
+    if (a == b) {
+        // Do something
+    }
+
+    print("success")
+    return true
+}
+```
+
+**Not Preferred:**
+
+```swift
+func firstMethod() -> Bool {
+    // Explanation
+    if (a == b) {
+        // Do something
+    }
+    print("success")
+    return true
+}
+```
+
 ### Whitespaces
 
 Whitespace within methods should separate functionality, but having too many sections in a method often means you should **refactor into several methods**.
 
 A single whitespace must be use between elements:
+
 - after/before `if` and `else`.
 - when calculating and comparing values.
 - when opening and closing brackets.
 - when declaring a function.
 
 **Preferred:**
+
 ```swift
 func dummyFunction(number: Int) -> Int {
     var result = 0
@@ -127,11 +164,13 @@ func dummyFunction(number: Int) -> Int {
     if (number > 0) {
         result = (number * number)
     }
+
     return result
 }
 ```
 
 **Not Preferred:**
+
 ```swift
 func dummyFunction(number: Int)->Int {
     var result = 0
@@ -149,11 +188,12 @@ func dummyFunction(number: Int)->Int {
 * Always specify the type to compared a value: add `== type` within your if statements.
 
 In Swift the type, that a value can be verify against, is uncertain.
-An object is sometimes an optional or not, it might be able to be checked against nil or not, maybe a against a boolean, etc.
+An object is sometimes an optional or not, it might be able to be checked against nil or not, maybe a against a Boolean, etc.
 
 For this very specific reason, one should always specify what's after the comparison operator: `==`, `!=`, etc.
 
 **Preferred:**
+
 ```swift
 if (finished == true) {
     // do something
@@ -161,6 +201,7 @@ if (finished == true) {
 ```
 
 **Not Preferred:**
+
 ```swift
 if (finished) {
     // do something
@@ -174,6 +215,7 @@ if (finished) {
 * Braces for `if`/`else`/`switch`/`while` etc. always open and close on the same line as the statement.
 
 **Preferred:**
+
 ```swift
 if (user.isHappy == true) {
     // Do something
@@ -184,6 +226,7 @@ if (user.isHappy == true) {
 ```
 
 **Not Preferred:**
+
 ```swift
 if user.isHappy
 {
@@ -196,12 +239,15 @@ else {
 
 ## Naming
 
-* Use descriptive names with **UpperCamelCase** for class names and static variables.
-* Use **lowerCamelCase** for class attributes, methods and local variables.
+### Classes and attributes
+
+* Use descriptive names with **UpperCamelCase** for class names.
+* Use **lowerCamelCase** for class attributes, methods and local and static variables.
 * When creating outlets, always specify the **type as a suffix**.
 * Only use **alphabetic characters** in variable names. No digit allowed.
 
 **Preferred:**
+
 ```swift
 class WidgetContainer {
     var widgetButton                    : UIButton? = nil
@@ -212,6 +258,7 @@ class WidgetContainer {
 ```
 
 **Not Preferred:**
+
 ```swift
 class app_widgetContainer {
     var wBut: UIButton? = nil
@@ -221,7 +268,12 @@ class app_widgetContainer {
 }
 ```
 
+### Functions
+
+TODO
+
 * For functions and init methods, prefer named parameters for all arguments unless the context is very clear. Include external parameter names if it makes function calls more readable.
+
 
 ```swift
 func dateFromString(dateString: String) -> NSDate
@@ -236,6 +288,7 @@ timedAction(delay: 1.0, perform: someOtherAction)
 
 * For methods, follow the standard Apple convention of referring to the first parameter in the method name:
 
+
 ```swift
 class Guideline {
     func combineWithString(incoming: String, options: Dictionary?) { ... }
@@ -244,12 +297,13 @@ class Guideline {
 ```
 ### Structures
 
-Use UpperCamelCase for static values within structures:
+Use **lowerCamelCase** for static values within structures:
+
 
 ```swift
 struct Duration {
-    static let FadeOut      = 0.3
-    static let FadeIn       = 0.8
+    static let fadeOut      = 0.3
+    static let fadeIn       = 0.8
 
     var someVariable        : AnyObject?
 }
@@ -257,19 +311,21 @@ struct Duration {
 
 ### Enumerations
 
-Use UpperCamelCase for enumeration values:
+Use **lowerCamelCase** for enumeration values:
+
 
 ```swift
 enum Shape {
-    case Rectangle
-    case Square
-    case Triangle
-    case Circle
+    case rectangle
+    case square
+    case triangle
+    case circle
 }
 ```
 
-Use a type to your enum only and only if you need the `rawValue` in your code.
+Use a type to your enum _only and only if_ you need the `rawValue` in your code.
 Without this, prefer simple enumeration without type.
+
 
 ```swift
 enum UserState : Int {
@@ -279,13 +335,18 @@ enum UserState : Int {
 }
 ```
 
-#### Functions
+## Functions in Enumerations
 
-Use an enum instead of a struct when you need to iterate through all elements or if you need a variable type.
+Use an enum instead of a struct when you need to:
+
+- Iterate through all elements.
+- If you need a variable type.
+- Have unique static variables.
 
 Enumerations and structures became amazing in Swift as they can now have (static) functions.
 
-This is extremely usefull when you need data or logic depending on an enum value, for example a title of a segue.
+This is extremely useful when you need data or logic depending on an enum value, for example a title of a segue or a list of (user) state.
+
 
 ```swift
 enum UserState : Int {
@@ -295,9 +356,9 @@ enum UserState : Int {
 
     func title() -> String {
         switch self {
-        case .NotRegistered: return L("user.pleaseRegister")
-        case .RegisteredWithoutEmail: return L("user.pleaseSpecifyEmail")
-        case .RegisteredWithEmail: return L("user.registrationComplete")
+        case .NotRegistered: 			return L("user.pleaseRegister")
+        case .RegisteredWithoutEmail: 	return L("user.pleaseSpecifyEmail")
+        case .RegisteredWithEmail: 		return L("user.registrationComplete")
         }
     }
 
@@ -307,14 +368,15 @@ enum UserState : Int {
 }
 ```
 
-#### Switch Cases
+## Switch Cases
 
 One other very handy thing Xcode does is to warn the developer when a case is missing inside a `switch` when iterating through an enum.
 It does warn you only if you do not set any `default` case.
 
-It can be annoying to write multiple times the same case. But, next time a developer adds a case to the enum, Xcode will tell him where he might misses something.
+It can be annoying to write multiple times the same case. But, next time a developer adds a case to the enum, Xcode will tell him where he might miss something.
 
 **Preferred:**
+
 ```swift
 static func isUserRegistered(user: UserState) -> Bool {
     switch user {
@@ -325,6 +387,7 @@ static func isUserRegistered(user: UserState) -> Bool {
 ```
 
 **Not Preferred:**
+
 ```swift
 static func isUserRegistered(user: UserState) -> Bool {
     switch user {
@@ -346,10 +409,11 @@ The main point is to really structure the comparison and the returned/used value
 Here is a small example in Swift showing all cases:
 
 **Preferred:**
+
 ```swift
 Int i = 0
 var message : String? = nil
-BOOL check = (true == false)  // comparison
+Bool check = (true == false)  // comparison
  
 while (check == true) {
     if (i >= 10) {  // if
@@ -367,10 +431,11 @@ return (message ?? "message does not exist") // ??
 ```
 
 **Not Preferred:**
+
 ```swift
 Int i = 0
 var message : String? = nil
-BOOL check = true == false  // comparison
+Bool check = true == false  // comparison
 
 while check == true {
     if i >= 10 {  // if
@@ -397,6 +462,7 @@ Try to think about rounded brackets like little blocks that should be executed w
 For example:
 
 **Preferred:**
+
 ```swift
 if (a == b) { ... }
 if (a == b && c == d) { ... }
@@ -406,6 +472,7 @@ if (a == b && (c == d || e == f)) { ... }
 This is too much:
 
 **Not Preferred:**
+
 ```swift
 if ((a == b)) { ... }
 if ((a == b) && (c == d)) { ... }
@@ -420,6 +487,7 @@ A developer should only use it with just one level of operation and with [rounde
 Without those rules, a developer will code this:
 
 **Not Preferred:**
+
 ```swift
 value = a == b ? b != c ? 4 : d == e ? 6 : 1 : 0
 ```
@@ -435,6 +503,7 @@ Even if for you it looks simple, and it surely does "now", but it won't in 5 mon
 Comments above the functions are, of course, well appreciated to explain what they are doing, the purpose and general informations about them.
 
 But inline comments are also very used to describe step-by-step what is going on inside the function.
+
 
 ```swift
 /**
@@ -464,6 +533,7 @@ The mark should be use as much as possible to actually separate and structure yo
 The mark should be indented, capitalised and using a separator. It should describe what the next methods are about.
 
 **Preferred:**
+
 ```swift
 class MyViewController : UIViewController {
 
@@ -475,6 +545,7 @@ class MyViewController : UIViewController {
 ```
 
 **Not Preferred:**
+
 ```swift
 class MyViewController : UIViewController {
 // MARK: - Actions
@@ -489,6 +560,7 @@ Make sure the code is aligned to itself. This is just about structure and better
 It is also extremely appreciated to use comments to separate the [Class Attributes](#class-attributes) and mark between functions.
 
 **Preferred:**
+
 ```swift
 class MyViewController                           : UIViewController {
 
@@ -521,6 +593,7 @@ class MyViewController                           : UIViewController {
 Please note the differences between the `// MARK: - ` and the missing `weak` references for the IBOutlets.
 
 **Not Preferred:**
+
 ```swift
 class MyViewController : UIViewController {
 
@@ -554,6 +627,7 @@ Meaning calling a function and giving the result directly to another without cre
 This is absolutely not a bad thing, if it is well done and well structured. 
 
 **Preferred:**
+
 ```swift
 let action = UIAlertAction(title:L("ALERTVIEW_BUTTON_CANCEL"), style:.Cancel, handler:nil)
 let subCrazy = UIMoreCrazyThing(string: "Crazy", action)
@@ -561,6 +635,7 @@ UICrazyThing(subCrazieness: subCrazy)
 ```
 
 **Not Preferred:**
+
 ```swift
 UICrazyThing(subCrazieness: UIMoreCrazyThing(string: "Crazy", UIAlertAction(title:L("ALERTVIEW_BUTTON_CANCEL"), style:.Cancel, handler:nil)))
 ```
@@ -587,6 +662,7 @@ The best thing to do is to use optionals whenever you can.
 In general, you can not be sure that all attributes will be correctly created, linked, instanciated, initialised, etc.
 
 **Preferred:**
+
 ```swift
 class Plane {
     var pilot                : Pilot?
@@ -598,6 +674,7 @@ class Plane {
 ```
 
 **Not Preferred:**
+
 ```swift
 class Plane {
     var pilot                : Pilot!
@@ -614,6 +691,7 @@ Even though Swift does not require the usage of `self`, a developer should force
 It is then easier for any other developer to understand where does a value come from or where is the current execution process going.
 
 **Preferred:**
+
 ```swift
 class MyViewController              : UIViewController {
 
@@ -631,6 +709,7 @@ class MyViewController              : UIViewController {
 ```
 
 **Not Preferred:**
+
 ```swift
 class MyViewController              : UIViewController {
 
@@ -656,6 +735,7 @@ Rationale: [Composition](https://en.wikipedia.org/wiki/Composition_over_inherita
 ### Class Definition
 
 Here's an example of a well-styled class definition:
+
 
 ```swift
 final class Circle      : Shape {
@@ -701,6 +781,7 @@ final class Circle      : Shape {
 ```
 
 When executing:
+
 ```swift
 let circle = Circle(x: 2, y: 2, radius: 10)
 print(circle.describe())
@@ -736,6 +817,7 @@ You should create **one extension per protocol**.
 Also, do not forget the `// MARK: -` comment to keep things well-organized!
 
 **Preferred:**
+
 ```swift
 class MyViewcontroller: UIViewController {
     // class stuff here
@@ -753,6 +835,7 @@ extension MyViewcontroller: UIScrollViewDelegate {
 ```
 
 **Not Preferred:**
+
 ```swift
 class MyViewcontroller: UIViewController, UITableViewDataSource, UIScrollViewDelegate {
     // all methods
@@ -766,6 +849,7 @@ For conciseness, if a computed property is read-only, omit the get clause. The g
 Please note the [rounded brackets](#rounded-brackets).
 
 **Preferred:**
+
 ```swift
 var diameter: Double {
     return (self.radius * 2)
@@ -773,6 +857,7 @@ var diameter: Double {
 ```
 
 **Not Preferred:**
+
 ```swift
 var diameter: Double {
     get {
@@ -800,6 +885,7 @@ Whenever you use such observers make sure to:
 - Avoid under-the-hood logics at all costs.
 
 **Preferred:**
+
 ```swift
 var diameter: Double {
     didSet {
@@ -811,6 +897,7 @@ var diameter: Double {
 ```
 
 **Not Preferred:**
+
 ```swift
 var diameter: Double {
     didSet {
@@ -855,6 +942,7 @@ That means providing default implementations for methods defined in the protocol
 The following example shows how to extend a protocol and implement default functions. This is a very good practice as it **reduces the amount of code** within the classes.
 
 **Preferred:**
+
 ```swift
 protocol Container {
     var items   : [String] { get set }
@@ -873,6 +961,7 @@ class Vowels    : Container {
 ```
 
 **Not Preferred:**
+
 ```swift
 protocol Container {
     var items   : [String] { get set }
@@ -904,6 +993,7 @@ Antoher good thing is to keep the lines of code maximum __between 100 and 120 ch
 
 Keep short function declarations on one line including the opening brace:
 
+
 ```swift
 func reticulateSplines(spline: [Double]) -> Bool {
     // reticulate code goes here
@@ -911,6 +1001,7 @@ func reticulateSplines(spline: [Double]) -> Bool {
 ```
 
 For functions with long signatures, add line breaks at appropriate points and add an extra indent on subsequent lines:
+
 
 ```swift
 func reticulateSplines(spline: [Double], adjustmentFactor: Double,
@@ -926,6 +1017,7 @@ By default, declare your functions and properties as `private`. Variables should
 Later on whenever you need to change them, let the compiler complain and then change it to `public` or `var`. This way you can be sure that you and other developers only have access to what is safe to access.
 
 **Preferred:**
+
 ```swift
 class MyViewcontroller: UIViewController {
     private var progress: Int?
@@ -942,6 +1034,7 @@ class MyViewcontroller: UIViewController {
 ```
 
 **Not Preferred:**
+
 ```swift
 class MyViewcontroller: UIViewController {
     var progress: Int?
@@ -968,6 +1061,7 @@ Here are some very specific rules:
 * Never write the parameters of the closure if there is none.
 
 **Preferred:**
+
 ```swift
 UIView.animateWithDuration(1.0) {
     self.myView.alpha = 0
@@ -975,6 +1069,7 @@ UIView.animateWithDuration(1.0) {
 ```
 
 **Not Preferred:**
+
 ```swift
 UIView.animateWithDuration(1.0, animations: { () -> Void in
     self.myView.alpha = 0
@@ -987,6 +1082,7 @@ UIView.animateWithDuration(1.0, animations: { () -> Void in
 * Always write the full names of the parameters of a closure.
 
 **Preferred:**
+
 ```swift
 UIView.animateWithDuration(1.0, animations: {
         self.myView.alpha = 0
@@ -997,6 +1093,7 @@ UIView.animateWithDuration(1.0, animations: {
 ```
 
 **Not Preferred:**
+
 ```swift
 UIView.animateWithDuration(1.0, animations: {
     self.myView.alpha = 0
@@ -1012,6 +1109,7 @@ The code as to be as self explained as possible.
 Please also note the [rounded brackets](#rounded-brackets).
 
 **Preferred:**
+
 ```swift
 var list = [1, 4, 2, 3]
 list.sort { (a, b) -> Bool in
@@ -1020,6 +1118,7 @@ list.sort { (a, b) -> Bool in
 ```
 
 **Not Preferred:**
+
 ```swift
 var list = [1, 4, 2, 3]
 list.sort { a, b in
@@ -1031,6 +1130,7 @@ list.sort { a, b in
 
 Please note the [rounded brackets](#rounded-brackets).
 
+
 ```swift
 var list = [1, 4, 2, 3]
 list.sort { ($0 > $1) }
@@ -1041,6 +1141,7 @@ list.sort { ($0 > $1) }
 * When declaring a function that takes a closure as parameter, **always declare the closure as optional**.
 
 **Preferred:**
+
 ```swift
 func myFunction(closure: (() -> Void)?) {
     if (something == true) {
@@ -1050,6 +1151,7 @@ func myFunction(closure: (() -> Void)?) {
 ```
 
 **Not Preferred:**
+
 ```swift
 func myFunction(closure: () -> Void) {
     if (something == true) {
@@ -1063,12 +1165,14 @@ func myFunction(closure: () -> Void) {
 Always use Swift's native types when available. Swift offers bridging to Objective-C so you can still use the full set of methods as needed.
 
 **Preferred:**
+
 ```swift
 let width = 120.0                                    // Double
 let widthString = (width as NSNumber).stringValue    // String
 ```
 
 **Not Preferred:**
+
 ```swift
 let width: NSNumber = 120.0                          // NSNumber
 let widthString: NSString = width.stringValue        // NSString
@@ -1094,6 +1198,7 @@ Constants are used for database keys, API endpoints and response codes, user def
 Actually all values that should not change. But if they do, they are all created in one single file and the change will take mostly 5 seconds.
 
 **Preferred:**
+
 ```swift
 //
 // User Default
@@ -1157,6 +1262,7 @@ struct API {
 ```
 
 **Not Preferred:**
+
 ```swift
 // User Default
 let K_APP_ID = "AppId"
@@ -1191,6 +1297,7 @@ The more your constants are *structured* the better.
 PS: Note how everything is aligned.
 
 **Preferred:**
+
 ```swift
 // Constants.swift file
 
@@ -1219,6 +1326,7 @@ UIView.animateWithDuration(GameConstants.AnimationDuration.FadeIn) {
 ```
 
 **Not Preferred:**
+
 ```swift
 // ViewController.swift file
 
@@ -1238,6 +1346,7 @@ Big mistake! What about a typo in one key that cause a crash or random behavior 
 How many hours of debug will be needed to find and correct the error?
 
 **Preferred:**
+
 ```swift
 func predicateFromJSON(json: [String : AnyObject]) -> NSPredicate? {
     if let value = json[JSON.Key.Id] as? Int {
@@ -1248,6 +1357,7 @@ func predicateFromJSON(json: [String : AnyObject]) -> NSPredicate? {
 ```
 
 **Not Preferred:**
+
 ```swift
 func predicateFromJSON(json: [String : AnyObject]) -> NSPredicate? {
     if let id = json["id"] as? Int {
@@ -1271,11 +1381,13 @@ If you keep focusing on doing a nice code right in the begining you won't have a
 When accessing an optional value, use optional chaining if the value is only accessed once or if there are many optionals in the chain. This way no crash will occur if one of the objects is `nil`.
 
 **Preferred:**
+
 ```swift
 self.textContainer?.textLabel?.setNeedsDisplay()
 ```
 
 **Not Preferred:**
+
 ```swift
 self.textContainer!.textLabel!.setNeedsDisplay()
 ```
@@ -1283,6 +1395,7 @@ self.textContainer!.textLabel!.setNeedsDisplay()
 #### Single Optional Binding
 
 Use optional binding when it's more convenient to unwrap once and perform multiple operations:
+
 
 ```swift
 if let _textContainer = self.textContainer {
@@ -1311,6 +1424,7 @@ About syntax, please the following points:
 - The two levels of indentation.
 - The [Naming Convention](#naming-convention) between the _binded_ and optional variables.
 
+
 ```swift
 let a = "10".toInt()
 let b = "5".toInt()
@@ -1318,6 +1432,7 @@ let c = "3".toInt()
 ```
 
 **Preferred:**
+
 ```swift
 if let
     a = a,
@@ -1330,6 +1445,7 @@ if let
 ```
 
 **Not Preferred:**
+
 ```swift
 if let a = a, b = b, c = c where c != 0 {
     print("\((a + b) / c)")
@@ -1345,6 +1461,7 @@ With Swift you could even integrate this one in the same `if let`.
 Please note the indentation differences.
 
 **Preferred:**
+
 ```swift
 if (array.count == 0),
     let
@@ -1356,6 +1473,7 @@ if (array.count == 0),
 ```
 
 **Not Preferred:**
+
 ```swift
 if (array.count == 0) {
     if let
@@ -1374,6 +1492,7 @@ In other words, check a new unwrapped value before unwrapping any others.
 
 Please note the indentation differences.
 
+
 ```swift
 let indexes = [1, 2]
 let users   : [AnyObject]? = ["bob", "peter", "john"]
@@ -1381,6 +1500,7 @@ let max     : Int? = 5
 ```
 
 **Preferred:**
+
 ```swift
 if (indexes.count >= 0),
     let _users  = users where (_users.count > 0),
@@ -1390,6 +1510,7 @@ if (indexes.count >= 0),
 ```
 
 **Not Preferred:**
+
 ```swift
 if (indexes.count >= 0),
     let
@@ -1410,11 +1531,13 @@ Close to the [Ternary operator](#ternary-operator), this one returns the optiona
 Please note the [rounded brackets](#rounded-brackets).
 
 **Preferred:**
+
 ```swift
 let text = (self.generateSuperText() as? String ?? "default value")
 ```
 
 **Not Preferred:**
+
 ```swift
 var text : String?
 if let _superText = self.generateSuperText() as? String {
@@ -1435,6 +1558,7 @@ Everything better than using names like `unwrappedView` or `actualLabel`. Usuall
 **Note:** Using the same name works and keeps the code in a good shape. Use underscores if you think it makes the code easier to understand.
 
 **Preferred:**
+
 ```swift
 var subview : UIView?
 var volume  : Double?
@@ -1447,6 +1571,7 @@ if let
 ```
 
 **Not Preferred:**
+
 ```swift
 var subview   : UIView?
 var volume    : Double?
@@ -1467,12 +1592,14 @@ Even though they might do the same now, the swift one has much future.
 Also it’s more readable in a swift environment and feels better integrated.
 
 **Preferred:**
+
 ```swift
 let bounds      = CGRect(x: 40, y: 20, width: 120, height: 80)
 let centerPoint = CGPoint(x: 96, y: 42)
 ```
 
 **Not Preferred:**
+
 ```swift
 let bounds = CGRectMake(40, 20, 120, 80)
 let centerPoint = CGPointMake(96, 42)
@@ -1490,6 +1617,7 @@ Those actually normalize the result before returning it.
 > The height and width stored in a CGRect data structure can be negative. For example, a rectangle with an origin of [0.0, 0.0] and a size of [10.0,10.0] is exactly equivalent to a rectangle with an origin of [10.0, 10.0] and a size of [-10.0,-10.0]. Your application can standardize a rectangle—that is, ensure that the height and width are stored as positive values—by calling the CGRectStandardize function. All functions described in this reference that take CGRect data structures as inputs implicitly standardize those rectangles before calculating their results. **For this reason, your applications should avoid directly reading and writing the data stored in the CGRect data structure. Instead, use the functions described here to manipulate rectangles and to retrieve their characteristics.**
 
 **Preferred:**
+
 ```swift
 let bounds = CGRect(x: 40, y: 20, width: 120, height: 80)
 
@@ -1501,6 +1629,7 @@ let h = CGRectGetHeight(bounds)
 ```
 
 **Not Preferred:**
+
 ```swift
 let bounds = CGRectMake(40, 20, 120, 80)
 
@@ -1515,6 +1644,7 @@ let h = bounds.size.heigth
 Prefer compact code and let the compiler infer the type for a constant or variable, unless you need a specific type other than the default such as `CGFloat` or `Int16`.
 
 **Preferred:**
+
 ```swift
 let message       = "Click the button"
 let currentBounds = computeViewBounds()
@@ -1523,6 +1653,7 @@ let maximumWidth  : CGFloat = 106.5
 ```
 
 **Not Preferred:**
+
 ```swift
 let message: String = "Click the button"
 let currentBounds: CGRect = computeViewBounds()
@@ -1536,6 +1667,7 @@ var names: [String] = []
 Prefer the shortcut versions of type declarations over the full generics syntax.
 
 **Preferred:**
+
 ```swift
 var deviceModels  : [String]
 var employees     : [Int: String]
@@ -1543,6 +1675,7 @@ var faxNumber     : Int?
 ```
 
 **Not Preferred:**
+
 ```swift
 var deviceModels: Array<String>
 var employees: Dictionary<Int, String>
@@ -1558,6 +1691,7 @@ Prefer the `for-in` style of `for` loop over the `for-condition-increment` style
 Since Swift 2.0 you can also use the `for-in-where` style instead `for-in { if }`.
 
 **Preferred:**
+
 ```swift
 for _ in 0..<3 {
     print("Hello three times")
@@ -1574,6 +1708,7 @@ for number in numbers where (number > 100) {
 ```
 
 **Not Preferred:**
+
 ```swift
 for var i = 0; i < 3; i++ {
     print("Hello three times")
@@ -1601,6 +1736,7 @@ If the condition, defined in the guard statement is not met, the code inside the
 With guard, you focus on handling the condition you don't want. Furthermore, it forces you to handle one case at a time, avoiding nested conditions. Thus, the code is cleaner and easier to read.
 
 **Preferred:**
+
 ```swift
 func printInfo(webArticle: Article?) {
     guard let article = webArticle else {
@@ -1616,6 +1752,7 @@ func printInfo(webArticle: Article?) {
 ```
 
 **Not Preferred:**
+
 ```swift
 func printInfo(webArticle: Article?) {
     if let article = webArticle {
@@ -1633,6 +1770,7 @@ func printInfo(webArticle: Article?) {
 But, if you don't need to handle one case at a time (for example if you don't need to print a specific message for each error) then the [Multiple Optional Bindings](#multiple-optional-bindings) is still the **best solution**.
 
 **Preferred:**
+
 ```swift
 func printInfo(webArticle: Article?) {
     if let
@@ -1645,6 +1783,7 @@ func printInfo(webArticle: Article?) {
 ```
 
 **Not Preferred:**
+
 ```swift
 func printInfo(webArticle: Article?) {
     guard let article = webArticle else {
@@ -1664,6 +1803,7 @@ The code defined in the defer block will be executed just right before the compl
 The defer statement should be used for cleanup or default operations.
 
 Here are two small examples when using `defer`:
+
 
 ```swift
 func start() {
@@ -1687,6 +1827,7 @@ Prints: `1 5 2 3 4`
 
 Before Swift 2.0 developers had to pass a pointer of a NSError object to functions like this one:
 
+
 ```swift
 var error: NSError?
 let value = NSString(contentsOfURL: url, encoding: 0, error: &error)
@@ -1705,6 +1846,7 @@ It is declared like this: `func removeItemAtURL(URL: NSURL) throws`
 
 * In case you want to simply `try` the function and `catch` the error in order to `return` a value:
 
+
 ```swift
 func deleteItemAtURL(url: NSURL) -> Bool {
     do {
@@ -1718,6 +1860,7 @@ func deleteItemAtURL(url: NSURL) -> Bool {
 ```
 
 * In case you would like to receive the `error` as a `NSError` object and not as an `ErrorType`:
+
 
 ```swift
 func deleteItemAtURL(url: NSURL) -> Bool {
@@ -1733,6 +1876,7 @@ func deleteItemAtURL(url: NSURL) -> Bool {
 
 * Or, if you assume that it _will_ work and you do **not want to handle the error**, but still don't let the app crash:
 
+
 ```swift
 func deleteItemAtURL(url: NSURL) {
     _ = try? NSFileManager.defaultManager().removeItemAtURL(url)
@@ -1742,6 +1886,7 @@ func deleteItemAtURL(url: NSURL) {
 This example returns the result as an optional inside the `_` variable. Another great feature here, you don't even need to specify a type, `var`, or `let` :]
 
 * But maybe you do **not want to handle the error**, but still want to get a value from the `tried` function:
+
 
 ```swift
 func allStoredAssets() {
@@ -1758,6 +1903,7 @@ func allStoredAssets() {
 **Attention:** if you need to cast the result of the `try?` function with `as?` the variable will be a **double optional**. This does not occur with the `do-try-catch` pattern.
 
 Example:
+
 ```swift
 let jsonArray = try? NSJSONSerialization.JSONObjectWithData(jsonData, options: .MutableContainers) as? [[NSObject : AnyObject]]
 ```
@@ -1772,6 +1918,7 @@ Developers are able to create **custom error types** conforming to this protocol
 For example, we take a plane that needs to take off with a missing pilot. An error should be thrown.
 
 * You can create an enumeration that adopts `ErrorType like this for the _invalid plane errors_:
+
 
 ```swift
 enum InvalidPlaneError: ErrorType {
@@ -1789,6 +1936,7 @@ enum InvalidPlaneError: ErrorType {
 
 * You can declare a throwing function and `throw` some errors like this:
 
+
 ```swift
 func takeOff() throws {
     guard let _ = self.planePilot else {
@@ -1802,6 +1950,7 @@ func takeOff() throws {
 ```
 
 * Finally, you can `catch` you custom errors by specifying the type you want to handle:
+
 
 ```swift
 func boardingFinished() {
@@ -1820,6 +1969,7 @@ func boardingFinished() {
 ```
 
 * Thanks to the enum type you could even improve the error handling like this:
+
 
 ```swift
 func boardingFinished() {
@@ -1843,11 +1993,13 @@ Just do not write multiple statements on a single line separated with semicolons
 The only exception to this rule is the `for-conditional-increment` construct, which requires semicolons. However, alternative `for-in` constructs should be used where possible.
 
 **Preferred:**
+
 ```swift
 let swift = "not a scripting language"
 ```
 
 **Not Preferred:**
+
 ```swift
 let swift = "not a scripting language";
 ```
@@ -1859,12 +2011,14 @@ let swift = "not a scripting language";
 Use US English spelling to match Apple's API.
 
 **Preferred:**
+
 ```swift
 let color     = "red"
 let favorites = [1, 2, 3]
 ```
 
 **Not Preferred:**
+
 ```swift
 let colour     = "red"
 let favourites = [1, 2, 3]
