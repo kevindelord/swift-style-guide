@@ -419,13 +419,13 @@ while (check == true) {
     if (i >= 10) {  // if
         check = false
     } else if (i == 2) {
-        i++
+        i += 1
     }
     message = (check == true ? "valid" : "invalid") // ternary
     if let msg = message as? String where (i > 7) { // where
         print(message)
     }
-    i++
+    i += 1
 }
 return (message ?? "message does not exist") // ??
 ```
@@ -441,13 +441,13 @@ while check == true {
     if i >= 10 {  // if
         check = false
     } else if i == 2 {
-        i++
+        i += 1
     }
     message = check == true ? "valid" : "invalid" // ternary
     if let msg = message as? String where i > 7 { // where
         print(message)
     }
-    i++
+    i += 1
 }
 return message ?? "message does not exist" // ??
 ```
@@ -492,7 +492,7 @@ Without those rules, a developer will code this:
 value = a == b ? b != c ? 4 : d == e ? 6 : 1 : 0
 ```
 
-This is horrible to read, debug and understand.
+This is horrible to read, to debug and to understand.
 
 ## Comments
 
@@ -502,13 +502,13 @@ Even if for you it looks simple, and it surely does "now", but it won't in 5 mon
 
 Comments above the functions are, of course, well appreciated to explain what they are doing, the purpose and general informations about them.
 
-But inline comments are also very used to describe step-by-step what is going on inside the function.
+But inline comments are also very useful to describe step-by-step what is going on inside the function.
 
 
 ```swift
-/**
- * Function to calculate top margin for the current view depending on [...]
- */
+/// Function to calculate top margin for the current view depending on [...]
+///
+/// - Returns: the top margin value.
 func calculateTopMargin() -> CGFloat {
 
     // Get the top x origin
@@ -519,6 +519,8 @@ func calculateTopMargin() -> CGFloat {
 
     // Apply frame
     self.popUpView?.frame = CGRectMake(...)
+
+    return finalPosition
 }
 ```
 
@@ -528,19 +530,29 @@ For more information about the documenting your code on Swift, please read this 
 
 ### Mark
 
-The mark should be use as much as possible to actually separate and structure your classes and code within different files.
+The mark should be use as much as possible to actually separate and structure your classes and related code extensions within different files.
 
 The mark should be indented, capitalised and using a separator. It should describe what the next methods are about.
+
+An empty line should always follow the mark.
 
 **Preferred:**
 
 ```swift
 class MyViewController : UIViewController {
 
-    // MARK: - Actions
+    // MARK: - Private functions
 
-    func superMethod() {
+    func privateMethodLogic() {
     }
+}
+
+// MARK: - Data Management
+
+extension MyViewController {
+
+	func refreshData() {
+	}
 }
 ```
 
@@ -548,9 +560,14 @@ class MyViewController : UIViewController {
 
 ```swift
 class MyViewController : UIViewController {
-// MARK: - Actions
-    func superMethod() {
+// MARK: - Private functions
+    func privateMethodLogic() {
     }
+}
+extension MyViewController {
+	// MARK: Data Management
+	func refreshData() {
+	}
 }
 ```
 
@@ -579,6 +596,7 @@ class MyViewController                           : UIViewController {
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+
         // Your code here.
     }
 
@@ -590,7 +608,7 @@ class MyViewController                           : UIViewController {
 }
 ```
 
-Please note the differences between the `// MARK: - ` and the missing `weak` references for the IBOutlets.
+Please note the differences between the `// MARK: - ` and the `weak` references for the IBOutlets.
 
 **Not Preferred:**
 
@@ -609,6 +627,7 @@ class MyViewController : UIViewController {
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+
         // Your code here.
     }
     @IBAction func buttonPressed(sender: UIButton) {
@@ -824,11 +843,13 @@ class MyViewcontroller: UIViewController {
 }
 
 // MARK: - UITableViewDataSource
+
 extension MyViewcontroller: UITableViewDataSource {
     // table view data source methods
 }
 
 // MARK: - UIScrollViewDelegate
+
 extension MyViewcontroller: UIScrollViewDelegate {
     // scroll view delegate methods
 }
@@ -837,6 +858,7 @@ extension MyViewcontroller: UIScrollViewDelegate {
 **Not Preferred:**
 
 ```swift
+// MARK: - MyViewcontroller
 class MyViewcontroller: UIViewController, UITableViewDataSource, UIScrollViewDelegate {
     // all methods
 }
@@ -874,13 +896,15 @@ The two [available observers](https://developer.apple.com/library/watchos/docume
 They are both very useful but as well pretty dangerous.
 
 The main problems are that:
+
 - They are declared _with_ the variable which makes some logic code to appear where you '_just_' declare attributes.
 - Another developer might not be aware of the observer(s) and gets very confused when facing incoherent behaviors.
 - Everything can be done there: not only managing the value itself but also reloading table views, perform segues, etc.
 
 Whenever you use such observers make sure to:
+
 - Execute as less code as possible.
-- Write code that ONLY interact with the variable iself and nothing else.
+- Write code that ONLY interact with the variable itself and nothing else.
 - Keep the context of the interaction consistent.
 - Avoid under-the-hood logics at all costs.
 
@@ -917,23 +941,25 @@ From the [official documentation](https://developer.apple.com/library/prerelease
 
 __Do extensions know about private attributes and functions ?__
 
-* Yes, extensions know about private attributes and functions from the main class if the extension is declared on the same file. It is also true the way around.
+Extensions only know about `fileprivate` attributes and functions from the main class if the extension is declared on the same file. It is also true the way around. 
+
+A `private` attribute or function is not accessible outside the scope it is declared from. 
 
 __Can an extension add class attributes ?__
 
-* No, extensions may not contain stored properties.
+No, extensions may not contain stored properties.
 
 __Where should I write an extension ?__
 
 Where it makes sense. For example:
 
 * Below the original class if the extension is very specific to the current file/class.
-* In a dedicated file if the extension tends to be very long and/or independant from the orinal class.
+* In a dedicated file if the extension tends to be very long and/or independant from the original class.
 * In a file grouping multiple extensions of the same context.
 
 ### Protocol Extensions
 
-Swift 2 allows developers to apply extensions to protocol types. Prior to Swift 2, protocols contain only method and property declarations. You were required to provide your own implementation when adopting the protocols in a class.
+Swift allows developers to apply extensions to protocol types. Prior to Swift 2, protocols contained only method and property declarations. You were required to provide your own implementation when adopting the protocols in a class.
 
 With protocol extensions, you can add methods or properties to existing protocols.
 
@@ -978,6 +1004,8 @@ class Vowels    : Container {
 ```
 
 ## Function Declarations
+
+TODO
 
 Be extremely careful on the function names: they have to be very explicit on what they do.
 The other way around, the code should __match the function name__ (the name should tell what the function does).
@@ -1057,34 +1085,33 @@ The code needs to be clear, very easy to read and understandable in seconds.
 
 Here are some very specific rules:
 
-* Never write the closure name if there is just one closure in a function.
-* Never write the parameters of the closure if there is none.
+* Always **write all closure names**.
+* Never write the parameters of the closure if there is none, example: `() -> Void in`
 
 **Preferred:**
 
 ```swift
-UIView.animateWithDuration(1.0) {
-    self.myView.alpha = 0
-}
+UIView.animate(withDuration: 1.0, animations: {
+	self.myView.alpha = 0
+})
 ```
 
 **Not Preferred:**
 
 ```swift
-UIView.animateWithDuration(1.0, animations: { () -> Void in
+UIView.animate(withDuration: 1.0) { () -> Void in
     self.myView.alpha = 0
 })
 ```
 
 * Always declare the parameters of the closure inside **[rounded brackets](#rounded-brackets)**.
-* Always **write all closure names** if there are more than one closure.
 * Always **specify the type** of each parameters of the closure if it is coming from a function. You can **not** be certain of the type.
 * Always write the full names of the parameters of a closure.
 
 **Preferred:**
 
 ```swift
-UIView.animateWithDuration(1.0, animations: {
+UIView.animate(withDuration: 0.3, animations: {
         self.myView.alpha = 0
     }, completion: { (finished: Bool) in
         self.myView.removeFromSuperview()
@@ -1095,9 +1122,9 @@ UIView.animateWithDuration(1.0, animations: {
 **Not Preferred:**
 
 ```swift
-UIView.animateWithDuration(1.0, animations: {
+UIView.animate(withDuration: 0.3, animations: {
     self.myView.alpha = 0
-  }) { f in () -> Void in
+  }) { f in
     self.myView.removeFromSuperview()
 }
 ```
@@ -1126,7 +1153,7 @@ list.sort { a, b in
 }
 ```
 
-* When the context is very very easy clear you can also use the shortcuts `$0` and `$1`
+* When the context is very very easy and clear you can also use the shortcuts `$0` and `$1`
 
 Please note the [rounded brackets](#rounded-brackets).
 
@@ -1136,7 +1163,7 @@ var list = [1, 4, 2, 3]
 list.sort { ($0 > $1) }
 ```
 
-###Closures as parameter
+### Closures as parameter
 
 * When declaring a function that takes a closure as parameter, **always declare the closure as optional**.
 
@@ -1206,44 +1233,45 @@ Actually all values that should not change. But if they do, they are all created
 enum HUUserDefault                          : String {
 
     // Keys set in PList files
-    case AppId                              = "AppId"
-    case HockeyId                           = "HockeyAppId"
-    case APIBaseURL                         = "ApiBaseURL"
-    case APIUserCredential                  = "ApiUserCredential"
-    case APIPasswordCredential              = "ApiPasswordCredential"
+    case appId                              = "AppId"
+    case hockeyId                           = "HockeyAppId"
+    case apiBaseURL                         = "ApiBaseURL"
+    case apiUserCredential                  = "ApiUserCredential"
+    case apiPasswordCredential              = "ApiPasswordCredential"
  
-    static let allValues                    = [AppId, HockeyId, APIBaseURL, APIUserCredential, APIPasswordCredential]
+    static let allValues                    = [appId, hockeyId, apiBaseURL, apiUserCredential, apiPasswordCredential]
 }
 
 //
 // Segues
 //
 enum HUSegueIdentifier                      : String {
-    case FormulaDetail                      = "showDetailFormula"
-    case SearchViewController               = "showSearchView"
+    case formulaDetail                      = "showDetailFormula"
+    case searchViewController               = "showSearchView"
 }
 
 //
 // Cells
 //
 enum HUCellReuseIdentifier                  : String {
-    case FormulaCell                        = "HUFormulaCell_id"
-    case SearchCell                         = "HUSearchCell_id"
-    case OptionCell                         = "HUOptionCell_id"
+    case formulaCell                        = "HUFormulaCell_id"
+    case searchCell                         = "HUSearchCell_id"
+    case optionCell                         = "HUOptionCell_id"
 }
 
 //
 // Database
 //
-struct DB {
+struct Database {
 
-    static let DatabaseName                 = "Huethig.sqlite"
+    static let name               			= "MyProject.sqlite"
 
-    struct Key {
-        static let Id                       = "id"
-        static let UpdatedAt                = "lastUpdate"
-        static let Key                      = "key"
-        static let Value                    = "value"
+    struct key {
+
+		static let identifier 				= "id"
+		static let updatedAt 				= "lastUpdate"
+		static let key						= "key"
+		static let value 					= "value"
     }
 }
 
@@ -1253,10 +1281,10 @@ struct DB {
 struct API {
 
     // Endpoints
-    enum Endpoint                           : String {
-        case Formula                        = "formula"
-        case PDF                            = "pdf"
-        case ProductId                      = "productid"
+    enum endpoint                           : String {
+        case formula                        = "formula"
+        case pdf                            = "pdf"
+        case productId                      = "productid"
     }
 }
 ```
@@ -1306,21 +1334,21 @@ PS: Note how everything is aligned.
 struct GameConstants {
 
     // Informative comment about the type of constant
-    static let ScrambleAnimationDelay   = 0.6
+    static let scrambleAnimationDelay   = 0.6
 
     // Animation Duration for pop up in [...]
-    struct AnimationDuration {
-        static let FadeOut              = 0.3
-        static let FadeIn               = 0.5
+    struct animationDuration {
+        static let fadeOut              = 0.3
+        static let fadeIn               = 0.5
     }
 
     // Top margin for view XY. Can't be dynamic because of [...]
-    static let TopViewLeftMargin        = 20
+    static let topViewLeftMargin        = 20
 }
 
 // ViewController.swift file
 
-UIView.animateWithDuration(GameConstants.AnimationDuration.FadeIn) {
+UIView.animateWithDuration(GameConstants.animationDuration.fadeIn) {
     self.myView.alpha = 0
 }
 ```
@@ -1348,24 +1376,27 @@ How many hours of debug will be needed to find and correct the error?
 **Preferred:**
 
 ```swift
-func predicateFromJSON(json: [String : AnyObject]) -> NSPredicate? {
-    if let value = json[JSON.Key.Id] as? Int {
-        return NSPredicate(format: "\(DB.Key.Id) ==[c] \(value)")
+func predicate(fromJSON json: [String : AnyObject]) -> NSPredicate? {
+    guard let identifier = json[JSON.Key.Id] as? Int else {
+		return nil
     }
-    return nil
+
+	return NSPredicate(format: "\(DB.Key.Id) ==[c] \(identifier)")
 }
 ```
 
 **Not Preferred:**
 
 ```swift
-func predicateFromJSON(json: [String : AnyObject]) -> NSPredicate? {
-    if let id = json["id"] as? Int {
-        return NSPredicate(format: "id ==[c] \(id)")
+func predicate(fromJSON json: [String : AnyObject]) -> NSPredicate? {
+    guard let id = json["id"] as? Int else {
+		return nil
     }
-    return nil
+	return NSPredicate(format: "id ==[c] \(id)")
 }
 ```
+
+Please note the empty line after the `if` scope.
 
 ### Optionals
 
@@ -1402,14 +1433,15 @@ if let _textContainer = self.textContainer {
     // do many things with _textContainer
 }
 
-if let _superText = self.generateSuperText() as? String where (_superText.count > 0) {
+if let _superText = self.generateSuperText() as? String, (_superText.count > 0) {
     // do many things with _superText
 }
 ```
 
 Unlike the [Multiple Optional Bindings](#multiple-optional-bindings), when binding one single optional you can:
+
 - inline the `if let` and the variable
-- inline the `where` with the variable
+- inline the condition with the variable
 
 #### Multiple Optional Bindings
 
@@ -1418,7 +1450,8 @@ Starting [Swift 1.2](http://nshipster.com/swift-1.2/) you can create multiple bi
 > Swift 1.2 allows multiple simultaneous optional bindings, providing an escape from the trap of needing deeply nested if let statements to unwrap multiple values. Multiple optional bindings are separated by commas and can be paired with a where clause that acts like the expression in a traditional if statement. 
 
 About syntax, please the following points:
-- New line after the first `let`.
+
+- New line for each `let` declaration.
 - All variables are aligned.
 - The opening brackets `{` at the end of the last line.
 - The two levels of indentation.
@@ -1426,30 +1459,28 @@ About syntax, please the following points:
 
 
 ```swift
-let a = "10".toInt()
-let b = "5".toInt()
-let c = "3".toInt()
+let a = Int("10")
+let b = Int("5")
+let c = Int("3")
 ```
 
 **Preferred:**
 
 ```swift
-if let
-    a = a,
-    b = b,
-    c = c
-    where (c != 0) {
-        print("\((a + b) / c)")
-        // 5
+if
+	let _a = a,
+	let _b = b,
+	let _c = c,
+	(_c != 0) {
+		print("\((_a + _b) / _c)") // 5
 }
 ```
 
 **Not Preferred:**
 
 ```swift
-if let a = a, b = b, c = c where c != 0 {
-    print("\((a + b) / c)")
-    // 5
+if let a = a, let b = b, let c = c, c != 0 {
+	print("\((a + b) / c)") // 5
 }
 ```
 
@@ -1466,8 +1497,8 @@ Please note the indentation differences.
 if (array.count == 0),
     let
         _a = a,
-        _b = b
-        where (_b > _a) {
+        _b = b,
+        (_b > _a) {
             print(_a)
 }
 ```
@@ -1478,8 +1509,8 @@ if (array.count == 0),
 if (array.count == 0) {
     if let
         _a = a,
-        _b = b
-        where (_b > _a) {
+        _b = b,
+        (_b > _a) {
             print(_a)
     }
 }
@@ -1495,36 +1526,35 @@ Please note the indentation differences.
 
 ```swift
 let indexes = [1, 2]
-let users   : [AnyObject]? = ["bob", "peter", "john"]
+let users   : [String]? = ["bob", "peter", "john"]
 let max     : Int? = 5
 ```
 
 **Preferred:**
 
 ```swift
-if (indexes.count >= 0),
-    let _users  = users where (_users.count > 0),
-    let _max    = max where (_max > _users.count) {
-        print(_users)
+if (indexes.isEmpty == false),
+	let _users = users, (_users.isEmpty == false),
+	let _max = max, (_max > _users.count) {
+		print(_users)
 }
 ```
 
 **Not Preferred:**
 
 ```swift
-if (indexes.count >= 0),
-    let
-    _users = users
-    where (_users.count > 0),
-    let _max = max
-    where (_max > _users.count) {
-        print(_users)
+if (indexes.isEmpty == false),
+	let _users = users,
+	(_users.isEmpty == false),
+	let _max = max,
+	(_max > _users.count) {
+		print(_users)
 }
 ```
 
 #### ?? Operator
 
-Swift has very neat operator used to safely unwrapped optionals: `??`
+Swift has a very neat operator used to safely unwrapped optionals: `??`
 
 Close to the [Ternary operator](#ternary-operator), this one returns the optional value or a default value if `nil` is found.
 
@@ -1553,7 +1583,7 @@ When naming optional variables and properties, avoid naming them like `optionalS
 
 For optional binding, you can either add a small prefix to the original name or simply reuse the same name.
 
-Everything better than using names like `unwrappedView` or `actualLabel`. Usually `_` is quick and easy to understand.
+Everything better than using names like `unwrappedView` or `actualLabel`. Usually the underscore `_` is quick and easy to understand.
 
 **Note:** Using the same name works and keeps the code in a good shape. Use underscores if you think it makes the code easier to understand.
 
@@ -1586,7 +1616,7 @@ if let
 ### Struct Initializers
 
 Use the native Swift struct initializers rather than the legacy CGGeometry constructors.
-The `CGPoint` is a new native swift function, it should be used rather than the old `CGPointMake` as it is a legacy C method.
+`CGPoint` is a now a struct with native Swift initializers that should be used rather than the old `CGPointMake` as it is a legacy C method.
 Even though they might do the same now, the swift one has much future.
 
 Also it’s more readable in a swift environment and feels better integrated.
@@ -1621,11 +1651,10 @@ Those actually normalize the result before returning it.
 ```swift
 let bounds = CGRect(x: 40, y: 20, width: 120, height: 80)
 
-let x = CGRectGetMinX(bounds)
-let y = CGRectGetMinY(bounds)
-let w = CGRectGetWidth(bounds)
-let h = CGRectGetHeight(bounds)
-
+let x = bounds.minX
+let y = bounds.minY
+let w = bounds.width
+let h = bounds.height
 ```
 
 **Not Preferred:**
@@ -1687,39 +1716,34 @@ var faxNumber: Optional<Int>
 ### For Loops
 
 Prefer the `for-in` style of `for` loop over the `for-condition-increment` style.
+This C-style has been removed in Swift 3.
 
 Since Swift 2.0 you can also use the `for-in-where` style instead `for-in { if }`.
+
+```swift
+let attendeeList = ["Bob", "John", "Alice"]
+let numbers = [20, 18, 39, 49, 68, 230, 499, 238, 239, 723, 332]
+```
 
 **Preferred:**
 
 ```swift
 for _ in 0..<3 {
-    print("Hello three times")
+	print("Hello three times")
 }
 
-for (index, person) in enumerate(attendeeList) {
-    print("\(person) is at position #\(index)")
+for (index, person) in attendeeList.enumerated() {
+	print("\(person) is at position #\(index)")
 }
 
-let numbers = [20, 18, 39, 49, 68, 230, 499, 238, 239, 723, 332]
 for number in numbers where (number > 100) {
-    print(number)
+	print(number)
 }
 ```
 
 **Not Preferred:**
 
 ```swift
-for var i = 0; i < 3; i++ {
-    print("Hello three times")
-}
-
-for var i = 0; i < attendeeList.count; i++ {
-    let person = attendeeList[i]
-    print("\(person) is at position #\(i)")
-}
-
-let numbers = [20, 18, 39, 49, 68, 230, 499, 238, 239, 723, 332]
 for number in numbers {
     if (number > 100) {
         print(number)
@@ -1731,9 +1755,9 @@ for number in numbers {
 
 > A guard statement, like an if statement, executes statements depending on the Boolean value of an expression. You use a guard statement to require that a condition must be true in order for the code after the guard statement to be executed.
 
-If the condition, defined in the guard statement is not met, the code inside the else branch is executed. On the other hand, if the condition is met, it skips the else clause and continues the code execution.
+If the condition defined in the guard statement *is not met*, the code inside the `else` branch is executed. On the other hand, if the condition *is met*, it skips the else clause and continues the code execution.
 
-With guard, you focus on handling the condition you don't want. Furthermore, it forces you to handle one case at a time, avoiding nested conditions. Thus, the code is cleaner and easier to read.
+With guard, you focus on handling the condition you do not want. Furthermore, it forces you to handle one case at a time, avoiding nested conditions. Thus, the code is cleaner and easier to read.
 
 **Preferred:**
 
@@ -1743,20 +1767,24 @@ func printInfo(webArticle: Article?) {
         print("Error: invalid web article")
         return
     }
-    guard let title = article.title where (title.characters.count > 100) else {
+
+    guard let title = article.title, (title.characters.count > 100) else {
         print("Error: title too short")
         return
     }
+
     print("Title: \(title)")
 }
 ```
+
+Please note the empty lines after the scopes.
 
 **Not Preferred:**
 
 ```swift
 func printInfo(webArticle: Article?) {
     if let article = webArticle {
-        if let title = article.title where (title.characters.count > 100) {
+        if let title = article.title, (title.characters.count > 100) {
             print("Title: (title)")
         } else {
             print("Error: title too short")
@@ -1767,17 +1795,19 @@ func printInfo(webArticle: Article?) {
 }
 ```
 
+TODO: this changed.
+
 But, if you don't need to handle one case at a time (for example if you don't need to print a specific message for each error) then the [Multiple Optional Bindings](#multiple-optional-bindings) is still the **best solution**.
 
 **Preferred:**
 
 ```swift
 func printInfo(webArticle: Article?) {
-    if let
-        article = webArticle,
-        title = article.title
-        where (title.characters.count > 100) {
-            print("Title: (title)")
+	if
+		let article = webArticle,
+		let title = article.title,
+		(title.characters.count > 100) {
+			print("Title: (title)")
     }
 }
 ```
@@ -1789,16 +1819,18 @@ func printInfo(webArticle: Article?) {
     guard let article = webArticle else {
         return
     }
-    guard let title = article.title where (title.characters.count > 100) else {
+
+    guard let title = article.title, (title.characters.count > 100) else {
         return
     }
+
     print("Title: (title)")
 }
 ```
 
 ### Defer
 
-The code defined in the defer block will be executed just right before the completion of the **current scope**, regardless of errors.
+The code defined in the defer block will be executed right before the completion of the **current scope**, regardless of errors.
 
 The defer statement should be used for cleanup or default operations.
 
@@ -1840,17 +1872,17 @@ The native framework changed, you now have to use the `do-try-catch` keywords.
 
 ### Do Try Catch
 
-For example if you want to remove a file from the disk using the `NSFileManager`, the function `removeItemAtURL` **throws** an exception in case of error.
+For example if you want to remove a file from the disk using the `FileManager`, the function `removeItemAtURL` **throws** an exception in case of error.
 
-It is declared like this: `func removeItemAtURL(URL: NSURL) throws`
+It is declared like this: `func removeItem(at url: NSURL) throws`
 
-* In case you want to simply `try` the function and `catch` the error in order to `return` a value:
+In case you want to simply `try` the function and `catch` the error in order to `return` a value:
 
 
 ```swift
-func deleteItemAtURL(url: NSURL) -> Bool {
+func deleteItem(at url: NSURL) -> Bool {
     do {
-        try NSFileManager.defaultManager().removeItemAtURL(url)
+        tryFileManager.default.removeItem(at: url)
         return true
     } catch {
         print(error)
@@ -1859,44 +1891,42 @@ func deleteItemAtURL(url: NSURL) -> Bool {
 }
 ```
 
-* In case you would like to receive the `error` as a `NSError` object and not as an `ErrorType`:
+In case you would like to receive the `error` as a `NSError` object and not as an `ErrorType`:
 
 
 ```swift
-func deleteItemAtURL(url: NSURL) -> Bool {
+func deleteItem(at url: NSURL) -> Bool {
     do {
-        try NSFileManager.defaultManager().removeItemAtURL(url)
+        try FileManager.default.removeItem(at: url)
         return true
     } catch let error as NSError {
-        UIAlertView.showErrorMessage(error.localizedDescription)
+        print(error.localizedDescription)
         return false
     }
 }
 ```
 
-* Or, if you assume that it _will_ work and you do **not want to handle the error**, but still don't let the app crash:
+Or, if you assume that it _will_ work and you do **not want to handle the error**, but still don't let the app crash:
 
 
 ```swift
-func deleteItemAtURL(url: NSURL) {
-    _ = try? NSFileManager.defaultManager().removeItemAtURL(url)
+func deleteItem(at url: NSURL) {
+    _ = try? FileManager.default.removeItem(at: url)
 }
 ```
 
 This example returns the result as an optional inside the `_` variable. Another great feature here, you don't even need to specify a type, `var`, or `let` :]
 
-* But maybe you do **not want to handle the error**, but still want to get a value from the `tried` function:
+But maybe you do **not want to handle the error**, but still want to get a value from the '*tried*' function:
 
 
 ```swift
 func allStoredAssets() {
-    if let
-        directory = self.getApplicationDocumentsDirectory(),
-        files = try? NSFileManager.defaultManager().contentsOfDirectoryAtPath(directory.absoluteString) {
-            for file in (files ?? []) {
-                print(file)
-            }
-    }
+    if
+		let directory = self.getApplicationDocumentsDirectory(),
+		let files = try? FileManager.default.contentsOfDirectory(atPath: directory.absoluteString) {
+			print(files)
+	}
 }
 ```
 
@@ -1905,23 +1935,23 @@ func allStoredAssets() {
 Example:
 
 ```swift
-let jsonArray = try? NSJSONSerialization.JSONObjectWithData(jsonData, options: .MutableContainers) as? [[NSObject : AnyObject]]
+let jsonArray = try? JSONSerialization.jsonObject(with: jsonData, options: .mutableContainers) as? [[NSObject : AnyObject]]
 ```
 The type of `jsonArray` is: `[[NSObject : AnyObject]]??`
 
 ### Custom Errors Handling
 
-In Swift, errors are represented by values of types conforming to the [ErrorType protocol](https://developer.apple.com/library/watchos/documentation/Swift/Reference/Swift_ErrorType_Protocol/index.html).
+In Swift, errors are represented by values of types conforming to the [Error protocol](https://developer.apple.com/reference/swift/error).
 
 Developers are able to create **custom error types** conforming to this protocol using enums (and [functions](#functions) inside!).
 
 For example, we take a plane that needs to take off with a missing pilot. An error should be thrown.
 
-* You can create an enumeration that adopts `ErrorType like this for the _invalid plane errors_:
+* You can create an enumeration that adopts `Error` like this for the _invalid plane errors_:
 
 
 ```swift
-enum InvalidPlaneError: ErrorType {
+enum InvalidPlaneError: Error {
     case MissingPilot
     case NoPassengers
 
@@ -1942,9 +1972,11 @@ func takeOff() throws {
     guard let _ = self.planePilot else {
         throw InvalidPlaneError.MissingPilot
     }
-    guard let passengers = self.waitingPassengers where (passengers.count > 0) else {
+
+    guard let passengers = self.waitingPassengers, (passengers.count > 0) else {
         throw InvalidPlaneError.NoPassengers
     }
+
     print("start to fly")
 }
 ```
@@ -1958,10 +1990,8 @@ func boardingFinished() {
         try self.takeOff()
     } catch InvalidPlaneError.MissingPilot {
         print(InvalidPlaneError.MissingPilot.description())
-        // do something
     } catch InvalidPlaneError.NoPassengers {
         print(InvalidPlaneError.NoPassengers.description())
-        // do something
     } catch {
         print(error)
     }
@@ -1977,7 +2007,6 @@ func boardingFinished() {
         try self.takeOff()
     } catch let error as InvalidPlaneError {
         print(error.description())
-        // do something
     } catch {
         print(error)
     }
@@ -1989,8 +2018,6 @@ func boardingFinished() {
 Swift does not require a semicolon after each statement in your code. They are only required if you wish to combine multiple statements on a single line, which of course should be avoided. 
 
 Just do not write multiple statements on a single line separated with semicolons.
-
-The only exception to this rule is the `for-conditional-increment` construct, which requires semicolons. However, alternative `for-in` constructs should be used where possible.
 
 **Preferred:**
 
@@ -2030,6 +2057,7 @@ This style guide is a fork from the collaborative effort from the most stylish r
 Please see the full list on the [orginal page](https://github.com/raywenderlich/swift-style-guide#credits).
 
 The current fork has been mainly improved and maintained by:
+
 * [Kevin Delord](https://github.com/kevindelord)
 
 ## See Also
@@ -2037,4 +2065,3 @@ The current fork has been mainly improved and maintained by:
 * [The Swift Programming Language](https://developer.apple.com/library/prerelease/ios/documentation/swift/conceptual/swift_programming_language/index.html)
 * [Using Swift with Cocoa and Objective-C](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html)
 * [Swift Standard Library Reference](https://developer.apple.com/library/prerelease/ios/documentation/General/Reference/SwiftStandardLibraryReference/index.html)
-* [Swift 2.0 Tutorial](http://www.appcoda.com/swift2/)
