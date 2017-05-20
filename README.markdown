@@ -157,9 +157,9 @@ func firstMethod() -> Bool {
 
 ```swift
 override func viewDidLoad() {
-	super.viewDidLoad()
+    super.viewDidLoad()
 
-	self.title = "MyTitle"
+    self.title = "MyTitle"
 }
 ```
 
@@ -167,8 +167,8 @@ override func viewDidLoad() {
 
 ```swift
 override func viewDidLoad() {
-	super.viewDidLoad()
-	self.title = "MyTitle"
+    super.viewDidLoad()
+    self.title = "MyTitle"
 }
 ```
 
@@ -179,12 +179,12 @@ override func viewDidLoad() {
 ```swift
 class Pilot {
 
-	var name: String
+    var name: String
 }
 
 struct Plane {
 
-	var pilot: Pilot?
+    var pilot: Pilot?
 }
 ```
 
@@ -192,11 +192,11 @@ struct Plane {
 
 ```swift
 class Pilot {
-	var name: String
+    var name: String
 }
 
 struct Plane {
-	var pilot: Pilot?
+    var pilot: Pilot?
 }
 ```
 
@@ -286,10 +286,10 @@ if (user.isHappy == true) {
 ```swift
 if user.isHappy
 {
-  // Do something
+    // Do something
 }
 else {
-  // Do something else
+    // Do something else
 }
 ```
 
@@ -338,14 +338,14 @@ The inner structs use **lowerCamelCase**.
 ```swift
 struct Database { // UpperCamelCase
 
-	struct key { // LowerCamelCase
+  struct key { // LowerCamelCase
 
-		static let identifier = "identifier" // LowerCamelCase
-	}
+    static let identifier = "identifier" // LowerCamelCase
+  }
 
-	enum model { // LowerCamelCase
-		case user // LowerCamelCase
-	}
+  enum model { // LowerCamelCase
+    case user // LowerCamelCase
+  }
 }
 ```
 
@@ -353,12 +353,12 @@ struct Database { // UpperCamelCase
 
 ```swift
 struct Database {
-	struct Key {
-		static let Identifier = "identifier"
-	}
-	enum Model {
-		case User
-	}
+  struct Key {
+    static let Identifier = "identifier"
+  }
+  enum Model {
+    case User
+  }
 }
 ```
 
@@ -526,9 +526,9 @@ Here is a small example in Swift showing all cases:
 **Preferred:**
 
 ```swift
-Int i = 0
-var message : String? = nil
-Bool check = (true == false)  // comparison
+var i: Int = 0
+var message: String? = nil
+var check = (true == false) // Comparison
  
 while (check == true) {
     if (i >= 10) {  // if
@@ -536,8 +536,8 @@ while (check == true) {
     } else if (i == 2) {
         i += 1
     }
-    message = (check == true ? "valid" : "invalid") // ternary
-    if let msg = message as? String where (i > 7) { // where
+    message = (check == true ? "valid" : "invalid") // Ternary
+    if let msg = message as? String, (i > 7) { // condition
         print(message)
     }
     i += 1
@@ -548,9 +548,9 @@ return (message ?? "message does not exist") // ??
 **Not Preferred:**
 
 ```swift
-Int i = 0
-var message : String? = nil
-Bool check = true == false  // comparison
+var i: Int = 0
+var message: String? = nil
+var check = true == false  // Comparison
 
 while check == true {
     if i >= 10 {  // if
@@ -558,8 +558,8 @@ while check == true {
     } else if i == 2 {
         i += 1
     }
-    message = check == true ? "valid" : "invalid" // ternary
-    if let msg = message as? String where i > 7 { // where
+    message = check == true ? "valid" : "invalid" // Ternary
+    if let msg = message as? String, i > 7 { // condition
         print(message)
     }
     i += 1
@@ -669,8 +669,8 @@ class MyViewController : UIViewController {
 
 extension MyViewController {
 
-	func refreshData() {
-	}
+    func refreshData() {
+    }
 }
 ```
 
@@ -683,9 +683,9 @@ class MyViewController : UIViewController {
     }
 }
 extension MyViewController {
-	// MARK: Data Management
-	func refreshData() {
-	}
+  // MARK: Data Management
+  func refreshData() {
+  }
 }
 ```
 
@@ -697,18 +697,18 @@ It is also extremely appreciated to use comments to separate the [Class Attribut
 **Preferred:**
 
 ```swift
-class MyViewController 									: UIViewController {
+class MyViewController 					: UIViewController {
 
     // MARK: - Outlets
 
-    @IBOutlet private weak var lettersGameButton		: UIButton?
+    @IBOutlet private weak var lettersGameButton	: UIButton?
     @IBOutlet private weak var headBodyLegsGameButton	: UIButton?
     @IBOutlet private weak var colorMatcherGameButton	: UIButton?
 
     // MARK: - Instance Variables
 
-    private var destinationType							: FFGameType?
-    private let transitionManager						= FFTransitionManager()
+    private var destinationType					: FFGameType?
+    private let transitionManager				= FFTransitionManager()
 
     // MARK: - View Lifecycle
 
@@ -735,9 +735,9 @@ class MyViewController : UIViewController {
 
 //MARK Outlets
 
-    @IBOutlet var lettersGameButton      : UIButton?
+    @IBOutlet var lettersGameButton: UIButton?
     @IBOutlet var headBodyLegsGameButton : UIButton?
-    @IBOutlet var colorMatcherGameButton : UIButton?
+    @IBOutlet var colorMatcherGameButton: UIButton?
     var destinationType : FFGameType?
     let transitionManager = FFTransitionManager()
 
@@ -802,9 +802,9 @@ In general, you can not be sure that all attributes will be correctly created, l
 
 ```swift
 class Plane {
-    var pilot						: Pilot?
-    var passengerCount				: Int = 0
-    var passengers					= [Passenger]()
+    var pilot     : Pilot?
+    var passengerCount    : Int = 0
+    var passengers      = [Passenger]()
 
     @IBOutlet private weak var text	: UILabel?
 }
@@ -814,9 +814,9 @@ class Plane {
 
 ```swift
 class Plane {
-    var pilot						: Pilot!
-    var passengerCount				: Int!
-    var passengers					: [Passenger]!
+    var pilot     : Pilot!
+    var passengerCount    : Int!
+    var passengers      : [Passenger]!
 
     @IBOutlet private weak var text	: UILabel!
 }
@@ -830,9 +830,9 @@ It is then easier for any other developer to understand where does a value come 
 **Preferred:**
 
 ```swift
-class MyViewController						: UIViewController {
+class MyViewController        : UIViewController {
 
-    @IBOutlet private weak var titleLabel	: Int?
+    @IBOutlet private weak var titleLabel : Int?
 
     func setTitle(text: String) {
         self.titleLabel?.text = text
@@ -848,7 +848,7 @@ class MyViewController						: UIViewController {
 **Not Preferred:**
 
 ```swift
-class MyViewController            			: UIViewController {
+class MyViewController        : UIViewController {
 
     @IBOutlet private weak var titleLabel   : Int?
 
@@ -1177,7 +1177,7 @@ Here are some very specific rules:
 
 ```swift
 UIView.animate(withDuration: 1.0, animations: {
-	self.myView.alpha = 0
+  self.myView.alpha = 0
 })
 ```
 
@@ -1185,7 +1185,7 @@ UIView.animate(withDuration: 1.0, animations: {
 
 ```swift
 UIView.animate(withDuration: 1.0) { () -> Void in
-    self.myView.alpha = 0
+  self.myView.alpha = 0
 })
 ```
 
@@ -1197,11 +1197,10 @@ UIView.animate(withDuration: 1.0) { () -> Void in
 
 ```swift
 UIView.animate(withDuration: 0.3, animations: {
-        self.myView.alpha = 0
-    }, completion: { (finished: Bool) in
-        self.myView.removeFromSuperview()
-    }
-)
+    self.myView.alpha = 0
+}, completion: { (finished: Bool) in
+    self.myView.removeFromSuperview()
+})
 ```
 
 **Not Preferred:**
@@ -1256,7 +1255,7 @@ list.sort { ($0 > $1) }
 
 ```swift
 func myFunction(closure: (() -> Void)?) {
-	closure?()
+  closure?()
 }
 ```
 
@@ -1264,7 +1263,7 @@ func myFunction(closure: (() -> Void)?) {
 
 ```swift
 func myFunction(closure: () -> Void) {
-	closure()
+  closure()
 }
 ```
 
@@ -1284,15 +1283,15 @@ let numbers = [20, 18, 39, 49, 68, 230, 499, 238, 239, 723, 332]
 
 ```swift
 for _ in 0..<3 {
-	print("Hello three times")
+  print("Hello three times")
 }
 
 for (index, person) in attendeeList.enumerated() {
-	print("\(person) is at position #\(index)")
+  print("\(person) is at position #\(index)")
 }
 
 for number in numbers where (number > 100) {
-	print(number)
+  print(number)
 }
 ```
 
@@ -1392,10 +1391,10 @@ Since Swift 3 you can see how Apple emphasizes the `guard` over the `if let` sim
 ```swift
 func printInfo(webArticle: Article?) {
     guard
-		let article = webArticle,
-		let title = article.title,
-		(title.characters.count > 100) else {
-			return
+    let article = webArticle,
+    let title = article.title,
+    (title.characters.count > 100) else {
+      return
     }
 
     print("Title: (title)")
@@ -1406,13 +1405,13 @@ func printInfo(webArticle: Article?) {
 
 ```swift
 func printInfo(webArticle: Article?) {
-	if let article = webArticle {
-		if let title = article.title {
-			if (title.characters.count > 100) {
-				print("Title: (title)")
-			}
-		}
-	}
+  if let article = webArticle {
+    if let title = article.title {
+      if (title.characters.count > 100) {
+        print("Title: (title)")
+      }
+    }
+  }
 }
 ```
 
@@ -1462,20 +1461,20 @@ let c = Int("3")
 ```swift
 // Optional Bindings statement
 if
-	let _a = a,
-	let _b = b,
-	let _c = c,
-	(_c != 0) {
-	print("\((_a + _b) / _c)") // Odd auto-identation huh?
+  let _a = a,
+  let _b = b,
+  let _c = c,
+  (_c != 0) {
+  print("\((_a + _b) / _c)") // Odd auto-identation huh?
 }
 
 // Guard statement
 guard
-	let _a = a,
-	let _b = b,
-	let _c = c,
-	(_c != 0) else {
-		return
+  let _a = a,
+  let _b = b,
+  let _c = c,
+  (_c != 0) else {
+    return
 }
 
 print("\((_a + _b) / _c)") // Odd auto-identation huh?
@@ -1487,7 +1486,7 @@ print("\((_a + _b) / _c)") // Odd auto-identation huh?
 
 ```swift
 if let a = a, let b = b, let c = c, c != 0 {
-	print("\((a + b) / c)") // 5
+  print("\((a + b) / c)") // 5
 }
 ```
 
@@ -1512,17 +1511,17 @@ let max     : Int? = 5
 ```swift
 // Optional Binding statement
 if (indexes.isEmpty == false),
-	let _users = users, (_users.isEmpty == false),
-	let _max = max, (_max > _users.count) {
-	print(_users)
+  let _users = users, (_users.isEmpty == false),
+  let _max = max, (_max > _users.count) {
+  print(_users)
 }
 
 // Guard statement
 guard
-	(indexes.isEmpty == false),
-	let _users = users, (_users.isEmpty == false),
-	let _max = max, (_max > _users.count) else {
-		return
+  (indexes.isEmpty == false),
+  let _users = users, (_users.isEmpty == false),
+  let _max = max, (_max > _users.count) else {
+    return
 }
 
 print(_users)
@@ -1534,11 +1533,11 @@ print(_users)
 
 ```swift
 if (indexes.isEmpty == false),
-	let _users = users,
-	(_users.isEmpty == false),
-	let _max = max,
-	(_max > _users.count) {
-	print(_users)
+  let _users = users,
+  (_users.isEmpty == false),
+  let _max = max,
+  (_max > _users.count) {
+  print(_users)
 }
 ```
 
@@ -1584,9 +1583,9 @@ var subview : UIView?
 var volume  : Double?
 
 guard 
-	let	subview = subview,
-	let _volume = volume else {
-		return
+  let subview = subview,
+  let _volume = volume else {
+    return
 }
 
 // Do something with the subview and _volume variables.
@@ -1599,9 +1598,9 @@ var subview   : UIView?
 var volume    : Double?
 
 guard
-	let unwrappedSubview = subview,
-	let realVolume = volume {
-		return
+  let unwrappedSubview = subview,
+  let realVolume = volume {
+    return
 }
 
 // Do something with the unwrappedSubview and realVolume variables.
@@ -1788,11 +1787,11 @@ How many hours of debug will be needed to find and correct the error?
 
 ```swift
 func predicate(fromJSON json: [String : AnyObject]) -> NSPredicate? {
-    guard let identifier = json[JSON.Key.Id] as? Int else {
-		return nil
-    }
+  guard let identifier = json[JSON.Key.Id] as? Int else {
+    return nil
+  }
 
-	return NSPredicate(format: "\(DB.Key.Id) ==[c] \(identifier)")
+  return NSPredicate(format: "\(DB.Key.Id) ==[c] \(identifier)")
 }
 ```
 
@@ -1800,10 +1799,10 @@ func predicate(fromJSON json: [String : AnyObject]) -> NSPredicate? {
 
 ```swift
 func predicate(fromJSON json: [String : AnyObject]) -> NSPredicate? {
-    guard let id = json["id"] as? Int else {
-		return nil
-    }
-	return NSPredicate(format: "id ==[c] \(id)")
+  guard let id = json["id"] as? Int else {
+    return nil
+  }
+  return NSPredicate(format: "id ==[c] \(id)")
 }
 ```
 
