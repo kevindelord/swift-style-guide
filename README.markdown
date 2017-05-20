@@ -338,14 +338,14 @@ The inner structs use **lowerCamelCase**.
 ```swift
 struct Database { // UpperCamelCase
 
-  struct key { // lowerCamelCase
+    struct key { // lowerCamelCase
 
-    static let identifier = "identifier" // lowerCamelCase
-  }
+        static let identifier = "identifier" // lowerCamelCase
+    }
 
-  enum model { // lowerCamelCase
-    case user // lowerCamelCase
-  }
+    enum model { // lowerCamelCase
+        case user // lowerCamelCase
+    }
 }
 ```
 
@@ -353,12 +353,12 @@ struct Database { // UpperCamelCase
 
 ```swift
 struct Database {
-  struct Key {
-    static let Identifier = "identifier"
-  }
-  enum Model {
-    case User
-  }
+    struct Key {
+        static let Identifier = "identifier"
+    }
+    enum Model {
+        case User
+    }
 }
 ```
 
@@ -471,9 +471,9 @@ enum UserState : Int {
 
     func title() -> String {
         switch self {
-        case .NotRegistered: 			return L("user.pleaseRegister")
-        case .RegisteredWithoutEmail: 	return L("user.pleaseSpecifyEmail")
-        case .RegisteredWithEmail: 		return L("user.registrationComplete")
+        case .NotRegistered:            return L("user.pleaseRegister")
+        case .RegisteredWithoutEmail:   return L("user.pleaseSpecifyEmail")
+        case .RegisteredWithEmail:      return L("user.registrationComplete")
         }
     }
 
@@ -1647,43 +1647,43 @@ Actually all values that should not change. But if they do, they are all created
 
 ```swift
 /// User Default (UpperCamelCase)
-enum HUUserDefault          : String {
+enum HUUserDefault              : String {
 
     // Keys set in PList files (lowerCamelCase)
-    case appId              = "AppId"
-    case hockeyId           = "HockeyAppId"
-    case apiBaseURL         = "ApiBaseURL"
-    case apiUserCredential  = "ApiUserCredential"
+    case appId                  = "AppId"
+    case hockeyId               = "HockeyAppId"
+    case apiBaseURL             = "ApiBaseURL"
+    case apiUserCredential      = "ApiUserCredential"
     case apiPasswordCredential  = "ApiPasswordCredential"
  
-    static let allValues    = [appId, hockeyId, apiBaseURL, apiUserCredential, apiPasswordCredential]
+    static let allValues        = [appId, hockeyId, apiBaseURL, apiUserCredential, apiPasswordCredential]
 }
 
 /// Segues (UpperCamelCase)
-enum HUSegueIdentifier      : String {
-    case formulaDetail      = "showDetailFormula"
+enum HUSegueIdentifier          : String {
+    case formulaDetail          = "showDetailFormula"
     case searchViewController   = "showSearchView"
 }
 
 /// Cells (UpperCamelCase)
-enum HUCellReuseIdentifier  : String {
-    case formulaCell        = "HUFormulaCell_id"
-    case searchCell         = "HUSearchCell_id"
-    case optionCell         = "HUOptionCell_id"
+enum HUCellReuseIdentifier      : String {
+    case formulaCell            = "HUFormulaCell_id"
+    case searchCell             = "HUSearchCell_id"
+    case optionCell             = "HUOptionCell_id"
 }
 
 /// Database (UpperCamelCase)
 struct Database {
 
-    static let name         = "MyProject.sqlite"
+    static let name             = "MyProject.sqlite"
 
-	// Database keys (lowerCamelCase)
+    // Database keys (lowerCamelCase)
     struct key {
 
-		static let identifier     = "id"
-		static let updatedAt      = "lastUpdate"
-		static let key            = "key"
-		static let value          = "value"
+        static let identifier     = "id"
+        static let updatedAt      = "lastUpdate"
+        static let key            = "key"
+        static let value          = "value"
     }
 }
 
@@ -1972,6 +1972,7 @@ func start() {
             print("4")
         }
     }
+
     print("5")
 }
 ```
