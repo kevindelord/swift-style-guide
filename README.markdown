@@ -389,7 +389,6 @@ class Guideline {
 
 Use **lowerCamelCase** for static values within structures:
 
-
 ```swift
 struct Duration {
     static let fadeOut      = 0.3
