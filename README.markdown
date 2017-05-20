@@ -338,13 +338,13 @@ The inner structs use **lowerCamelCase**.
 ```swift
 struct Database { // UpperCamelCase
 
-  struct key { // LowerCamelCase
+  struct key { // lowerCamelCase
 
-    static let identifier = "identifier" // LowerCamelCase
+    static let identifier = "identifier" // lowerCamelCase
   }
 
-  enum model { // LowerCamelCase
-    case user // LowerCamelCase
+  enum model { // lowerCamelCase
+    case user // lowerCamelCase
   }
 }
 ```
@@ -683,9 +683,9 @@ class MyViewController : UIViewController {
     }
 }
 extension MyViewController {
-  // MARK: Data Management
-  func refreshData() {
-  }
+    // MARK: Data Management
+    func refreshData() {
+    }
 }
 ```
 
@@ -707,8 +707,8 @@ class MyViewController 					: UIViewController {
 
     // MARK: - Instance Variables
 
-    private var destinationType					: FFGameType?
-    private let transitionManager				= FFTransitionManager()
+    private var destinationType				: FFGameType?
+    private let transitionManager			= FFTransitionManager()
 
     // MARK: - View Lifecycle
 
@@ -802,11 +802,11 @@ In general, you can not be sure that all attributes will be correctly created, l
 
 ```swift
 class Plane {
-    var pilot     : Pilot?
-    var passengerCount    : Int = 0
-    var passengers      = [Passenger]()
+    var pilot                       : Pilot?
+    var passengerCount              : Int = 0
+    var passengers                  = [Passenger]()
 
-    @IBOutlet private weak var text	: UILabel?
+    @IBOutlet private weak var text : UILabel?
 }
 ```
 
@@ -814,9 +814,9 @@ class Plane {
 
 ```swift
 class Plane {
-    var pilot     : Pilot!
-    var passengerCount    : Int!
-    var passengers      : [Passenger]!
+    var pilot                       : Pilot!
+    var passengerCount              : Int!
+    var passengers                  : [Passenger]!
 
     @IBOutlet private weak var text	: UILabel!
 }
