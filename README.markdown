@@ -594,6 +594,11 @@ Comments above the functions are, of course, well appreciated to explain what th
 
 But inline comments are also very useful to describe step-by-step what is going on inside the function.
 
+Few rules:
+
+* 3 slashes should be used **outside** a function: `///`
+* 2 slashes should be used **inside** a function: `//`
+* The first letter of the comment message should be uppercase.
 
 ```swift
 /// Function to calculate top margin for the current view depending on [...]
