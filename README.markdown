@@ -18,7 +18,7 @@ To help you out with the rules described here, a [configuration file](https://gi
   * [Explicit Type](#explicit-type)
   * [Brackets Position](#brackets-position)
 * [Naming](#naming)
-  * [Classes and attributes](#classes and attributes)
+  * [Classes and attributes](#classes-and-attributes)
   * [Nested structs](#nested-structs)
   * [Functions](#functions)
     * [Prefixed functions](#prefixed-functions)
@@ -56,7 +56,7 @@ To help you out with the rules described here, a [configuration file](https://gi
   * [Single Optional Binding](#single-optional-binding)
   * [Multiple Optional Bindings](#multiple-optional-bindings)
   * [Condition Check](#condition-check)
-  * [?? Operator](#??-operator)
+  * [Nil-Coalescing Operator](#nil-coalescing-operator)
   * [Naming Convention](#naming-convention)
 * [Types](#types)
   * [Constants](#constants)
@@ -76,7 +76,7 @@ To help you out with the rules described here, a [configuration file](https://gi
 * [Semicolons](#semicolons)
 * [Language](#language)
 * [Credits](#credits)
-* [See Also](#See also)
+* [See Also](#see-also)
 
 ## Spacing
 
@@ -1542,9 +1542,9 @@ if (indexes.isEmpty == false),
 }
 ```
 
-### ?? Operator
+### Nil-Coalescing Operator
 
-Swift has a very neat operator used to safely unwrapped optionals: `??`
+The Nil-Coalescing is a very neat operator used to safely unwrapped optionals: `??`
 
 Close to the [Ternary operator](#ternary-operator), this one returns the optional value or a default value if `nil` is found.
 
