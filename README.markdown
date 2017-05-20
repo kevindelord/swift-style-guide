@@ -1936,7 +1936,31 @@ To avoid a retain cycle the IBOutlets variables should **always** be declared as
 
 Please note the (file)private visibility and the optional type.
 
-### Defer
+### Array
+
+To check whether an array is empty or not, please use the `isEmpty` attribute member over comparing `count` to zero.
+
+**Preferred:**
+
+```swift
+guard (myArray.isEmpty == false) else {
+	return
+}
+
+// Your code here
+```
+
+**Not Preferred:**
+
+```swift
+guard (myArray.count > 0) else {
+	return
+}
+
+// Your code here
+```
+
+## Defer
 
 The code defined in the defer block will be executed right before the completion of the **current scope**, regardless of errors.
 
