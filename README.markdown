@@ -669,18 +669,18 @@ It is also extremely appreciated to use comments to separate the [Class Attribut
 **Preferred:**
 
 ```swift
-class MyViewController                           : UIViewController {
+class MyViewController 									: UIViewController {
 
     // MARK: - Outlets
 
-    @IBOutlet weak var lettersGameButton         : UIButton?
-    @IBOutlet weak var headBodyLegsGameButton    : UIButton?
-    @IBOutlet weak var colorMatcherGameButton    : UIButton?
+    @IBOutlet private weak var lettersGameButton		: UIButton?
+    @IBOutlet private weak var headBodyLegsGameButton	: UIButton?
+    @IBOutlet private weak var colorMatcherGameButton	: UIButton?
 
     // MARK: - Instance Variables
 
-    var destinationType                          : FFGameType?
-    let transitionManager                        = FFTransitionManager()
+    private var destinationType							: FFGameType?
+    private let transitionManager						= FFTransitionManager()
 
     // MARK: - View Lifecycle
 
@@ -774,11 +774,11 @@ In general, you can not be sure that all attributes will be correctly created, l
 
 ```swift
 class Plane {
-    var pilot                : Pilot?
-    var passengerCount       : Int = 0
-    var passengers           = [Passenger]()
+    var pilot						: Pilot?
+    var passengerCount				: Int = 0
+    var passengers					= [Passenger]()
 
-    @IBOutlet weak var text  : UILabel?
+    @IBOutlet private weak var text	: UILabel?
 }
 ```
 
@@ -786,11 +786,11 @@ class Plane {
 
 ```swift
 class Plane {
-    var pilot                : Pilot!
-    var passengerCount       : Int!
-    var passengers           : [Passenger]!
+    var pilot						: Pilot!
+    var passengerCount				: Int!
+    var passengers					: [Passenger]!
 
-    @IBOutlet weak var text  : UILabel!
+    @IBOutlet private weak var text	: UILabel!
 }
 ```
 
@@ -802,9 +802,9 @@ It is then easier for any other developer to understand where does a value come 
 **Preferred:**
 
 ```swift
-class MyViewController              : UIViewController {
+class MyViewController						: UIViewController {
 
-    @IBOutlet weak var titleLabel   : Int?
+    @IBOutlet private weak var titleLabel	: Int?
 
     func setTitle(text: String) {
         self.titleLabel?.text = text
@@ -820,9 +820,9 @@ class MyViewController              : UIViewController {
 **Not Preferred:**
 
 ```swift
-class MyViewController              : UIViewController {
+class MyViewController            			: UIViewController {
 
-    @IBOutlet weak var titleLabel   : Int?
+    @IBOutlet private weak var titleLabel   : Int?
 
     func setTitle(text: String) {
         titleLabel?.text = text
@@ -1800,6 +1800,26 @@ var deviceModels: Array<String>
 var employees: Dictionary<Int, String>
 var faxNumber: Optional<Int>
 ```
+
+### IBOutlets
+
+To avoid a retain cycle the IBOutlets variables should **always** be declared as `weak`.
+
+**Preferred:**
+
+```swift
+@IBOutlet fileprivate weak var searchBar 		: UISearchBar?
+@IBOutlet private weak var pageMenuContainer 	: UIView?
+```
+
+**Not Preferred:**
+
+```swift
+@IBOutlet fileprivate var searchBar 		: UISearchBar?
+@IBOutlet private var pageMenuContainer 	: UIView?
+```
+
+Please note the (file)private visibility and the optional type.
 
 ## Control Flow
 
