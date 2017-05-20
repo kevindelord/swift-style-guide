@@ -360,31 +360,54 @@ Please note the empty lines and lower/upper camel cases.
 
 ### Functions
 
-TODO
+Be extremely careful on the function names: they have to be very explicit on what they do.
+The other way around, the code should __match the function name__ (the name should tell what the function does).
+It is super easy to keep coding and changing your code, and in the end have a function doing something completely different than what its name says.
 
-* For functions and init methods, prefer named parameters for all arguments unless the context is very clear. Include external parameter names if it makes function calls more readable.
+Few rules:
 
+* A function should __not exceed 40 lines__. This drastic limit forces the developer to think twice about the code and its structure. A better encapsulation will help you with this rule.
+* Keep the lines of code maximum __between 100 and 120 characters__.
+* Since Swift 3, always use named parameters for the first argument, and the others if it helps the function's readability. 
 
 ```swift
-func dateFromString(dateString: String) -> NSDate
-func convertPointAt(#column: Int, #row: Int) -> CGPoint
-func timedAction(#delay: NSTimeInterval, perform action: SKAction) -> SKAction!
+func resetSearchBar(shouldResetSearchText resetSearchText: Bool)
+func date(fromString dateString: String) -> Date
+func convertPoint(atColumn column: Int, row: Int) -> CGPoint
+func timedAction(delay: NSTimeInterval, perform action: SKAction) -> SKAction?
 
 // would be called like this:
-dateFromString("2014-03-14")
-convertPointAt(column: 42, row: 13)
+resetSearchBar(shouldResetSearchText: true)
+date(fromString: "2014-03-14")
+convertPoint(atColumn: 42, row: 13)
 timedAction(delay: 1.0, perform: someOtherAction)
 ```
 
-* For methods, follow the standard Apple convention of referring to the first parameter in the method name:
-
+For functions with long signatures, add line breaks at appropriate points and add an extra indent on subsequent lines:
 
 ```swift
-class Guideline {
-    func combineWithString(incoming: String, options: Dictionary?) { ... }
-    func upvoteBy(amount: Int) { ... }
+func reticulateSplines(spline: [Double], adjustmentFactor: Double,
+        index: Int, comment: String) -> Bool {
+    // reticulate code goes here
 }
 ```
+
+#### Prefixed functions
+
+Be careful when prefixing your functions. For instance with newer versions of Swift it is better appreciated to omit the `get` prefix.
+
+**Preferred:**
+
+```swift
+func userState() -> UserState { ... }
+```
+
+**Not Preferred:**
+
+```swift
+func getUserState() -> UserState { ... }
+```
+
 ### Structures
 
 Use **lowerCamelCase** for static values within structures:
@@ -402,7 +425,6 @@ struct Duration {
 
 Use **lowerCamelCase** for enumeration values:
 
-
 ```swift
 enum Shape {
     case rectangle
@@ -414,7 +436,6 @@ enum Shape {
 
 Use a type to your enum _only and only if_ you need the `rawValue` in your code.
 Without this, prefer simple enumeration without type.
-
 
 ```swift
 enum UserState : Int {
@@ -435,7 +456,6 @@ Use an enum instead of a struct when you need to:
 Enumerations and structures became amazing in Swift as they can now have (static) functions.
 
 This is extremely useful when you need data or logic depending on an enum value, for example a title of a segue or a list of (user) state.
-
 
 ```swift
 enum UserState : Int {
@@ -540,8 +560,6 @@ while check == true {
 }
 return message ?? "message does not exist" // ??
 ```
-
-### If
 
 There is also no need to put too much rounded brackets where it isn't needed.
 They should be used to separate different _'deepness/level'_ of comparison.
@@ -1097,44 +1115,11 @@ class Vowels    : Container {
 }
 ```
 
-## Function Declarations
+## Visibility
 
-TODO
+By default, declare your functions and properties as `private`.
 
-Be extremely careful on the function names: they have to be very explicit on what they do.
-The other way around, the code should __match the function name__ (the name should tell what the function does).
-It is super easy to keep coding and changing your code, and in the end have a function doing something completely different than what its name says.
-
-
-Other point, a function should __not exceed 40 lines__. This drastic limit forces the developer to think twice about the code and its structure.
-A better encapsulation will help you with this rule.
-
-
-Antoher good thing is to keep the lines of code maximum __between 100 and 120 characters__.
-
-
-Keep short function declarations on one line including the opening brace:
-
-
-```swift
-func reticulateSplines(spline: [Double]) -> Bool {
-    // reticulate code goes here
-}
-```
-
-For functions with long signatures, add line breaks at appropriate points and add an extra indent on subsequent lines:
-
-
-```swift
-func reticulateSplines(spline: [Double], adjustmentFactor: Double,
-        index: Int, comment: String) -> Bool {
-    // reticulate code goes here
-}
-```
-
-### Visibility
-
-By default, declare your functions and properties as `private`. Variables should also be declared as constants using `let`. See [Constants](#constants) for more information.
+Variables should also be declared as constants using `let`. See [Constants](#constants) for more information.
 
 Later on whenever you need to change them, let the compiler complain and then change it to `public` or `var`. This way you can be sure that you and other developers only have access to what is safe to access.
 
@@ -1144,7 +1129,7 @@ Later on whenever you need to change them, let the compiler complain and then ch
 class MyViewcontroller: UIViewController {
     private var progress: Int?
 
-    func animateProgress() {
+    private func animateProgress() {
        self.calculateProgressBasedOnMoonPhase()
        // ...
     }
