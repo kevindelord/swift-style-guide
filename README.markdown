@@ -6,6 +6,8 @@ It has then be modified and improved to match different styles and add some miss
 This style guide is different from others, nonetheless the goals are the same: define a style, syntax and structure while coding in Swift.
 Of course, efficacity, readability, and simplicity are the most important points.
 
+To help you out with the rules described here, a [configuration file](https://github.com/kevindelord/swift-style-guide/blob/master/.swiftlint.yml) for [Swiftlint](https://github.com/realm/SwiftLint) has been published on this repository. 
+
 ## Table of Contents
 
 * [Spacing](#spacing)
@@ -2182,3 +2184,4 @@ The current fork has been mainly improved and maintained by:
 * [The Swift Programming Language](https://developer.apple.com/library/prerelease/ios/documentation/swift/conceptual/swift_programming_language/index.html)
 * [Using Swift with Cocoa and Objective-C](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html)
 * [Swift Standard Library Reference](https://developer.apple.com/library/prerelease/ios/documentation/General/Reference/SwiftStandardLibraryReference/index.html)
+* [Official Swift Blog](https://swift.org)
