@@ -1,6 +1,5 @@
 ## TODO:
 
-* Review table of contents.
 * Review overall indentation.
 
 ## Sample markdown:
