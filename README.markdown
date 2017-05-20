@@ -74,6 +74,8 @@ Of course, efficacity, readability, and simplicity are the most important points
 
 ## Spacing
 
+### Xcode configuration
+
 * Indent using tabs equivalent to 4 spaces, and indent by inserting tab characters. Be sure to set xcode like this:
 
   ![Xcode indent settings](screens/indentation.png)
@@ -114,8 +116,7 @@ func secondMethod() {
 }
 ```
 
-* There should be exactly one emmpty lines between the end bracket of a block and some code.
-
+* There should be exactly one empty line **after a scope and before some code**.
 
 **Preferred:**
 
@@ -141,6 +142,55 @@ func firstMethod() -> Bool {
     }
     print("success")
     return true
+}
+```
+
+* There should be exactly one empty line **after a call to a super method**.
+
+**Preferred:**
+
+```swift
+override func viewDidLoad() {
+	super.viewDidLoad()
+
+	self.title = "MyTitle"
+}
+```
+
+**Not Preferred:**
+
+```swift
+override func viewDidLoad() {
+	super.viewDidLoad()
+	self.title = "MyTitle"
+}
+```
+
+* There should be exactly one empty line **after the declaration of a class or a struct**.
+
+**Preferred:**
+
+```swift
+class Pilot {
+
+	var name: String
+}
+
+struct Plane {
+
+	var pilot: Pilot?
+}
+```
+
+**Not Preferred:**
+
+```swift
+class Pilot {
+	var name: String
+}
+
+struct Plane {
+	var pilot: Pilot?
 }
 ```
 

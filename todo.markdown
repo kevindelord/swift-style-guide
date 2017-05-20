@@ -3,9 +3,7 @@
 * Swift 3.x
 	* Functions naming with Swift 3
 	* Swift extensions
-	* Empty line after call to super and end of scopes.
 	* weak IBOutlets
-	* struct and classes declaration should be followed by an emoty lines.
 	* lowerCamelCase for enum and structs
 * New guard rules BEFORE the `if let` rules.
 * Replace `if let` examples with `guard let`
