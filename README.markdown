@@ -1680,10 +1680,10 @@ struct Database {
     // Database keys (lowerCamelCase)
     struct key {
 
-        static let identifier     = "id"
-        static let updatedAt      = "lastUpdate"
-        static let key            = "key"
-        static let value          = "value"
+        static let identifier   = "id"
+        static let updatedAt    = "lastUpdate"
+        static let key          = "key"
+        static let value        = "value"
     }
 }
 
