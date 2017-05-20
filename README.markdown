@@ -1265,9 +1265,7 @@ list.sort { ($0 > $1) }
 
 ```swift
 func myFunction(closure: (() -> Void)?) {
-    if (something == true) {
-        closure?()
-    }
+	closure?()
 }
 ```
 
@@ -1275,10 +1273,347 @@ func myFunction(closure: (() -> Void)?) {
 
 ```swift
 func myFunction(closure: () -> Void) {
-    if (something == true) {
-        closure()
+	closure()
+}
+```
+
+## For Loops
+
+Prefer the `for-in` style of `for` loop over the `for-condition-increment` style.
+This C-style has been removed in Swift 3.
+
+Since Swift 2 you can also use the `for-in-where` style instead `for-in { if }`.
+
+```swift
+let attendeeList = ["Bob", "John", "Alice"]
+let numbers = [20, 18, 39, 49, 68, 230, 499, 238, 239, 723, 332]
+```
+
+**Preferred:**
+
+```swift
+for _ in 0..<3 {
+	print("Hello three times")
+}
+
+for (index, person) in attendeeList.enumerated() {
+	print("\(person) is at position #\(index)")
+}
+
+for number in numbers where (number > 100) {
+	print(number)
+}
+```
+
+**Not Preferred:**
+
+```swift
+for number in numbers {
+    if (number > 100) {
+        print(number)
     }
 }
+```
+
+## Optionals
+
+Declare variables and function return types as optional with `?` where a nil value is acceptable.
+
+You should just simply **never unwrap an optional** value using `!` or `as!`.
+There is always a better way to keep the code safe and avoid crashes.
+
+If you keep focusing on doing a nice code right in the begining you won't have any trouble to avoid unwrapping crashes.
+
+### Optional Chaining
+
+When accessing an optional value, use optional chaining if the value is only accessed once or if there are many optionals in the chain. This way no crash will occur if one of the objects is `nil`.
+
+**Preferred:**
+
+```swift
+self.textContainer?.textLabel?.setNeedsDisplay()
+```
+
+**Not Preferred:**
+
+```swift
+self.textContainer!.textLabel!.setNeedsDisplay()
+```
+
+### Guard
+
+> A guard statement, like an if statement, executes statements depending on the Boolean value of an expression. You use a guard statement to require that a condition must be true in order for the code after the guard statement to be executed.
+
+If the condition defined in the guard statement *is not met*, the code inside the `else` branch is executed. On the other hand, if the condition *is met*, it skips the else clause and continues the code execution.
+
+With guard, you focus on handling the condition you do not want. Furthermore, it forces you to handle one case at a time, avoiding nested conditions. Thus, the code is cleaner and easier to read.
+
+**Preferred:**
+
+```swift
+func printInfo(webArticle: Article?) {
+    guard let article = webArticle else {
+        print("Error: invalid web article")
+        return
+    }
+
+    guard let title = article.title, (title.characters.count > 100) else {
+        print("Error: title too short")
+        return
+    }
+
+    print("Title: \(title)")
+}
+```
+
+Please note the empty lines after the scopes.
+
+**Not Preferred:**
+
+```swift
+func printInfo(webArticle: Article?) {
+    if let article = webArticle {
+        if let title = article.title, (title.characters.count > 100) {
+            print("Title: (title)")
+        } else {
+            print("Error: title too short")
+        }
+    } else {
+        print("Error: invalid web article")
+    }
+}
+```
+
+### Guard over if let
+
+Even though in some cases an `if let` might be a shorter solution, prefer to use the `guard` statement. 
+
+This way you will:
+
+* Avoid pyramidal indentation with too many nested `if let` statements.
+* Write the main logic of the scope on the 'ground' level of indentation.
+* Keep the code easier to read and maintain.
+
+Since Swift 3 you can see how Apple emphasizes the `guard` over the `if let` simply with the built-in auto-indentation of Xcode 8. The [Multiple Optional Bindings](#multiple-optional-bindings) does not indent properly where it does with a *multiple optional guard*.
+
+**Preferred:**
+
+```swift
+func printInfo(webArticle: Article?) {
+    guard
+		let article = webArticle,
+		let title = article.title,
+		(title.characters.count > 100) else {
+			return
+    }
+
+    print("Title: (title)")
+}
+```
+
+**Not Preferred:**
+
+```swift
+func printInfo(webArticle: Article?) {
+	if let article = webArticle {
+		if let title = article.title {
+			if (title.characters.count > 100) {
+				print("Title: (title)")
+			}
+		}
+	}
+}
+```
+
+### Single Optional Binding
+
+Sometimes you may not be able to `return` through a `guard` (as you could be a `for loop` or so). In such cases use a simple `if` or `if let` aka *optional binding*. 
+
+Use optional binding when it's more convenient to unwrap once and perform multiple operations:
+
+Unlike the [Multiple Optional Bindings](#multiple-optional-bindings), when binding one single optional you can:
+
+- inline the `if let` and the variable.
+- inline the condition with the variable.
+
+```swift
+if let _textContainer = self.textContainer {
+    // do many things with _textContainer
+}
+
+if let _superText = self.generateSuperText() as? String, (_superText.count > 0) {
+    // do many things with _superText
+}
+```
+
+### Multiple Optional Bindings
+
+Starting [Swift 1.2](http://nshipster.com/swift-1.2/) you can create multiple bindings but this is mainly **outdated since Swift 3** and the emphasis of the `guard` statement.
+
+> Swift 1.2 allows multiple simultaneous optional bindings, providing an escape from the trap of needing deeply nested if let statements to unwrap multiple values. Multiple optional bindings are separated by commas and can be paired with a where clause that acts like the expression in a traditional if statement. 
+
+About syntax for `if let` and `guard`:
+
+- New line for each `let` declaration.
+- All variables are aligned.
+- The opening brackets `{` at the end of the last line.
+- The two levels of indentation (should be done manually for the `if let`).
+- The [Naming Convention](#naming-convention) between the _binded_ and optional variables.
+
+```swift
+let a = Int("10")
+let b = Int("5")
+let c = Int("3")
+```
+
+**Preferred:**
+
+```swift
+// Optional Bindings statement
+if
+	let _a = a,
+	let _b = b,
+	let _c = c,
+	(_c != 0) {
+	print("\((_a + _b) / _c)") // Odd auto-identation huh?
+}
+
+// Guard statement
+guard
+	let _a = a,
+	let _b = b,
+	let _c = c,
+	(_c != 0) else {
+		return
+}
+
+print("\((_a + _b) / _c)") // Odd auto-identation huh?
+```
+
+*IMPORTANT: Please note that the `guard` statement is much more appreciated.*
+
+**Not Preferred:**
+
+```swift
+if let a = a, let b = b, let c = c, c != 0 {
+	print("\((a + b) / c)") // 5
+}
+```
+
+### Condition Check
+
+In some case you need a condition check before binding optionals.
+Swift lets you integrate `if` statements inside a [Multiple Optional Bindings](#multiple-optional-bindings).
+In other words, check a new unwrapped value before unwrapping any others.
+
+* If you need to check a new unwrapped variable, put the statement on the same line.
+
+Please note the difference of indentations.
+
+```swift
+let indexes = [1, 2]
+let users   : [String]? = ["bob", "peter", "john"]
+let max     : Int? = 5
+```
+
+**Preferred:**
+
+```swift
+// Optional Binding statement
+if (indexes.isEmpty == false),
+	let _users = users, (_users.isEmpty == false),
+	let _max = max, (_max > _users.count) {
+	print(_users)
+}
+
+// Guard statement
+guard
+	(indexes.isEmpty == false),
+	let _users = users, (_users.isEmpty == false),
+	let _max = max, (_max > _users.count) else {
+		return
+}
+
+print(_users)
+```
+
+*IMPORTANT: Please note that the `guard` statement is much more appreciated.*
+
+**Not Preferred:**
+
+```swift
+if (indexes.isEmpty == false),
+	let _users = users,
+	(_users.isEmpty == false),
+	let _max = max,
+	(_max > _users.count) {
+	print(_users)
+}
+```
+
+### ?? Operator
+
+Swift has a very neat operator used to safely unwrapped optionals: `??`
+
+Close to the [Ternary operator](#ternary-operator), this one returns the optional value or a default value if `nil` is found.
+
+Please note the [rounded brackets](#rounded-brackets).
+
+**Preferred:**
+
+```swift
+let text = (self.generateSuperText() as? String ?? "default value")
+```
+
+**Not Preferred:**
+
+```swift
+var text : String?
+if let _superText = self.generateSuperText() as? String {
+    text = _superText
+} else {
+    text = "default value"
+}
+```
+
+### Naming Convention
+
+When naming optional variables and properties, avoid naming them like `optionalString` or `maybeView` since their optional-ness is already in the type declaration.
+
+For optional binding, you can either add a small prefix to the original name or simply reuse the same name.
+
+Everything better than using names like `unwrappedView` or `actualLabel`. Usually the underscore `_` is quick and easy to understand.
+
+**Note:** Using the same name works and keeps the code in a good shape. Use underscores if you think it makes the code easier to understand.
+
+**Preferred:**
+
+```swift
+var subview : UIView?
+var volume  : Double?
+
+guard 
+	let	subview = subview,
+	let _volume = volume else {
+		return
+}
+
+// Do something with the subview and _volume variables.
+```
+
+**Not Preferred:**
+
+```swift
+var subview   : UIView?
+var volume    : Double?
+
+guard
+	let unwrappedSubview = subview,
+	let realVolume = volume {
+		return
+}
+
+// Do something with the unwrappedSubview and realVolume variables.
 ```
 
 ## Types
@@ -1321,64 +1656,55 @@ Actually all values that should not change. But if they do, they are all created
 **Preferred:**
 
 ```swift
-//
-// User Default
-//
-enum HUUserDefault                          : String {
+/// User Default (UpperCamelCase)
+enum HUUserDefault					: String {
 
-    // Keys set in PList files
-    case appId                              = "AppId"
-    case hockeyId                           = "HockeyAppId"
-    case apiBaseURL                         = "ApiBaseURL"
-    case apiUserCredential                  = "ApiUserCredential"
-    case apiPasswordCredential              = "ApiPasswordCredential"
+    // Keys set in PList files (lowerCamelCase)
+    case appId						= "AppId"
+    case hockeyId					= "HockeyAppId"
+    case apiBaseURL					= "ApiBaseURL"
+    case apiUserCredential			= "ApiUserCredential"
+    case apiPasswordCredential		= "ApiPasswordCredential"
  
-    static let allValues                    = [appId, hockeyId, apiBaseURL, apiUserCredential, apiPasswordCredential]
+    static let allValues			= [appId, hockeyId, apiBaseURL, apiUserCredential, apiPasswordCredential]
 }
 
-//
-// Segues
-//
-enum HUSegueIdentifier                      : String {
-    case formulaDetail                      = "showDetailFormula"
-    case searchViewController               = "showSearchView"
+/// Segues (UpperCamelCase)
+enum HUSegueIdentifier				: String {
+    case formulaDetail				= "showDetailFormula"
+    case searchViewController		= "showSearchView"
 }
 
-//
-// Cells
-//
-enum HUCellReuseIdentifier                  : String {
-    case formulaCell                        = "HUFormulaCell_id"
-    case searchCell                         = "HUSearchCell_id"
-    case optionCell                         = "HUOptionCell_id"
+/// Cells (UpperCamelCase)
+enum HUCellReuseIdentifier			: String {
+    case formulaCell				= "HUFormulaCell_id"
+    case searchCell					= "HUSearchCell_id"
+    case optionCell					= "HUOptionCell_id"
 }
 
-//
-// Database
-//
+/// Database (UpperCamelCase)
 struct Database {
 
-    static let name               			= "MyProject.sqlite"
+    static let name               	= "MyProject.sqlite"
 
+	// Database keys (lowerCamelCase)
     struct key {
 
-		static let identifier 				= "id"
-		static let updatedAt 				= "lastUpdate"
-		static let key						= "key"
-		static let value 					= "value"
+		static let identifier		= "id"
+		static let updatedAt		= "lastUpdate"
+		static let key				= "key"
+		static let value			= "value"
     }
 }
 
-//
-// API
-//
+/// API (UpperCamelCase)
 struct API {
 
-    // Endpoints
-    enum endpoint                           : String {
-        case formula                        = "formula"
-        case pdf                            = "pdf"
-        case productId                      = "productid"
+    // Endpoints (lowerCamelCase)
+    enum endpoint					: String {
+        case formula				= "formula"
+        case pdf					= "pdf"
+        case productId				= "productid"
     }
 }
 ```
@@ -1421,7 +1747,7 @@ PS: Note how everything is aligned.
 **Preferred:**
 
 ```swift
-// Constants.swift file
+/// Constants.swift file
 
 // MARK: - Games
 
@@ -1440,7 +1766,7 @@ struct GameConstants {
     static let topViewLeftMargin        = 20
 }
 
-// ViewController.swift file
+/// ViewController.swift file
 
 UIView.animateWithDuration(GameConstants.animationDuration.fadeIn) {
     self.myView.alpha = 0
@@ -1450,7 +1776,7 @@ UIView.animateWithDuration(GameConstants.animationDuration.fadeIn) {
 **Not Preferred:**
 
 ```swift
-// ViewController.swift file
+/// ViewController.swift file
 
 UIView.animateWithDuration(0.5, animations: {
     self.myView.alpha = 0
@@ -1490,222 +1816,7 @@ func predicate(fromJSON json: [String : AnyObject]) -> NSPredicate? {
 }
 ```
 
-Please note the empty line after the `if` scope.
-
-### Optionals
-
-Declare variables and function return types as optional with `?` where a nil value is acceptable.
-
-You should just simply **never unwrap an optional** value using `!` or `as!`.
-There is always a better way to keep the code safe and avoid crashes.
-
-If you keep focusing on doing a nice code right in the begining you won't have any trouble to avoid unwrapping crashes.
-
-#### Optional Chaining
-
-When accessing an optional value, use optional chaining if the value is only accessed once or if there are many optionals in the chain. This way no crash will occur if one of the objects is `nil`.
-
-**Preferred:**
-
-```swift
-self.textContainer?.textLabel?.setNeedsDisplay()
-```
-
-**Not Preferred:**
-
-```swift
-self.textContainer!.textLabel!.setNeedsDisplay()
-```
-
-#### Single Optional Binding
-
-Use optional binding when it's more convenient to unwrap once and perform multiple operations:
-
-
-```swift
-if let _textContainer = self.textContainer {
-    // do many things with _textContainer
-}
-
-if let _superText = self.generateSuperText() as? String, (_superText.count > 0) {
-    // do many things with _superText
-}
-```
-
-Unlike the [Multiple Optional Bindings](#multiple-optional-bindings), when binding one single optional you can:
-
-- inline the `if let` and the variable
-- inline the condition with the variable
-
-#### Multiple Optional Bindings
-
-Starting [Swift 1.2](http://nshipster.com/swift-1.2/) you can create multiple bindings:
-
-> Swift 1.2 allows multiple simultaneous optional bindings, providing an escape from the trap of needing deeply nested if let statements to unwrap multiple values. Multiple optional bindings are separated by commas and can be paired with a where clause that acts like the expression in a traditional if statement. 
-
-About syntax, please the following points:
-
-- New line for each `let` declaration.
-- All variables are aligned.
-- The opening brackets `{` at the end of the last line.
-- The two levels of indentation.
-- The [Naming Convention](#naming-convention) between the _binded_ and optional variables.
-
-
-```swift
-let a = Int("10")
-let b = Int("5")
-let c = Int("3")
-```
-
-**Preferred:**
-
-```swift
-if
-	let _a = a,
-	let _b = b,
-	let _c = c,
-	(_c != 0) {
-		print("\((_a + _b) / _c)") // 5
-}
-```
-
-**Not Preferred:**
-
-```swift
-if let a = a, let b = b, let c = c, c != 0 {
-	print("\((a + b) / c)") // 5
-}
-```
-
-#### Single Condition Check
-
-In some case you need a `if` statement before binding optionals.
-With Swift you could even integrate this one in the same `if let`.
-
-Please note the indentation differences.
-
-**Preferred:**
-
-```swift
-if (array.count == 0),
-    let
-        _a = a,
-        _b = b,
-        (_b > _a) {
-            print(_a)
-}
-```
-
-**Not Preferred:**
-
-```swift
-if (array.count == 0) {
-    if let
-        _a = a,
-        _b = b,
-        (_b > _a) {
-            print(_a)
-    }
-}
-```
-
-#### Multiple Condition Check
-
-Another great thing is that you can add `if` statements inside a [Multiple Optional Bindings](#multiple-optional-bindings).
-In other words, check a new unwrapped value before unwrapping any others.
-
-Please note the indentation differences.
-
-
-```swift
-let indexes = [1, 2]
-let users   : [String]? = ["bob", "peter", "john"]
-let max     : Int? = 5
-```
-
-**Preferred:**
-
-```swift
-if (indexes.isEmpty == false),
-	let _users = users, (_users.isEmpty == false),
-	let _max = max, (_max > _users.count) {
-		print(_users)
-}
-```
-
-**Not Preferred:**
-
-```swift
-if (indexes.isEmpty == false),
-	let _users = users,
-	(_users.isEmpty == false),
-	let _max = max,
-	(_max > _users.count) {
-		print(_users)
-}
-```
-
-#### ?? Operator
-
-Swift has a very neat operator used to safely unwrapped optionals: `??`
-
-Close to the [Ternary operator](#ternary-operator), this one returns the optional value or a default value if `nil` is found.
-
-Please note the [rounded brackets](#rounded-brackets).
-
-**Preferred:**
-
-```swift
-let text = (self.generateSuperText() as? String ?? "default value")
-```
-
-**Not Preferred:**
-
-```swift
-var text : String?
-if let _superText = self.generateSuperText() as? String {
-    text = _superText
-} else {
-    text = "default value"
-}
-```
-
-#### Naming Convention
-
-When naming optional variables and properties, avoid naming them like `optionalString` or `maybeView` since their optional-ness is already in the type declaration.
-
-For optional binding, you can either add a small prefix to the original name or simply reuse the same name.
-
-Everything better than using names like `unwrappedView` or `actualLabel`. Usually the underscore `_` is quick and easy to understand.
-
-**Note:** Using the same name works and keeps the code in a good shape. Use underscores if you think it makes the code easier to understand.
-
-**Preferred:**
-
-```swift
-var subview : UIView?
-var volume  : Double?
-
-if let
-    subview = subview,
-    _volume = volume {
-        // do something with unwrapped subview and _volume
-}
-```
-
-**Not Preferred:**
-
-```swift
-var subview   : UIView?
-var volume    : Double?
-
-if let
-    unwrappedSubview = subview,
-    realVolume = volume {
-        // do something with unwrappedSubview and realVolume
-}
-```
+Please note the empty line after the `if` scope and the use of `guard`.
 
 ### Struct Initializers
 
@@ -1825,123 +1936,6 @@ To avoid a retain cycle the IBOutlets variables should **always** be declared as
 
 Please note the (file)private visibility and the optional type.
 
-## Control Flow
-
-### For Loops
-
-Prefer the `for-in` style of `for` loop over the `for-condition-increment` style.
-This C-style has been removed in Swift 3.
-
-Since Swift 2.0 you can also use the `for-in-where` style instead `for-in { if }`.
-
-```swift
-let attendeeList = ["Bob", "John", "Alice"]
-let numbers = [20, 18, 39, 49, 68, 230, 499, 238, 239, 723, 332]
-```
-
-**Preferred:**
-
-```swift
-for _ in 0..<3 {
-	print("Hello three times")
-}
-
-for (index, person) in attendeeList.enumerated() {
-	print("\(person) is at position #\(index)")
-}
-
-for number in numbers where (number > 100) {
-	print(number)
-}
-```
-
-**Not Preferred:**
-
-```swift
-for number in numbers {
-    if (number > 100) {
-        print(number)
-    }
-}
-```
-
-### Guard
-
-> A guard statement, like an if statement, executes statements depending on the Boolean value of an expression. You use a guard statement to require that a condition must be true in order for the code after the guard statement to be executed.
-
-If the condition defined in the guard statement *is not met*, the code inside the `else` branch is executed. On the other hand, if the condition *is met*, it skips the else clause and continues the code execution.
-
-With guard, you focus on handling the condition you do not want. Furthermore, it forces you to handle one case at a time, avoiding nested conditions. Thus, the code is cleaner and easier to read.
-
-**Preferred:**
-
-```swift
-func printInfo(webArticle: Article?) {
-    guard let article = webArticle else {
-        print("Error: invalid web article")
-        return
-    }
-
-    guard let title = article.title, (title.characters.count > 100) else {
-        print("Error: title too short")
-        return
-    }
-
-    print("Title: \(title)")
-}
-```
-
-Please note the empty lines after the scopes.
-
-**Not Preferred:**
-
-```swift
-func printInfo(webArticle: Article?) {
-    if let article = webArticle {
-        if let title = article.title, (title.characters.count > 100) {
-            print("Title: (title)")
-        } else {
-            print("Error: title too short")
-        }
-    } else {
-        print("Error: invalid web article")
-    }
-}
-```
-
-TODO: this changed.
-
-But, if you don't need to handle one case at a time (for example if you don't need to print a specific message for each error) then the [Multiple Optional Bindings](#multiple-optional-bindings) is still the **best solution**.
-
-**Preferred:**
-
-```swift
-func printInfo(webArticle: Article?) {
-	if
-		let article = webArticle,
-		let title = article.title,
-		(title.characters.count > 100) {
-			print("Title: (title)")
-    }
-}
-```
-
-**Not Preferred:**
-
-```swift
-func printInfo(webArticle: Article?) {
-    guard let article = webArticle else {
-        return
-    }
-
-    guard let title = article.title, (title.characters.count > 100) else {
-        return
-    }
-
-    print("Title: (title)")
-}
-```
-
 ### Defer
 
 The code defined in the defer block will be executed right before the completion of the **current scope**, regardless of errors.
@@ -1971,7 +1965,7 @@ Prints: `1 5 2 3 4`
 
 ## Error Handling
 
-Before Swift 2.0 developers had to pass a pointer of a NSError object to functions like this one:
+Before Swift 2 developers had to pass a pointer of a NSError object to functions like this one:
 
 
 ```swift
