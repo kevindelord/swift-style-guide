@@ -818,7 +818,7 @@ class Plane {
     var passengerCount              : Int!
     var passengers                  : [Passenger]!
 
-    @IBOutlet private weak var text	: UILabel!
+    @IBOutlet private weak var text : UILabel!
 }
 ```
 
@@ -830,7 +830,7 @@ It is then easier for any other developer to understand where does a value come 
 **Preferred:**
 
 ```swift
-class MyViewController        : UIViewController {
+class MyViewController                    : UIViewController {
 
     @IBOutlet private weak var titleLabel : Int?
 
@@ -848,9 +848,9 @@ class MyViewController        : UIViewController {
 **Not Preferred:**
 
 ```swift
-class MyViewController        : UIViewController {
+class MyViewController                    : UIViewController {
 
-    @IBOutlet private weak var titleLabel   : Int?
+    @IBOutlet private weak var titleLabel : Int?
 
     func setTitle(text: String) {
         titleLabel?.text = text
@@ -957,19 +957,19 @@ Also, do not forget the `// MARK: -` comment to keep things well-organized!
 
 ```swift
 class MyViewcontroller: UIViewController {
-    // class stuff here
+    // Class stuff here
 }
 
 // MARK: - UITableViewDataSource
 
 extension MyViewcontroller: UITableViewDataSource {
-    // table view data source methods
+    // Table view data source methods
 }
 
 // MARK: - UIScrollViewDelegate
 
 extension MyViewcontroller: UIScrollViewDelegate {
-    // scroll view delegate methods
+    // Scroll view delegate methods
 }
 ```
 
@@ -978,7 +978,7 @@ extension MyViewcontroller: UIScrollViewDelegate {
 ```swift
 // MARK: - MyViewcontroller
 class MyViewcontroller: UIViewController, UITableViewDataSource, UIScrollViewDelegate {
-    // all methods
+    // All methods
 }
 ```
 
@@ -1177,7 +1177,7 @@ Here are some very specific rules:
 
 ```swift
 UIView.animate(withDuration: 1.0, animations: {
-  self.myView.alpha = 0
+    self.myView.alpha = 0
 })
 ```
 
@@ -1185,7 +1185,7 @@ UIView.animate(withDuration: 1.0, animations: {
 
 ```swift
 UIView.animate(withDuration: 1.0) { () -> Void in
-  self.myView.alpha = 0
+    self.myView.alpha = 0
 })
 ```
 
@@ -1255,7 +1255,7 @@ list.sort { ($0 > $1) }
 
 ```swift
 func myFunction(closure: (() -> Void)?) {
-  closure?()
+    closure?()
 }
 ```
 
@@ -1263,7 +1263,7 @@ func myFunction(closure: (() -> Void)?) {
 
 ```swift
 func myFunction(closure: () -> Void) {
-  closure()
+    closure()
 }
 ```
 
@@ -1283,15 +1283,15 @@ let numbers = [20, 18, 39, 49, 68, 230, 499, 238, 239, 723, 332]
 
 ```swift
 for _ in 0..<3 {
-  print("Hello three times")
+    print("Hello three times")
 }
 
 for (index, person) in attendeeList.enumerated() {
-  print("\(person) is at position #\(index)")
+    print("\(person) is at position #\(index)")
 }
 
 for number in numbers where (number > 100) {
-  print(number)
+    print(number)
 }
 ```
 
@@ -1391,10 +1391,10 @@ Since Swift 3 you can see how Apple emphasizes the `guard` over the `if let` sim
 ```swift
 func printInfo(webArticle: Article?) {
     guard
-    let article = webArticle,
-    let title = article.title,
-    (title.characters.count > 100) else {
-      return
+        let article = webArticle,
+        let title = article.title,
+        (title.characters.count > 100) else {
+            return
     }
 
     print("Title: (title)")
@@ -1405,13 +1405,13 @@ func printInfo(webArticle: Article?) {
 
 ```swift
 func printInfo(webArticle: Article?) {
-  if let article = webArticle {
-    if let title = article.title {
-      if (title.characters.count > 100) {
-        print("Title: (title)")
-      }
+    if let article = webArticle {
+        if let title = article.title {
+            if (title.characters.count > 100) {
+                print("Title: (title)")
+            }
+        }
     }
-  }
 }
 ```
 
@@ -1461,20 +1461,20 @@ let c = Int("3")
 ```swift
 // Optional Bindings statement
 if
-  let _a = a,
-  let _b = b,
-  let _c = c,
-  (_c != 0) {
-  print("\((_a + _b) / _c)") // Odd auto-identation huh?
+    let _a = a,
+    let _b = b,
+    let _c = c,
+    (_c != 0) {
+    print("\((_a + _b) / _c)") // Odd auto-identation huh?
 }
 
 // Guard statement
 guard
-  let _a = a,
-  let _b = b,
-  let _c = c,
-  (_c != 0) else {
-    return
+    let _a = a,
+    let _b = b,
+    let _c = c,
+    (_c != 0) else {
+        return
 }
 
 print("\((_a + _b) / _c)") // Odd auto-identation huh?
@@ -1486,7 +1486,7 @@ print("\((_a + _b) / _c)") // Odd auto-identation huh?
 
 ```swift
 if let a = a, let b = b, let c = c, c != 0 {
-  print("\((a + b) / c)") // 5
+    print("\((a + b) / c)") // 5
 }
 ```
 
@@ -1511,17 +1511,17 @@ let max     : Int? = 5
 ```swift
 // Optional Binding statement
 if (indexes.isEmpty == false),
-  let _users = users, (_users.isEmpty == false),
-  let _max = max, (_max > _users.count) {
-  print(_users)
+    let _users = users, (_users.isEmpty == false),
+    let _max = max, (_max > _users.count) {
+    print(_users)
 }
 
 // Guard statement
 guard
-  (indexes.isEmpty == false),
-  let _users = users, (_users.isEmpty == false),
-  let _max = max, (_max > _users.count) else {
-    return
+    (indexes.isEmpty == false),
+    let _users = users, (_users.isEmpty == false),
+    let _max = max, (_max > _users.count) else {
+        return
 }
 
 print(_users)
@@ -1533,11 +1533,11 @@ print(_users)
 
 ```swift
 if (indexes.isEmpty == false),
-  let _users = users,
-  (_users.isEmpty == false),
-  let _max = max,
-  (_max > _users.count) {
-  print(_users)
+    let _users = users,
+    (_users.isEmpty == false),
+    let _max = max,
+    (_max > _users.count) {
+    print(_users)
 }
 ```
 
@@ -1583,9 +1583,9 @@ var subview : UIView?
 var volume  : Double?
 
 guard 
-  let subview = subview,
-  let _volume = volume else {
-    return
+    let subview = subview,
+    let _volume = volume else {
+        return
 }
 
 // Do something with the subview and _volume variables.
@@ -1598,9 +1598,9 @@ var subview   : UIView?
 var volume    : Double?
 
 guard
-  let unwrappedSubview = subview,
-  let realVolume = volume {
-    return
+    let unwrappedSubview = subview,
+    let realVolume = volume {
+        return
 }
 
 // Do something with the unwrappedSubview and realVolume variables.
@@ -1647,43 +1647,43 @@ Actually all values that should not change. But if they do, they are all created
 
 ```swift
 /// User Default (UpperCamelCase)
-enum HUUserDefault					: String {
+enum HUUserDefault          : String {
 
     // Keys set in PList files (lowerCamelCase)
-    case appId						= "AppId"
-    case hockeyId					= "HockeyAppId"
-    case apiBaseURL					= "ApiBaseURL"
-    case apiUserCredential			= "ApiUserCredential"
-    case apiPasswordCredential		= "ApiPasswordCredential"
+    case appId              = "AppId"
+    case hockeyId           = "HockeyAppId"
+    case apiBaseURL         = "ApiBaseURL"
+    case apiUserCredential  = "ApiUserCredential"
+    case apiPasswordCredential  = "ApiPasswordCredential"
  
-    static let allValues			= [appId, hockeyId, apiBaseURL, apiUserCredential, apiPasswordCredential]
+    static let allValues    = [appId, hockeyId, apiBaseURL, apiUserCredential, apiPasswordCredential]
 }
 
 /// Segues (UpperCamelCase)
-enum HUSegueIdentifier				: String {
-    case formulaDetail				= "showDetailFormula"
-    case searchViewController		= "showSearchView"
+enum HUSegueIdentifier      : String {
+    case formulaDetail      = "showDetailFormula"
+    case searchViewController   = "showSearchView"
 }
 
 /// Cells (UpperCamelCase)
-enum HUCellReuseIdentifier			: String {
-    case formulaCell				= "HUFormulaCell_id"
-    case searchCell					= "HUSearchCell_id"
-    case optionCell					= "HUOptionCell_id"
+enum HUCellReuseIdentifier  : String {
+    case formulaCell        = "HUFormulaCell_id"
+    case searchCell         = "HUSearchCell_id"
+    case optionCell         = "HUOptionCell_id"
 }
 
 /// Database (UpperCamelCase)
 struct Database {
 
-    static let name               	= "MyProject.sqlite"
+    static let name         = "MyProject.sqlite"
 
 	// Database keys (lowerCamelCase)
     struct key {
 
-		static let identifier		= "id"
-		static let updatedAt		= "lastUpdate"
-		static let key				= "key"
-		static let value			= "value"
+		static let identifier     = "id"
+		static let updatedAt      = "lastUpdate"
+		static let key            = "key"
+		static let value          = "value"
     }
 }
 
@@ -1691,10 +1691,10 @@ struct Database {
 struct API {
 
     // Endpoints (lowerCamelCase)
-    enum endpoint					: String {
-        case formula				= "formula"
-        case pdf					= "pdf"
-        case productId				= "productid"
+    enum endpoint               : String {
+        case formula            = "formula"
+        case pdf                = "pdf"
+        case productId          = "productid"
     }
 }
 ```
@@ -1787,11 +1787,11 @@ How many hours of debug will be needed to find and correct the error?
 
 ```swift
 func predicate(fromJSON json: [String : AnyObject]) -> NSPredicate? {
-  guard let identifier = json[JSON.Key.Id] as? Int else {
-    return nil
-  }
+    guard let identifier = json[JSON.Key.Id] as? Int else {
+        return nil
+    }
 
-  return NSPredicate(format: "\(DB.Key.Id) ==[c] \(identifier)")
+    return NSPredicate(format: "\(DB.Key.Id) ==[c] \(identifier)")
 }
 ```
 
@@ -1799,10 +1799,10 @@ func predicate(fromJSON json: [String : AnyObject]) -> NSPredicate? {
 
 ```swift
 func predicate(fromJSON json: [String : AnyObject]) -> NSPredicate? {
-  guard let id = json["id"] as? Int else {
-    return nil
-  }
-  return NSPredicate(format: "id ==[c] \(id)")
+    guard let id = json["id"] as? Int else {
+        return nil
+    }
+    return NSPredicate(format: "id ==[c] \(id)")
 }
 ```
 
@@ -1913,15 +1913,15 @@ To avoid a retain cycle the IBOutlets variables should **always** be declared as
 **Preferred:**
 
 ```swift
-@IBOutlet fileprivate weak var searchBar 		: UISearchBar?
-@IBOutlet private weak var pageMenuContainer 	: UIView?
+@IBOutlet fileprivate weak var searchBar        : UISearchBar?
+@IBOutlet private weak var pageMenuContainer    : UIView?
 ```
 
 **Not Preferred:**
 
 ```swift
-@IBOutlet fileprivate var searchBar 		: UISearchBar?
-@IBOutlet private var pageMenuContainer 	: UIView?
+@IBOutlet fileprivate var searchBar         : UISearchBar?
+@IBOutlet private var pageMenuContainer     : UIView?
 ```
 
 Please note the (file)private visibility and the optional type.
@@ -1934,7 +1934,7 @@ To check whether an array is empty or not, please use the `isEmpty` attribute me
 
 ```swift
 guard (myArray.isEmpty == false) else {
-	return
+    return
 }
 
 // Your code here
@@ -1944,7 +1944,7 @@ guard (myArray.isEmpty == false) else {
 
 ```swift
 guard (myArray.count > 0) else {
-	return
+    return
 }
 
 // Your code here
@@ -2045,10 +2045,10 @@ But maybe you do **not want to handle the error**, but still want to get a value
 ```swift
 func allStoredAssets() {
     if
-		let directory = self.getApplicationDocumentsDirectory(),
-		let files = try? FileManager.default.contentsOfDirectory(atPath: directory.absoluteString) {
-			print(files)
-	}
+        let directory = self.getApplicationDocumentsDirectory(),
+        let files = try? FileManager.default.contentsOfDirectory(atPath: directory.absoluteString) {
+            print(files)
+    }
 }
 ```
 
