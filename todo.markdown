@@ -4,7 +4,6 @@
 	* Functions naming with Swift 3
 	* Swift extensions
 	* weak IBOutlets
-	* lowerCamelCase for enum and structs
 * New guard rules BEFORE the `if let` rules.
 * Replace `if let` examples with `guard let`
 * Insert new rules.

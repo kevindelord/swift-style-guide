@@ -292,9 +292,14 @@ else {
 ### Classes and attributes
 
 * Use descriptive names with **UpperCamelCase** for class names.
-* Use **lowerCamelCase** for class attributes, methods and local and static variables.
 * When creating outlets, always specify the **type as a suffix**.
 * Only use **alphabetic characters** in variable names. No digit allowed.
+* Use **lowerCamelCase** for:
+	* class attributes
+	* methods names
+	* local and static variables
+	* enum cases
+	* nested structs and enums.
 
 **Preferred:**
 
@@ -317,6 +322,41 @@ class app_widgetContainer {
     @IBOutlet weak var labelDescription : UILabel?
 }
 ```
+
+### Nested structs
+
+When declaring a `struct` or `enum` within a scope **only the top level "owner" is UpperCamelCase**.
+
+The inner structs use **lowerCamelCase**.
+
+```swift
+struct Database { // UpperCamelCase
+
+	struct key { // LowerCamelCase
+
+		static let identifier = "identifier" // LowerCamelCase
+	}
+
+	enum model { // LowerCamelCase
+		case user // LowerCamelCase
+	}
+}
+```
+
+**Not Preferred:**
+
+```swift
+struct Database {
+	struct Key {
+		static let Identifier = "identifier"
+	}
+	enum Model {
+		case User
+	}
+}
+```
+
+Please note the empty lines and lower/upper camel cases.
 
 ### Functions
 
