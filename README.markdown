@@ -648,7 +648,7 @@ For more information about the documenting your code on Swift, please read this 
 
 ### Mark
 
-The mark should be use as much as possible to actually separate and structure your classes and related code extensions within different files.
+The mark should be used as much as possible to actually separate and structure your classes and related code extensions within different files.
 
 The mark should be indented, capitalised and using a separator. It should describe what the next methods are about.
 
@@ -1513,7 +1513,7 @@ let max     : Int? = 5
 if (indexes.isEmpty == false),
     let _users = users, (_users.isEmpty == false),
     let _max = max, (_max > _users.count) {
-    print(_users)
+      print(_users) // Manually indented
 }
 
 // Guard statement
@@ -1537,7 +1537,7 @@ if (indexes.isEmpty == false),
     (_users.isEmpty == false),
     let _max = max,
     (_max > _users.count) {
-    print(_users)
+    print(_users) // Weird auto indentation
 }
 ```
 
