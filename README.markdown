@@ -331,19 +331,19 @@ class app_widgetContainer {
 
 ### Nested structs
 
-When declaring a `struct` or `enum` within a scope **only the top level "owner" is UpperCamelCase**.
+When declaring a `struct` or `enum` within a scope or not **use UpperCamelCase**.
 
-The inner structs use **lowerCamelCase**.
+Use **lowerCamelCase** for the inner attributes.
 
 ```swift
 struct Database { // UpperCamelCase
 
-    struct key { // lowerCamelCase
+    struct Key { // UpperCamelCase
 
         static let identifier = "identifier" // lowerCamelCase
     }
 
-    enum model { // lowerCamelCase
+    enum Model { // UpperCamelCase
         case user // lowerCamelCase
     }
 }
@@ -353,10 +353,10 @@ struct Database { // UpperCamelCase
 
 ```swift
 struct Database {
-    struct Key {
+    struct key {
         static let Identifier = "identifier"
     }
-    enum Model {
+    enum model {
         case User
     }
 }
@@ -1678,7 +1678,7 @@ struct Database {
     static let name             = "MyProject.sqlite"
 
     // Database keys (lowerCamelCase)
-    struct key {
+    struct Key {
 
         static let identifier   = "id"
         static let updatedAt    = "lastUpdate"
