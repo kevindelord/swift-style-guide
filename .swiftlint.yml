@@ -1,29 +1,35 @@
 ###
 # Swiftlint configuration file.
-# Latest version supported: 0.12.0
+# Latest version supported: 0.16.1
 # Any newer version hasn't been checked yet and might not follow the style guide.
 #
 # To update your local version of this file, execute the following command line:
 # curl https://raw.githubusercontent.com/kevindelord/swift-style-guide/master/.swiftlint.yml > .swiftlint.yml
 ###
 
-disabled_rules: # rule identifiers to exclude from running
-  - colon # exaclty one space after the : >>> let abc: Void\n
-  - control_statement # no rounded brackets around conditions. we would need this the other way around
+disabled_rules: # Rule identifiers to exclude from running
+  - colon # Exaclty one space after the : >>> let abc: Void\n
+  - control_statement # No rounded brackets around conditions. we would need this the other way around
   - todo # TODO can be written in the code but should be linked to a ticket on JIRA.
-  - nesting # func nesting max 1 level
+  - nesting # Func nesting max 1 level
+  - cyclomatic_complexity # Limit the number of entries inside an enum or struct.
+  - unused_closure_parameter
+  - empty_parentheses_with_trailing_closure
+  - closure_parameter_position
+  - redundant_string_enum_value
+  - vertical_parameter_alignment
 
 excluded: # paths to ignore during linting. overridden by `included`.
   - Carthage
   - Pods
   - External
   - Submodules
+  - Generated
+  - Core/Model/CoreData
+  - Database/Model
+  - fastlane
 
 # rule parameters
-cyclomatic_complexity:
-  - 20 #warning
-  - 35 #error
-
 file_length:
   - 600 #warning
   - 800 #error
@@ -40,12 +46,27 @@ type_body_length:
   - 400 #warning
   - 500 #error
 
+large_tuple:
+  - 4 #warning
+  - 6 #error
+
+allow_private_set:
+ - allow_private_set: true
+
 opt_in_rules:
   - missing_docs
   - force_unwrapping
   - conditional_returns_on_newline
   - private_outlet
   - vertical_whitespace
+  - closure_spacing
+  - explicit_init
+  - redundant_nil_coalescing
+  - nimble_operator
+  - attributes
+  - closure_end_indentation
+  - empty_count
+  - private_outlet
 
 custom_rules:
   extra_whitespace:
@@ -57,11 +78,6 @@ custom_rules:
     name: "Unnecessary Datatype"
     regex: "(?m-s)(let|var).*(:\s\[+(\w|:| |\t)+\]+\s*=\s*\[:*\])"
     message: "Unnecessary datatype. Use '= [DataType]()' instead of ': [DataType] = []'"
-    severity: warning
-  missing_parameter_name:
-    name: "Missing parameter name"
-    regex: "(_( |\t|:|\))( |\t|=)(?! try).*)"
-    message: "Variable named '_' should be avoided. Please use a valid name."
     severity: warning
   missing_closure_name:
     name: "Missing closure name"
@@ -135,7 +151,7 @@ custom_rules:
     severity: warning
   missing_closure_datatype:
     name: "Missing Closure Data Type"
-    regex: "(\{[\s]{1}\([^:]+?\)[\s]{1}in)"
+    regex: "(\{[\s]{1}(\[weak [\w]+?\][\s]{1})*?\([^:]+?\)[\s]{1}in)"
     message: "Data Type in Closure is missing"
     severity: warning
   invalid_mark_format:
@@ -143,13 +159,28 @@ custom_rules:
     regex: "(?m-s)(\/\/[\s]*?MARK(?!(\:[\s]{1}\-[\s]{1}){1}))"
     message: "Use format: MARK: - Your Info"
     severity: warning
-  prefer_structs_over_classes:
-    name: "Prefer structs over classes"
-    regex: "(?m-s)(class[\s]{1}[a-zA-Z]*[\s]*\{$)"
-    message: "Prefer structs over classes"
-    severity: warning
   missing_brackets_unwrap:
     name: "Missing rounded brackets around ??"
     regex: "(\?\?[^)]*$)"
     message: "Missing rounded brackets around ??"
+    severity: warning
+  unnecessary_space:
+    name: "Unnecessary Space"
+    regex: "(\[[a-zA-Z]+? {1}: {1}[a-zA-Z]+?\])"
+    message: "Unnecessary space. use [DataType: DataType]."
+    severity: warning
+  missing_space:
+    name: "Missing Space"
+    regex: "(\[[a-zA-Z]+?:[a-zA-Z]+?\])"
+    message: "Missing space. use [DataType: DataType]."
+    severity: warning
+  missing_empty_line:
+    name: "Missing Empty Line"
+    regex: "(?-smxi)(\}\n)([ \t]*?)([^\n\}\t ])"
+    message: "Missing empty line."
+    severity: warning
+  get_prefixed_function:
+    name: "Get prefixed function"
+    regex: "(?-smxi)(func get[\w]+?(\())"
+    message: "You should not prefix your functions with the word get."
     severity: warning
